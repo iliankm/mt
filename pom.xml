@@ -1,69 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.iliankm</groupId>
-  <artifactId>test</artifactId>
-  <version>SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>test</name>
-  <modules>
-  	<module>test-ear</module>
-  	<module>test-business</module>
-  	<module>test-business-api</module>
-  	<module>test-web</module>
-  </modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iliankm</groupId>
+	<artifactId>test</artifactId>
+	<version>SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>test</name>
+	<modules>
+		<module>test-ear</module>
+		<module>test-business</module>
+		<module>test-business-api</module>
+		<module>test-web</module>
+	</modules>
 
-  <build>
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.5.1</version>
-            <configuration>
-               <source>1.7</source>
-               <target>1.7</target>
-            </configuration>
-         </plugin>
-      </plugins>
-  </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-  <dependencyManagement>
-  	<dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.wildfly</groupId>
+				<artifactId>wildfly-parent</artifactId>
+				<version>8.1.0.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-		<dependency>
-    		<groupId>org.wildfly</groupId>
-    		<artifactId>wildfly-parent</artifactId>
-    		<version>8.1.0.Final</version>
-    		<scope>import</scope>
-		</dependency>
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>2.12.2</version>
+			</dependency>
 
-	    <dependency>
-	      <groupId>junit</groupId>
-	      <artifactId>junit</artifactId>
-	      <version>3.8.1</version>
-	    </dependency>
+			<dependency>
+				<groupId>org.mongodb.morphia</groupId>
+				<artifactId>morphia</artifactId>
+				<version>0.107</version>
+			</dependency>
 
-  		<dependency>
-	 		<groupId>com.iliankm</groupId>
-	 		<artifactId>test-business</artifactId>
-	 		<type>ejb</type>
-  			<version>${project.version}</version>
-  		</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>3.8.1</version>
+			</dependency>
 
-  		<dependency>
-	 		<groupId>com.iliankm</groupId>
-	 		<artifactId>test-business-api</artifactId>
-	 		<type>jar</type>
-  			<version>${project.version}</version>
-  		</dependency>
+			<dependency>
+				<groupId>com.iliankm</groupId>
+				<artifactId>test-business</artifactId>
+				<type>ejb</type>
+				<version>${project.version}</version>
+			</dependency>
 
-  		<dependency>
-	 		<groupId>com.iliankm</groupId>
-	 		<artifactId>test-web</artifactId>
-	 		<type>war</type>
-  			<version>${project.version}</version>
-  		</dependency>
+			<dependency>
+				<groupId>com.iliankm</groupId>
+				<artifactId>test-business-api</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
 
-  	</dependencies>
-  </dependencyManagement>
+			<dependency>
+				<groupId>com.iliankm</groupId>
+				<artifactId>test-web</artifactId>
+				<type>war</type>
+				<version>${project.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 </project>
