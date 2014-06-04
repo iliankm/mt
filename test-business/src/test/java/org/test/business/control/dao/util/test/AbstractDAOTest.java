@@ -104,8 +104,6 @@ public class AbstractDAOTest {
 
     @Test
     public void testFindByIds() {
-	AbstractDAOTest.cleanUp();
-
 	boolean thrown = false;
 	try {
 	    dao.findByIds(null);
