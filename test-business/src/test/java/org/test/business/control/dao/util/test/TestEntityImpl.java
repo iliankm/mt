@@ -1,26 +1,14 @@
 package org.test.business.control.dao.util.test;
 
-import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Entity;
+import org.test.business.entity.BaseEntityBean;
 
-public class TestEntityImpl implements TestEntity {
-
-    @Id
-    ObjectId id;
+@Entity
+public class TestEntityImpl extends BaseEntityBean implements TestEntity {
 
     String field1;
 
     Integer field2;
-
-    @Override
-    public ObjectId getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
 
     @Override
     public String getField1() {

@@ -1,19 +1,15 @@
 package org.test.business.control.dao.util.test;
 
-import org.bson.types.ObjectId;
+import org.test.business.api.entity.BaseEntity;
 
-public interface TestEntity {
+public interface TestEntity extends BaseEntity {
 
-    public abstract ObjectId getId();
+    public String getField1();
 
-    public abstract void setId(ObjectId id);
+    public void setField1(String field1);
 
-    public abstract String getField1();
+    public Integer getField2();
 
-    public abstract void setField1(String field1);
-
-    public abstract Integer getField2();
-
-    public abstract void setField2(Integer field2);
+    public void setField2(Integer field2);
 
 }

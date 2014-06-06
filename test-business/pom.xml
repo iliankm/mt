@@ -41,6 +41,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.iliankm</groupId>
+			<artifactId>test-business-api</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

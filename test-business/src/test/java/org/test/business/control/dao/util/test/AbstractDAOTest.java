@@ -238,8 +238,8 @@ public class AbstractDAOTest {
 	deleteResult = dao.deleteByIds(ids);
 	assertEquals(0, deleteResult);
 
-	ids.add(ObjectId.get());
-	ids.add(ObjectId.get());
+	ids.add(ObjectId.get().toHexString());
+	ids.add(ObjectId.get().toHexString());
 	deleteResult = dao.deleteByIds(ids);
 	assertEquals(0, deleteResult);
 
