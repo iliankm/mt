@@ -1,17 +1,23 @@
 package org.test.business.entity;
 
+import javax.validation.constraints.NotNull;
+
 import org.mongodb.morphia.annotations.Embedded;
 import org.test.business.api.entity.AddressEntity;
 
 @Embedded
 public class AddressEntityBean implements AddressEntity {
 
+    @NotNull(message = "validation_address_street_is_mandatory")
     private String street;
 
+    @NotNull(message = "validation_address_zip_is_mandatory")
     private String zip;
 
+    @NotNull(message = "validation_address_street_is_mandatory")
     private String city;
 
+    @NotNull(message = "validation_address_country_is_mandatory")
     private String country;
 
     @Override

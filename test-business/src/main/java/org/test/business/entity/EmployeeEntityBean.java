@@ -5,6 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -18,24 +23,32 @@ import org.test.business.api.entity.util.Gender;
 public class EmployeeEntityBean extends BaseEntityBean implements
 	EmployeeEntity {
 
+    @NotNull(message = "validation_employee_first_name_is_mandatory")
     @Indexed
     private String firstName;
 
+    @NotNull(message = "validation_employee_sur_name_is_mandatory")
     @Indexed
     private String surName;
 
+    @NotNull(message = "validation_employee_gender_is_mandatory")
     private Gender gender;
 
+    @NotNull(message = "validation_employee_address_is_mandatory")
+    @Valid
     @Embedded
     private AddressEntityBean address;
 
+    @Pattern (regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message = "validation_employee_email_invalid")
     @Indexed
     private String email;
 
     @Embedded
+    @Valid
     private List<PhoneEntityBean> phones;
 
-    private double salary;
+    @Min(value = 0, message = "validation_employee_salary_invalid")
+    private long salary;
 
     private Set<ObjectId> substituteIds;
 
@@ -98,12 +111,12 @@ public class EmployeeEntityBean extends BaseEntityBean implements
     }
 
     @Override
-    public double getSalary() {
+    public long getSalary() {
 	return salary;
     }
 
     @Override
-    public void setSalary(double salary) {
+    public void setSalary(long salary) {
 	this.salary = salary;
     }
 

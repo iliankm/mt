@@ -28,9 +28,9 @@ public interface EmployeeEntity extends BaseEntity {
 
     public List<? extends PhoneEntity> getPhones();
 
-    public double getSalary();
+    public long getSalary();
 
-    public void setSalary(double salary);
+    public void setSalary(long salary);
 
     public Set<ObjectId> getSubstituteIds();
 
