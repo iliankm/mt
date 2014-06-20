@@ -23,13 +23,9 @@ import org.test.business.api.entity.util.Gender;
 public class EmployeeEntityBean extends BaseEntityBean implements
 	EmployeeEntity {
 
-    @NotNull(message = "validation_employee_first_name_is_mandatory")
+    @NotNull(message = "validation_employee_name_is_mandatory")
     @Indexed
-    private String firstName;
-
-    @NotNull(message = "validation_employee_sur_name_is_mandatory")
-    @Indexed
-    private String surName;
+    private String name;
 
     @NotNull(message = "validation_employee_gender_is_mandatory")
     private Gender gender;
@@ -53,23 +49,13 @@ public class EmployeeEntityBean extends BaseEntityBean implements
     private Set<ObjectId> substituteIds;
 
     @Override
-    public String getFirstName() {
-	return firstName;
+    public String getName() {
+	return name;
     }
 
     @Override
-    public void setFirstName(String firstName) {
-	this.firstName = firstName;
-    }
-
-    @Override
-    public String getSurName() {
-	return surName;
-    }
-
-    @Override
-    public void setSurName(String surName) {
-	this.surName = surName;
+    public void setName(String name) {
+	this.name = name;
     }
 
     @Override
@@ -135,8 +121,7 @@ public class EmployeeEntityBean extends BaseEntityBean implements
 	int result = 1;
 	result = prime * result + ((email == null) ? 0 : email.hashCode());
 	result = prime * result
-		+ ((firstName == null) ? 0 : firstName.hashCode());
-	result = prime * result + ((surName == null) ? 0 : surName.hashCode());
+		+ ((name == null) ? 0 : name.hashCode());
 	return result;
     }
 
@@ -154,15 +139,10 @@ public class EmployeeEntityBean extends BaseEntityBean implements
 		return false;
 	} else if (!email.equals(other.email))
 	    return false;
-	if (firstName == null) {
-	    if (other.firstName != null)
+	if (name == null) {
+	    if (other.name != null)
 		return false;
-	} else if (!firstName.equals(other.firstName))
-	    return false;
-	if (surName == null) {
-	    if (other.surName != null)
-		return false;
-	} else if (!surName.equals(other.surName))
+	} else if (!name.equals(other.name))
 	    return false;
 	return true;
     }

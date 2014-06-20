@@ -8,13 +8,9 @@ import org.test.business.api.entity.util.Gender;
 
 public interface EmployeeEntity extends BaseEntity {
 
-    public String getFirstName();
+    public String getName();
 
-    public void setFirstName(String firstName);
-
-    public String getSurName();
-
-    public void setSurName(String surName);
+    public void setName(String name);
 
     public Gender getGender();
 
