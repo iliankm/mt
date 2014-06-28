@@ -20,11 +20,8 @@ public class TestServlet extends HttpServlet {
     private static final long serialVersionUID = 7047447390031215877L;
     
     @Inject
-    EntityInstancer<EmployeeEntity> empEntityInstancer;
+    EntityInstancer entityInstancer;
     
-    @Inject
-    EntityInstancer<AddressEntity> addressEntityInstancer;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	    throws ServletException, IOException {
@@ -35,16 +32,16 @@ public class TestServlet extends HttpServlet {
         
         out.println("<div>Hello from servlet!</div>");
         
-        EmployeeEntity emp1 = empEntityInstancer.create(EmployeeEntity.class);
+        EmployeeEntity emp1 = entityInstancer.create(EmployeeEntity.class);
         emp1.setName("Petko Voivoda");
         
-        AddressEntity adr1 = addressEntityInstancer.create(AddressEntity.class);
+        AddressEntity adr1 = entityInstancer.create(AddressEntity.class);
         adr1.setCity("Varna");
         
-        EmployeeEntity emp2 = empEntityInstancer.create(EmployeeEntity.class);
+        EmployeeEntity emp2 = entityInstancer.create(EmployeeEntity.class);
         emp2.setName("Vasil Levski");
         
-        AddressEntity adr2 = addressEntityInstancer.create(AddressEntity.class);
+        AddressEntity adr2 = entityInstancer.create(AddressEntity.class);
         adr2.setCity("Karlovo");
         
         out.println("<div>emp1:" + emp1.getName() + "</div>");
