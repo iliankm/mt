@@ -17,7 +17,7 @@ public interface EmployeeEntity extends BaseEntity {
     public void setGender(Gender gender);
 
     public AddressEntity getAddress();
-
+    
     public String getEmail();
 
     public void setEmail(String email);

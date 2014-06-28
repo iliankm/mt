@@ -4,16 +4,17 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.test.business.api.boundary.EntityInstancer;
-import org.test.business.api.entity.BaseEntity;
+import org.test.business.api.entity.Entity;
 
-public class EntityInstancerBean<EI extends BaseEntity> implements EntityInstancer<EI> {
+public class EntityInstancerBean<EI extends Entity> implements
+	EntityInstancer<EI> {
 
     @Inject
-    private Instance<EI> entityProvider;
+    private Instance<Entity> entityProvider;
 
     @Override
-    public EI create() {
-	return entityProvider.get();
+    public EI create(Class<EI> entityInterfaceClazz) {
+	
+	return entityProvider.select(entityInterfaceClazz).get();
     }
-
 }

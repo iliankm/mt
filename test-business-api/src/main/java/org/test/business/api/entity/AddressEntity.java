@@ -1,6 +1,6 @@
 package org.test.business.api.entity;
 
-public interface AddressEntity {
+public interface AddressEntity extends Entity {
 
     public String getStreet();
 

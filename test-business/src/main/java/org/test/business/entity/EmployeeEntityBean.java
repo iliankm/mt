@@ -76,7 +76,7 @@ public class EmployeeEntityBean extends BaseEntityBean implements
 
 	return address;
     }
-
+    
     @Override
     public String getEmail() {
 	return email;
