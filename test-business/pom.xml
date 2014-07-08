@@ -45,6 +45,28 @@
 		<dependency>
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-jcache</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.enterprise</groupId>
+					<artifactId>cdi-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.inject</groupId>
+					<artifactId>javax.inject</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.logging</groupId>
+					<artifactId>jboss-logging</artifactId>
+				</exclusion>
+				<exclusion>
+	                <groupId>org.jboss.marshalling</groupId>
+	                <artifactId>jboss-marshalling</artifactId>
+				</exclusion>
+				<exclusion>
+	                <groupId>org.jboss.marshalling</groupId>
+	                <artifactId>jboss-marshalling-river</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>			
 
 		<dependency>
