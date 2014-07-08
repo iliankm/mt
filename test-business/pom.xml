@@ -41,6 +41,11 @@
 			<artifactId>validation-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-jcache</artifactId>
+		</dependency>			
 
 		<dependency>
 			<groupId>junit</groupId>
