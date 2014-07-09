@@ -61,6 +61,16 @@ public class TestServlet extends HttpServlet {
         out.println("<div>test2:" + employeeService.test("test2") + "</div>");
         out.println("<div>test2:" + employeeService.test("test2") + "</div>");
         
+        EmployeeEntity emp3 = entityInstancer.create(EmployeeEntity.class);
+        emp3.setName("Iliyan");
+        employeeService.save(emp3);
+        
+        Object id = emp3.getId();
+        
+        EmployeeEntity emp4 = employeeService.findById(id);
+        
+        EmployeeEntity emp5 = employeeService.findById(id);
+        
         out.close();
     }
     

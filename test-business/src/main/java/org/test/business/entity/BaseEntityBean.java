@@ -10,6 +10,8 @@ import org.test.business.api.entity.BaseEntity;
 
 public abstract class BaseEntityBean implements BaseEntity {
 
+    private static final long serialVersionUID = 2628771360357245371L;
+
     @Id
     private ObjectId id;
 

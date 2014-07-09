@@ -3,6 +3,7 @@ package org.test.business.control.dao.util;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -18,10 +19,12 @@ import com.mongodb.WriteResult;
  * @param <EC> Entity concrete class (annotated with Morphia annotations) and implements EI.
  */
 public abstract class AbstractDAO <EI, EC extends EI> {
+    
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Inject
     protected Datastore ds;
-
+    
     public abstract Class<EC> getEntityClazz();
 
     public void save(EI entity) {
@@ -31,6 +34,8 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	}
 
 	ds.save(entity);
+	
+	invalidateCache();
     }
 
     public void save(Collection<EI> entities) {
@@ -40,7 +45,10 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	}
 
 	if (!entities.isEmpty()) {
+	    
 	    ds.save(entities);
+	    
+	    invalidateCache();
 	}
     }
 
@@ -49,6 +57,8 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	if (id == null) {
 	    throw new IllegalArgumentException("id is null");
 	}
+	
+	logger.info(this.getEntityClazz().getName() + "with id: " + id + " is to be loaded from db!!!");
 
 	return ds.get(getEntityClazz(), id);
     }
@@ -80,15 +90,6 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	return ds.getCount(getEntityClazz());
     }
 
-    public EI refresh(EI entity) {
-
-	if (entity == null) {
-	    throw new IllegalArgumentException("entity is null");
-	}
-
-	return ds.get(entity);
-    }
-
     public boolean deleteById(Object id) {
 
 	if (id == null) {
@@ -98,6 +99,9 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	WriteResult wr = ds.delete(getEntityClazz(), id);
 
 	if (wr.getN() > 0) {
+	    
+	    invalidateCache();
+	    
 	    return true;
 	}
 
@@ -115,9 +119,15 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	}
 
 	WriteResult wr = ds.delete(getEntityClazz(), ids);
+	
+	invalidateCache();
 
 	return wr.getN();
     }
-
+    
+    protected void invalidateCache() {
+	
+	logger.info("Cache is being invalidated.");
+    };
 
 }

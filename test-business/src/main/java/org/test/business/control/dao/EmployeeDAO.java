@@ -1,9 +1,11 @@
 package org.test.business.control.dao;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 
@@ -17,6 +19,12 @@ import org.test.business.control.dao.util.OrderGenerator;
 import org.test.business.entity.EmployeeEntityBean;
 
 public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean> {
+    
+    private static final String CACHE_BY_ID = "emp-cache-by-id";
+    
+    private static final String CACHE_BY_IDS = "emp-cache-by-ids";
+    
+    private static final String CACHE_BY_CRITERIA = "emp-cache-by-criteria";
 
     @Inject
     private OrderGenerator orderGenerator;
@@ -29,6 +37,7 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 	return EmployeeEntityBean.class;
     }
 
+    @CacheResult(cacheName = CACHE_BY_CRITERIA)
     public List<? extends EmployeeEntity> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset, int limit) {
 	Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
 
@@ -67,12 +76,47 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 
     }
     
-    @CacheResult(cacheName = "employee-default")
+    @CacheResult(cacheName = "employee-test")
     public String test(String a) {
 	
 	log.info("Method test(" + a + ") just invoked." );
 	
 	return a + "1";
     }
+
+    @Override
+    @CacheResult(cacheName = CACHE_BY_ID)
+    public EmployeeEntity findById(Object id) {
+	
+	return super.findById(id);
+    }
+
+    @Override
+    @CacheResult(cacheName = CACHE_BY_IDS)
+    public List<EmployeeEntity> findByIds(Collection<?> ids) {
+	
+	return super.findByIds(ids);
+    }
+
+    @Override
+    protected void invalidateCache() {
+	
+	super.invalidateCache();
+	
+	invalidateCacheById();
+	
+	invalidateCacheByIds();
+	
+	invalidateCacheByCriteria();
+    }
+    
+    @CacheRemoveAll(cacheName = CACHE_BY_ID)
+    private void invalidateCacheById() {}
+    
+    @CacheRemoveAll(cacheName = CACHE_BY_IDS)
+    private void invalidateCacheByIds() {}
+    
+    @CacheRemoveAll(cacheName = CACHE_BY_CRITERIA)
+    private void invalidateCacheByCriteria() {}
 
 }

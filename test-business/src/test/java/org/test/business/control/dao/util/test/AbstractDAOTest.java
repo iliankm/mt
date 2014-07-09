@@ -160,36 +160,6 @@ public class AbstractDAOTest {
     }
 
     @Test
-    public void testRefresh() {
-	TestEntity entity = null;
-
-	boolean thrown = false;
-	try {
-	    dao.refresh(entity);
-	} catch (IllegalArgumentException e) {
-	    thrown = true;
-	}
-	assertTrue(thrown);
-
-	entity = generateTestEntity();
-	dao.save(entity);
-
-	ObjectId originalId = entity.getId();
-	String originalFiled1 = entity.getField1();
-	Integer originalField2 = entity.getField2();
-
-	entity.setField1(null);
-	entity.setField2(null);
-
-	entity = dao.refresh(entity);
-
-	assertNotNull(entity);
-	assertEquals(originalId, entity.getId());
-	assertEquals(originalFiled1, entity.getField1());
-	assertEquals(originalField2, entity.getField2());
-    }
-
-    @Test
     public void testDeleteById() {
 	boolean thrown = false;
 	try {

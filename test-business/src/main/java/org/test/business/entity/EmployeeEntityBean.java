@@ -23,6 +23,8 @@ import org.test.business.api.entity.util.Gender;
 public class EmployeeEntityBean extends BaseEntityBean implements
 	EmployeeEntity {
 
+    private static final long serialVersionUID = -2454104054295746441L;
+
     @NotNull(message = "validation_employee_name_is_mandatory")
     @Indexed
     private String name;
