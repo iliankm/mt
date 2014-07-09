@@ -6,6 +6,8 @@ import org.test.business.entity.BaseEntityBean;
 @Entity
 public class TestEntityImpl extends BaseEntityBean implements TestEntity {
 
+    private static final long serialVersionUID = 431749443507951476L;
+
     String field1;
 
     Integer field2;

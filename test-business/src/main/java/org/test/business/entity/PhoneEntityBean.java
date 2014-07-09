@@ -8,6 +8,8 @@ import org.test.business.api.entity.util.PhoneType;
 @Embedded
 public class PhoneEntityBean implements PhoneEntity {
 
+    private static final long serialVersionUID = 4329488264002771374L;
+
     @NotNull(message = "validation_phone_type_is_mandatory")
     private PhoneType type;
 

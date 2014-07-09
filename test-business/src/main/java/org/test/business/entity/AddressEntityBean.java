@@ -8,6 +8,8 @@ import org.test.business.api.entity.AddressEntity;
 @Embedded
 public class AddressEntityBean implements AddressEntity {
 
+    private static final long serialVersionUID = 6014825721289910144L;
+
     @NotNull(message = "validation_address_street_is_mandatory")
     private String street;
 

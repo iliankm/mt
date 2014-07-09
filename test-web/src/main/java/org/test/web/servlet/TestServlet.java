@@ -67,9 +67,13 @@ public class TestServlet extends HttpServlet {
         
         Object id = emp3.getId();
         
-        EmployeeEntity emp4 = employeeService.findById(id);
+        employeeService.findById(id);
         
-        EmployeeEntity emp5 = employeeService.findById(id);
+        employeeService.findById(id);
+        
+        employeeService.findById(id);
+        
+        employeeService.findById(id);
         
         out.close();
     }
