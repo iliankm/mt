@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.test.business.api.boundary.EntityInstancer;
+import org.test.business.api.boundary.service.EmployeeService;
 import org.test.business.api.entity.AddressEntity;
 import org.test.business.api.entity.EmployeeEntity;
 
@@ -21,6 +22,9 @@ public class TestServlet extends HttpServlet {
     
     @Inject
     EntityInstancer entityInstancer;
+    
+    @Inject
+    EmployeeService employeeService;
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -51,6 +55,11 @@ public class TestServlet extends HttpServlet {
         out.println("<div>emp2:" + emp2.getName() + "</div>");
         
         out.println("<div>adr2:" + adr2.getCity() + "</div>");
+        
+        out.println("<div>test:" + employeeService.test("test") + "</div>");
+        out.println("<div>test:" + employeeService.test("test") + "</div>");
+        out.println("<div>test2:" + employeeService.test("test2") + "</div>");
+        out.println("<div>test2:" + employeeService.test("test2") + "</div>");
         
         out.close();
     }

@@ -2,7 +2,9 @@ package org.test.business.control.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 
 import org.mongodb.morphia.query.Criteria;
@@ -18,6 +20,9 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 
     @Inject
     private OrderGenerator orderGenerator;
+    
+    @Inject
+    private Logger log;
 
     @Override
     public Class<EmployeeEntityBean> getEntityClazz() {
@@ -60,6 +65,14 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 
 	return results;
 
+    }
+    
+    @CacheResult(cacheName = "employee-default")
+    public String test(String a) {
+	
+	log.info("Method test(" + a + ") just invoked." );
+	
+	return a + "1";
     }
 
 }
