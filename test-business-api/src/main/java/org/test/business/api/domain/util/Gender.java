@@ -1,4 +1,4 @@
-package org.test.business.api.entity.util;
+package org.test.business.api.domain.util;
 
 public enum Gender {
 

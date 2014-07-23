@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.test.business.api.entity.util.SortCriteria;
-import org.test.business.api.entity.util.SortCriteria.SortDirection;
+import org.test.business.api.domain.util.SortCriteria;
+import org.test.business.api.domain.util.SortCriteria.SortDirection;
 
 public class OrderGenerator {
 

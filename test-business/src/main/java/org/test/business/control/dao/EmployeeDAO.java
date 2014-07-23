@@ -11,24 +11,23 @@ import javax.inject.Inject;
 
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
-import org.test.business.api.entity.EmployeeEntity;
-import org.test.business.api.entity.util.EmployeeSearchCriteria;
-import org.test.business.api.entity.util.SortCriteria;
+import org.test.business.api.domain.util.EmployeeSearchCriteria;
+import org.test.business.api.domain.util.SortCriteria;
 import org.test.business.control.dao.util.AbstractDAO;
 import org.test.business.control.dao.util.OrderGenerator;
 import org.test.business.entity.EmployeeEntityBean;
 
-public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean> {
-    
+public class EmployeeDAO extends AbstractDAO<EmployeeEntityBean> {
+
     private static final String CACHE_BY_ID = "emp-cache-by-id";
-    
+
     private static final String CACHE_BY_IDS = "emp-cache-by-ids";
-    
+
     private static final String CACHE_BY_CRITERIA = "emp-cache-by-criteria";
 
     @Inject
     private OrderGenerator orderGenerator;
-    
+
     @Inject
     private Logger log;
 
@@ -38,7 +37,8 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
     }
 
     @CacheResult(cacheName = CACHE_BY_CRITERIA)
-    public List<? extends EmployeeEntity> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset, int limit) {
+    public List<EmployeeEntityBean> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset, int limit) {
+
 	Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
 
 	if (criteria != null) {
@@ -75,47 +75,47 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 	return results;
 
     }
-    
+
     @CacheResult(cacheName = "employee-test")
     public String test(String a) {
-	
+
 	log.info("Method test(" + a + ") just invoked." );
-	
+
 	return a + "1";
     }
 
     @Override
     @CacheResult(cacheName = CACHE_BY_ID)
-    public EmployeeEntity findById(Object id) {
-	
+    public EmployeeEntityBean findById(Object id) {
+
 	return super.findById(id);
     }
 
     @Override
     @CacheResult(cacheName = CACHE_BY_IDS)
-    public List<EmployeeEntity> findByIds(Collection<?> ids) {
-	
+    public List<EmployeeEntityBean> findByIds(Collection<?> ids) {
+
 	return super.findByIds(ids);
     }
 
     @Override
     protected void invalidateCache() {
-	
+
 	super.invalidateCache();
-	
+
 	invalidateCacheById();
-	
+
 	invalidateCacheByIds();
-	
+
 	invalidateCacheByCriteria();
     }
-    
+
     @CacheRemoveAll(cacheName = CACHE_BY_ID)
     private void invalidateCacheById() {}
-    
+
     @CacheRemoveAll(cacheName = CACHE_BY_IDS)
     private void invalidateCacheByIds() {}
-    
+
     @CacheRemoveAll(cacheName = CACHE_BY_CRITERIA)
     private void invalidateCacheByCriteria() {}
 

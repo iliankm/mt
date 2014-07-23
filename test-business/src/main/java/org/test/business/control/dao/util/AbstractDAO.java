@@ -15,56 +15,54 @@ import com.mongodb.WriteResult;
 /**
  * Abstract DAO class for base CRUD operations on entities. <br>
  *
- * @param <EI> Entity interface
- * @param <EC> Entity concrete class (annotated with Morphia annotations) and implements EI.
+ * @param <E> Entity concrete class (annotated with Morphia annotations) and implements EI.
  */
-public abstract class AbstractDAO <EI, EC extends EI> {
-    
+public abstract class AbstractDAO <E> {
+
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Inject
     protected Datastore ds;
-    
-    public abstract Class<EC> getEntityClazz();
 
-    public void save(EI entity) {
+    public abstract Class<E> getEntityClazz();
+
+    public void save(E entity) {
 
 	if (entity == null) {
 	    throw new IllegalArgumentException("entity is null");
 	}
 
 	ds.save(entity);
-	
+
 	invalidateCache();
     }
 
-    public void save(Collection<EI> entities) {
+    public void save(Collection<E> entities) {
 
 	if (entities == null) {
 	    throw new IllegalArgumentException("entities cannot be null");
 	}
 
 	if (!entities.isEmpty()) {
-	    
+
 	    ds.save(entities);
-	    
+
 	    invalidateCache();
 	}
     }
 
-    public EI findById(Object id) {
+    public E findById(Object id) {
 
 	if (id == null) {
 	    throw new IllegalArgumentException("id is null");
 	}
-	
+
 	logger.info(this.getEntityClazz().getName() + "with id: " + id + " is to be loaded from db!!!");
 
 	return ds.get(getEntityClazz(), id);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<EI> findByIds(Collection<?> ids) {
+    public List<E> findByIds(Collection<?> ids) {
 
 	if (ids == null) {
 	    throw new IllegalArgumentException("ids cannot be null");
@@ -74,9 +72,9 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	    return Collections.emptyList();
 	}
 
-	Query<EC> query = ds.get(getEntityClazz(), ids);
+	Query<E> query = ds.get(getEntityClazz(), ids);
 
-	List<EI> results = (List<EI>) query.asList();
+	List<E> results = query.asList();
 
 	if (results == null) {
 	    results = Collections.emptyList();
@@ -99,9 +97,9 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	WriteResult wr = ds.delete(getEntityClazz(), id);
 
 	if (wr.getN() > 0) {
-	    
+
 	    invalidateCache();
-	    
+
 	    return true;
 	}
 
@@ -119,14 +117,14 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	}
 
 	WriteResult wr = ds.delete(getEntityClazz(), ids);
-	
+
 	invalidateCache();
 
 	return wr.getN();
     }
-    
+
     protected void invalidateCache() {
-	
+
 	logger.info("Cache is being invalidated.");
     };
 

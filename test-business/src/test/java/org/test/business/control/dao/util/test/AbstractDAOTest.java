@@ -39,7 +39,7 @@ public class AbstractDAOTest {
 
     @Test
     public void testSaveEI() {
-	TestEntity entity = null;
+	TestEntityImpl entity = null;
 
 	boolean thrown = false;
 	try {
@@ -57,7 +57,7 @@ public class AbstractDAOTest {
 
     @Test
     public void testSaveCollectionOfEI() {
-	Collection<TestEntity> entities = null;
+	Collection<TestEntityImpl> entities = null;
 
 	boolean thrown = false;
 	try {
@@ -73,7 +73,7 @@ public class AbstractDAOTest {
 
 	dao.save(entities);
 
-	for (TestEntity entity : entities) {
+	for (TestEntityImpl entity : entities) {
 	    assertNotNull(entity.getId());
 	}
     }
@@ -89,14 +89,14 @@ public class AbstractDAOTest {
 	assertTrue(thrown);
 
 	ObjectId id = ObjectId.get();
-	TestEntity notFoundEntity = dao.findById(id);
+	TestEntityImpl notFoundEntity = dao.findById(id);
 	assertNull(notFoundEntity);
 
-	TestEntity entity = generateTestEntity();
+	TestEntityImpl entity = generateTestEntity();
 	dao.save(entity);
 	assertNotNull(entity.getId());
 
-	TestEntity foundEntity = dao.findById(entity.getId());
+	TestEntityImpl foundEntity = dao.findById(entity.getId());
 	assertNotNull(foundEntity);
 	assertNotNull(foundEntity.getId());
 	assertEquals(entity.getId(), foundEntity.getId());
@@ -112,7 +112,7 @@ public class AbstractDAOTest {
 	}
 	assertTrue(thrown);
 
-	List<TestEntity> foundEntites;
+	List<TestEntityImpl> foundEntites;
 
 	Collection<Object> ids = new ArrayList<>();
 	foundEntites = dao.findByIds(ids);
@@ -123,14 +123,14 @@ public class AbstractDAOTest {
 	foundEntites = dao.findByIds(ids);
 	assertTrue(foundEntites.isEmpty());
 
-	Collection<TestEntity> entities = new LinkedList<>();
+	Collection<TestEntityImpl> entities = new LinkedList<>();
 	entities.add(generateTestEntity());
 	entities.add(generateTestEntity());
 	dao.save(entities);
 
 	foundEntites.clear();
 
-	for (TestEntity e : entities) {
+	for (TestEntityImpl e : entities) {
 	    ids.add(e.getId());
 	}
 
@@ -150,7 +150,7 @@ public class AbstractDAOTest {
 	count = dao.getCount();
 	assertEquals(0, count);
 
-	Collection<TestEntity> entities = new LinkedList<>();
+	Collection<TestEntityImpl> entities = new LinkedList<>();
 	entities.add(generateTestEntity());
 	entities.add(generateTestEntity());
 	dao.save(entities);
@@ -174,10 +174,10 @@ public class AbstractDAOTest {
 	deleteResult = dao.deleteById(ObjectId.get());
 	assertFalse(deleteResult);
 
-	TestEntity entity = generateTestEntity();
+	TestEntityImpl entity = generateTestEntity();
 	dao.save(entity);
 
-	TestEntity foundEntity;
+	TestEntityImpl foundEntity;
 
 	foundEntity = dao.findById(entity.getId());
 	assertNotNull(foundEntity);
@@ -191,7 +191,7 @@ public class AbstractDAOTest {
 
     @Test
     public void testDeleteByIds() {
-	Collection<TestEntity> entities = null;
+	Collection<TestEntityImpl> entities = null;
 	Collection<Object> ids;
 
 	boolean thrown = false;
@@ -219,11 +219,11 @@ public class AbstractDAOTest {
 	dao.save(entities);
 
 	ids.clear();
-	for (TestEntity e : entities) {
+	for (TestEntityImpl e : entities) {
 	    ids.add(e.getId());
 	}
 
-	List<TestEntity> foundEntities;
+	List<TestEntityImpl> foundEntities;
 
 	foundEntities = dao.findByIds(ids);
 	assertEquals(2, foundEntities.size());
@@ -235,8 +235,8 @@ public class AbstractDAOTest {
 	assertEquals(0, foundEntities.size());
     }
 
-    private TestEntity generateTestEntity() {
-	TestEntity testEntity = new TestEntityImpl();
+    private TestEntityImpl generateTestEntity() {
+        TestEntityImpl testEntity = new TestEntityImpl();
 
 	testEntity.setField1(UUID.randomUUID().toString());
 

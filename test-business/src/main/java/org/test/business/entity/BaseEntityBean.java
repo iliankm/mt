@@ -1,14 +1,14 @@
 package org.test.business.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.annotations.Version;
-import org.test.business.api.entity.BaseEntity;
 
-public abstract class BaseEntityBean implements BaseEntity {
+public abstract class BaseEntityBean implements Serializable {
 
     private static final long serialVersionUID = 2628771360357245371L;
 
@@ -22,17 +22,14 @@ public abstract class BaseEntityBean implements BaseEntity {
 
     private Date lastModifiedDate;
 
-    @Override
     public ObjectId getId() {
 	return id;
     }
 
-    @Override
     public Date getCreationDate() {
 	return creationDate;
     }
 
-    @Override
     public Date getLastModifiedDate() {
 	return lastModifiedDate;
     }
