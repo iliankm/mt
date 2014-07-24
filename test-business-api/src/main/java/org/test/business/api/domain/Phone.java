@@ -1,19 +1,14 @@
 package org.test.business.api.domain;
 
 import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
 import org.test.business.api.domain.util.PhoneType;
 
 public class Phone implements Serializable {
 
     private static final long serialVersionUID = 2436097481823432962L;
 
-    @NotNull(message = "validation_phone_type_is_mandatory")
     private PhoneType type;
 
-    @NotNull(message = "validation_phone_is_mandatory")
     private String phone;
 
     public PhoneType getType() {

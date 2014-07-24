@@ -2,22 +2,16 @@ package org.test.business.api.domain;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-
 public class Address implements Serializable{
 
     private static final long serialVersionUID = -1267552031136559623L;
 
-    @NotNull(message = "validation_address_street_is_mandatory")
     private String street;
 
-    @NotNull(message = "validation_address_zip_is_mandatory")
     private String zip;
 
-    @NotNull(message = "validation_address_street_is_mandatory")
     private String city;
 
-    @NotNull(message = "validation_address_country_is_mandatory")
     private String country;
 
     public String getStreet() {

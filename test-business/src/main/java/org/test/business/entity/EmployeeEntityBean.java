@@ -5,6 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -17,19 +22,26 @@ public class EmployeeEntityBean extends BaseEntityBean {
     private static final long serialVersionUID = -2454104054295746441L;
 
     @Indexed
+    @NotNull(message = "validation_employee_name_is_mandatory")
     private String name;
 
+    @NotNull(message = "validation_employee_gender_is_mandatory")
     private Gender gender;
 
+    @Valid
+    @NotNull(message = "validation_employee_address_is_mandatory")
     @Embedded
     private AddressEntityBean address;
 
+    @Pattern (regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message = "validation_employee_email_invalid")
     @Indexed
     private String email;
 
+    @Valid
     @Embedded
     private List<PhoneEntityBean> phones;
 
+    @Min(value = 0, message = "validation_employee_salary_invalid")
     private long salary;
 
     private Set<ObjectId> substituteIds;

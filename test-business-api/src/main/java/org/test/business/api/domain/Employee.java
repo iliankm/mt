@@ -3,12 +3,6 @@ package org.test.business.api.domain;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 import org.bson.types.ObjectId;
 import org.test.business.api.domain.util.Gender;
 
@@ -18,23 +12,16 @@ public class Employee implements Serializable {
 
     private ObjectId id;
 
-    @NotNull(message = "validation_employee_name_is_mandatory")
     private String name;
 
-    @NotNull(message = "validation_employee_gender_is_mandatory")
     private Gender gender;
 
-    @NotNull(message = "validation_employee_address_is_mandatory")
-    @Valid
     private Address address;
 
-    @Pattern (regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message = "validation_employee_email_invalid")
     private String email;
 
-    @Valid
     private List<Phone> phones;
 
-    @Min(value = 0, message = "validation_employee_salary_invalid")
     private long salary;
 
     public ObjectId getId() {
