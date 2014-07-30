@@ -25,7 +25,7 @@ public abstract class BaseEntityBean implements Serializable {
     public ObjectId getId() {
 	return id;
     }
-
+    
     public Date getCreationDate() {
 	return creationDate;
     }

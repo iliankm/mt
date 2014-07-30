@@ -45,7 +45,7 @@ public class EmployeeDAOBean implements EmployeeDAO {
     private Logger log;
     
     @Override
-    public void save(Employee employee) {
+    public Employee save(Employee employee) {
 
 	if (employee == null) {
 	    throw new IllegalArgumentException("Employee is null");
@@ -56,6 +56,10 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	ds.save(entity);
 
 	invalidateCache();
+	
+	Employee result = entityToDomainObject(entity);
+	
+	return result;
     }
     
     @Override

@@ -8,7 +8,7 @@ import org.test.business.api.domain.util.SortCriteria;
 
 public interface EmployeeDAO {
 
-    void save(Employee employee);
+    Employee save(Employee employee);
 
     Employee findById(Object id);
 
