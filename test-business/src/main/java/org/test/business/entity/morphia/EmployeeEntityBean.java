@@ -1,4 +1,4 @@
-package org.test.business.entity;
+package org.test.business.entity.morphia;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -29,7 +29,6 @@ public class EmployeeEntityBean extends BaseEntityBean {
     private Gender gender;
 
     @Valid
-    @NotNull(message = "validation_employee_address_is_mandatory")
     @Embedded
     private AddressEntityBean address;
 
@@ -63,11 +62,12 @@ public class EmployeeEntityBean extends BaseEntityBean {
     }
 
     public AddressEntityBean getAddress() {
-	if (address == null) {
-	    address = new AddressEntityBean();
-	}
 
 	return address;
+    }
+    
+    public void setAddress(AddressEntityBean address) {
+	this.address = address;
     }
 
     public String getEmail() {

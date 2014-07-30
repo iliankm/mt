@@ -1,4 +1,4 @@
-package org.test.business.entity;
+package org.test.business.entity.morphia;
 
 import java.io.Serializable;
 

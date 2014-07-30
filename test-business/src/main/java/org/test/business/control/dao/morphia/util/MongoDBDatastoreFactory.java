@@ -1,4 +1,4 @@
-package org.test.business.control.dao.util;
+package org.test.business.control.dao.morphia.util;
 
 import javax.enterprise.inject.Produces;
 

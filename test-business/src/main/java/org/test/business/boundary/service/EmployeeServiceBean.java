@@ -7,12 +7,9 @@ import org.test.business.control.dao.EmployeeDAO;
 
 public class EmployeeServiceBean implements EmployeeService {
 
+    @SuppressWarnings("unused")
     @Inject
     private EmployeeDAO employeeDAO;
 
-    @Override
-    public String test(String a) {
 
-	return employeeDAO.test(a);
-    }
 }

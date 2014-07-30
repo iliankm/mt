@@ -30,11 +30,6 @@ public class TestServlet extends HttpServlet {
 
         out.println("<div>Hello from servlet!</div>");
 
-        out.println("<div>test:" + employeeService.test("test") + "</div>");
-        out.println("<div>test:" + employeeService.test("test") + "</div>");
-        out.println("<div>test2:" + employeeService.test("test2") + "</div>");
-        out.println("<div>test2:" + employeeService.test("test2") + "</div>");
-
         out.close();
     }
 

@@ -49,12 +49,11 @@ public class Employee implements Serializable {
     }
 
     public Address getAddress() {
-
-	if (address == null) {
-	    address = new Address();
-	}
-
 	return address;
+    }
+    
+    public void setAddress(Address address) {
+	this.address = address;
     }
 
     public String getEmail() {
