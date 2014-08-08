@@ -37,12 +37,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.infinispan</groupId>
 				<artifactId>infinispan-jcache</artifactId>
 				<version>6.0.2.Final</version>
-			</dependency>			
+			</dependency>
 
 			<dependency>
 				<groupId>org.mongodb</groupId>
@@ -54,6 +54,18 @@
 				<groupId>org.mongodb.morphia</groupId>
 				<artifactId>morphia</artifactId>
 				<version>0.107</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.3.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.0</version>
 			</dependency>
 
 			<dependency>
