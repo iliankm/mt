@@ -57,10 +57,21 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	    throw new IllegalArgumentException("Employee is null");
 	}
 
+        /**
+         * Find by id or create new entity
+         */
+	EmployeeEntityBean entity;
+        if (employee.getId() != null) {
+            entity = ds.get(EmployeeEntityBean.class, employee.getId());
+        }
+        else {
+            entity = newEntityObject();
+        }
+
 	/**
 	 * Domain to entity
 	 */
-	EmployeeEntityBean entity = domainObjectToEntity(employee);
+	domainObjectToEntity(employee, entity);
 
 	/**
 	 * Validation
@@ -83,7 +94,8 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	/**
 	 * Result
 	 */
-	Employee result = entityToDomainObject(entity);
+	Employee result = newDomainObject();
+	entityToDomainObject(entity, result);
 
 	return result;
     }
@@ -96,9 +108,13 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	    throw new IllegalArgumentException("id is null");
 	}
 
-	EmployeeEntityBean employee = ds.get(EmployeeEntityBean.class, id);
+	EmployeeEntityBean employeeEntity = ds.get(EmployeeEntityBean.class, id);
 
-	return entityToDomainObject(employee);
+	Employee employee = newDomainObject();
+
+	entityToDomainObject(employeeEntity, employee);
+
+	return employee;
     }
 
     @Override
@@ -115,13 +131,17 @@ public class EmployeeDAOBean implements EmployeeDAO {
 
 	Query<EmployeeEntityBean> query = ds.get(EmployeeEntityBean.class, ids);
 
-	List<EmployeeEntityBean> results = query.asList();
+	List<EmployeeEntityBean> queryResults = query.asList();
 
-	if (results == null) {
-	    results = Collections.emptyList();
+	if (queryResults == null) {
+	    queryResults = Collections.emptyList();
 	}
 
-	return entitesToDomainObjects(results);
+	List<Employee> results = new LinkedList<>();
+
+	entitesToDomainObjects(queryResults, results);
+
+	return results;
     }
 
     @Override
@@ -159,10 +179,13 @@ public class EmployeeDAOBean implements EmployeeDAO {
 
 	query.limit(limit);
 
-	List<EmployeeEntityBean> results = query.asList();
+	List<EmployeeEntityBean> queryResults = query.asList();
 
-	return entitesToDomainObjects(results);
+	List<Employee> results = new LinkedList<>();
 
+	entitesToDomainObjects(queryResults, results);
+
+	return results;
     }
 
     @Override
@@ -202,13 +225,17 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	return wr.getN();
     }
 
-    private Employee entityToDomainObject(EmployeeEntityBean employeeEntity) {
+    protected EmployeeEntityBean newEntityObject() {
 
-	if (employeeEntity == null) {
-	    return null;
-	}
+        return new EmployeeEntityBean();
+    }
 
-	Employee employee = new Employee();
+    protected Employee newDomainObject() {
+
+        return new Employee();
+    }
+
+    protected void entityToDomainObject(EmployeeEntityBean employeeEntity, Employee employee) {
 
 	employee.setId(employeeEntity.getId());
 	employee.setName(employeeEntity.getName());
@@ -237,53 +264,32 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	    }
 	}
 
-	return employee;
+	return;
     }
 
-    private Collection<Employee> entitesToDomainObjects(Collection<EmployeeEntityBean> employeeEntites) {
-
-	if (employeeEntites == null) {
-	    return null;
-	}
-
-	Collection<Employee> employees = new LinkedList<>();
+    protected void entitesToDomainObjects(Collection<EmployeeEntityBean> employeeEntites, Collection<Employee> employees) {
 
 	for (EmployeeEntityBean e : employeeEntites) {
 
-	    Employee employee = entityToDomainObject(e);
+	    Employee employee = newDomainObject();
+	    entityToDomainObject(e, employee);
 	    employees.add(employee);
 	}
 
-	return employees;
+	return;
     }
 
-    private EmployeeEntityBean domainObjectToEntity(Employee employee) {
+    protected void domainObjectToEntity(Employee employee, EmployeeEntityBean employeeEntity) {
 
-	if (employee ==  null) {
-	    return null;
-	}
-
-	EmployeeEntityBean entity;
-	if (employee.getId() != null) {
-
-	    entity = ds.get(EmployeeEntityBean.class, employee.getId());
-	    if (entity == null) {
-		throw new RuntimeException("Employee with id " + employee.getId() + " not found.");
-	    }
-	}
-	else {
-	    entity = new EmployeeEntityBean();
-	}
-
-	entity.setName(employee.getName());
-	entity.setGender(employee.getGender());
-	entity.setEmail(employee.getEmail());
-	entity.setSalary(employee.getSalary());
+	employeeEntity.setName(employee.getName());
+	employeeEntity.setGender(employee.getGender());
+	employeeEntity.setEmail(employee.getEmail());
+	employeeEntity.setSalary(employee.getSalary());
 
 	if (employee.getAddress() != null) {
 
 	    AddressEntityBean addressEntityBean = new AddressEntityBean();
-	    entity.setAddress(addressEntityBean);
+	    employeeEntity.setAddress(addressEntityBean);
 
 	    addressEntityBean.setCountry(employee.getAddress().getCountry());
 	    addressEntityBean.setCity(employee.getAddress().getCity());
@@ -296,14 +302,12 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	    for (Phone p : employee.getPhones()) {
 
 		PhoneEntityBean phoneEntityBean = new PhoneEntityBean();
-		entity.getPhones().add(phoneEntityBean);
+		employeeEntity.getPhones().add(phoneEntityBean);
 
 		phoneEntityBean.setPhone(p.getPhone());
 		phoneEntityBean.setType(p.getType());
 	    }
 	}
-
-	return entity;
     }
 
     protected void invalidateCache() {
