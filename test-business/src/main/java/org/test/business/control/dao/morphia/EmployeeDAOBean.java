@@ -4,11 +4,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Criteria;
@@ -33,35 +36,58 @@ public class EmployeeDAOBean implements EmployeeDAO {
     private static final String CACHE_BY_IDS = "emp-cache-by-ids";
 
     private static final String CACHE_BY_CRITERIA = "emp-cache-by-criteria";
-    
+
     @Inject
     protected Datastore ds;
-    
+
     @Inject
     private OrderGenerator orderGenerator;
 
     @SuppressWarnings("unused")
     @Inject
     private Logger log;
-    
+
+    @Inject
+    private Validator validator;
+
     @Override
     public Employee save(Employee employee) {
 
 	if (employee == null) {
 	    throw new IllegalArgumentException("Employee is null");
 	}
-	
+
+	/**
+	 * Domain to entity
+	 */
 	EmployeeEntityBean entity = domainObjectToEntity(employee);
 
+	/**
+	 * Validation
+	 */
+	Set<ConstraintViolation<EmployeeEntityBean>> constraintViolations = validator.validate(entity);
+	if (!constraintViolations.isEmpty()) {
+	    throw new RuntimeException(constraintViolations.toString());
+	}
+
+	/**
+	 * Persist
+	 */
 	ds.save(entity);
 
+	/**
+	 * Invalidate cache
+	 */
 	invalidateCache();
-	
+
+	/**
+	 * Result
+	 */
 	Employee result = entityToDomainObject(entity);
-	
+
 	return result;
     }
-    
+
     @Override
     @CacheResult(cacheName = CACHE_BY_ID)
     public Employee findById(Object id) {
@@ -69,7 +95,7 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	if (id == null) {
 	    throw new IllegalArgumentException("id is null");
 	}
-	
+
 	EmployeeEntityBean employee = ds.get(EmployeeEntityBean.class, id);
 
 	return entityToDomainObject(employee);
@@ -138,7 +164,7 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	return entitesToDomainObjects(results);
 
     }
-    
+
     @Override
     public boolean deleteById(Object id) {
 
@@ -177,69 +203,69 @@ public class EmployeeDAOBean implements EmployeeDAO {
     }
 
     private Employee entityToDomainObject(EmployeeEntityBean employeeEntity) {
-	
+
 	if (employeeEntity == null) {
 	    return null;
 	}
-	
+
 	Employee employee = new Employee();
-	
+
 	employee.setId(employeeEntity.getId());
 	employee.setName(employeeEntity.getName());
 	employee.setGender(employeeEntity.getGender());
 	employee.setEmail(employeeEntity.getEmail());
 	employee.setSalary(employeeEntity.getSalary());
-	
+
 	if (employee.getAddress() != null) {
-	    
+
 	    Address address = new Address();
 	    address.setCountry(employee.getAddress().getCountry());
 	    address.setCity(employee.getAddress().getCity());
 	    address.setStreet(employee.getAddress().getStreet());
 	    address.setZip(employee.getAddress().getZip());
 	}
-	
+
 	if (!employeeEntity.getPhones().isEmpty()) {
-	    
+
 	    for (PhoneEntityBean p : employeeEntity.getPhones()) {
-		
+
 		Phone phone = new Phone();
 		phone.setPhone(p.getPhone());
 		phone.setType(p.getType());
-		
+
 		employee.getPhones().add(phone);
 	    }
-	}    
-	
+	}
+
 	return employee;
     }
-    
+
     private Collection<Employee> entitesToDomainObjects(Collection<EmployeeEntityBean> employeeEntites) {
-	
+
 	if (employeeEntites == null) {
 	    return null;
 	}
-	
+
 	Collection<Employee> employees = new LinkedList<>();
-	
+
 	for (EmployeeEntityBean e : employeeEntites) {
-	    
+
 	    Employee employee = entityToDomainObject(e);
 	    employees.add(employee);
 	}
-	
+
 	return employees;
     }
-    
+
     private EmployeeEntityBean domainObjectToEntity(Employee employee) {
-	
+
 	if (employee ==  null) {
 	    return null;
 	}
-	
+
 	EmployeeEntityBean entity;
 	if (employee.getId() != null) {
-	    
+
 	    entity = ds.get(EmployeeEntityBean.class, employee.getId());
 	    if (entity == null) {
 		throw new RuntimeException("Employee with id " + employee.getId() + " not found.");
@@ -248,35 +274,35 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	else {
 	    entity = new EmployeeEntityBean();
 	}
-	
+
 	entity.setName(employee.getName());
 	entity.setGender(employee.getGender());
 	entity.setEmail(employee.getEmail());
 	entity.setSalary(employee.getSalary());
-	
+
 	if (employee.getAddress() != null) {
-	    
+
 	    AddressEntityBean addressEntityBean = new AddressEntityBean();
 	    entity.setAddress(addressEntityBean);
-	    
+
 	    addressEntityBean.setCountry(employee.getAddress().getCountry());
 	    addressEntityBean.setCity(employee.getAddress().getCity());
 	    addressEntityBean.setStreet(employee.getAddress().getStreet());
 	    addressEntityBean.setZip(employee.getAddress().getZip());
 	}
-	
+
 	if (!employee.getPhones().isEmpty()) {
-	    
+
 	    for (Phone p : employee.getPhones()) {
-		
+
 		PhoneEntityBean phoneEntityBean = new PhoneEntityBean();
 		entity.getPhones().add(phoneEntityBean);
-		
+
 		phoneEntityBean.setPhone(p.getPhone());
 		phoneEntityBean.setType(p.getType());
 	    }
 	}
-	
+
 	return entity;
     }
 

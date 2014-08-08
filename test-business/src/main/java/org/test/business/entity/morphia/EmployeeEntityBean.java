@@ -65,7 +65,7 @@ public class EmployeeEntityBean extends BaseEntityBean {
 
 	return address;
     }
-    
+
     public void setAddress(AddressEntityBean address) {
 	this.address = address;
     }
