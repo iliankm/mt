@@ -7,8 +7,9 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.annotations.Version;
+import org.test.business.api.domain.util.Identifiable;
 
-public abstract class BaseEntityBean implements Serializable {
+public abstract class BaseEntityBean implements Identifiable, Serializable {
 
     private static final long serialVersionUID = 2628771360357245371L;
 
@@ -22,10 +23,11 @@ public abstract class BaseEntityBean implements Serializable {
 
     private Date lastModifiedDate;
 
+    @Override
     public ObjectId getId() {
 	return id;
     }
-    
+
     public Date getCreationDate() {
 	return creationDate;
     }

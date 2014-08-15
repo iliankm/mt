@@ -3,10 +3,12 @@ package org.test.business.api.domain;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.test.business.api.domain.util.Gender;
+import org.test.business.api.domain.util.Identifiable;
 
-public class Employee implements Serializable {
+public class Employee implements Identifiable, Serializable {
 
     private static final long serialVersionUID = -7850236434515729926L;
 
@@ -24,6 +26,7 @@ public class Employee implements Serializable {
 
     private long salary;
 
+    @Override
     public ObjectId getId() {
 	return id;
     }
@@ -51,7 +54,7 @@ public class Employee implements Serializable {
     public Address getAddress() {
 	return address;
     }
-    
+
     public void setAddress(Address address) {
 	this.address = address;
     }

@@ -1,19 +1,13 @@
 package org.test.business.control.dao.morphia;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
 import org.test.business.api.domain.Address;
@@ -27,9 +21,7 @@ import org.test.business.entity.morphia.AddressEntityBean;
 import org.test.business.entity.morphia.EmployeeEntityBean;
 import org.test.business.entity.morphia.PhoneEntityBean;
 
-import com.mongodb.WriteResult;
-
-public class EmployeeDAOBean implements EmployeeDAO {
+public class EmployeeDAOBean extends AbstractDAO<Employee, EmployeeEntityBean> implements EmployeeDAO {
 
     private static final String CACHE_BY_ID = "emp-cache-by-id";
 
@@ -38,110 +30,24 @@ public class EmployeeDAOBean implements EmployeeDAO {
     private static final String CACHE_BY_CRITERIA = "emp-cache-by-criteria";
 
     @Inject
-    protected Datastore ds;
-
-    @Inject
     private OrderGenerator orderGenerator;
 
     @SuppressWarnings("unused")
     @Inject
     private Logger log;
 
-    @Inject
-    private Validator validator;
-
-    @Override
-    public Employee save(Employee employee) {
-
-	if (employee == null) {
-	    throw new IllegalArgumentException("Employee is null");
-	}
-
-        /**
-         * Find by id or create new entity
-         */
-	EmployeeEntityBean entity;
-        if (employee.getId() != null) {
-            entity = ds.get(EmployeeEntityBean.class, employee.getId());
-        }
-        else {
-            entity = newEntityObject();
-        }
-
-	/**
-	 * Domain to entity
-	 */
-	domainObjectToEntity(employee, entity);
-
-	/**
-	 * Validation
-	 */
-	Set<ConstraintViolation<EmployeeEntityBean>> constraintViolations = validator.validate(entity);
-	if (!constraintViolations.isEmpty()) {
-	    throw new RuntimeException(constraintViolations.toString());
-	}
-
-	/**
-	 * Persist
-	 */
-	ds.save(entity);
-
-	/**
-	 * Invalidate cache
-	 */
-	invalidateCache();
-
-	/**
-	 * Result
-	 */
-	Employee result = newDomainObject();
-	entityToDomainObject(entity, result);
-
-	return result;
-    }
-
     @Override
     @CacheResult(cacheName = CACHE_BY_ID)
     public Employee findById(Object id) {
 
-	if (id == null) {
-	    throw new IllegalArgumentException("id is null");
-	}
-
-	EmployeeEntityBean employeeEntity = ds.get(EmployeeEntityBean.class, id);
-
-	Employee employee = newDomainObject();
-
-	entityToDomainObject(employeeEntity, employee);
-
-	return employee;
+	return super.findById(id);
     }
 
     @Override
     @CacheResult(cacheName = CACHE_BY_IDS)
     public Collection<Employee> findByIds(Collection<?> ids) {
 
-	if (ids == null) {
-	    throw new IllegalArgumentException("ids cannot be null");
-	}
-
-	if (ids.isEmpty()) {
-	    return Collections.emptyList();
-	}
-
-	Query<EmployeeEntityBean> query = ds.get(EmployeeEntityBean.class, ids);
-
-	List<EmployeeEntityBean> queryResults = query.asList();
-
-	if (queryResults == null) {
-	    queryResults = Collections.emptyList();
-	}
-
-	List<Employee> results = new LinkedList<>();
-
-	entitesToDomainObjects(queryResults, results);
-
-	return results;
+	return super.findByIds(ids);
     }
 
     @Override
@@ -179,62 +85,32 @@ public class EmployeeDAOBean implements EmployeeDAO {
 
 	query.limit(limit);
 
-	List<EmployeeEntityBean> queryResults = query.asList();
+	Collection<EmployeeEntityBean> queryResults = query.asList();
 
-	List<Employee> results = new LinkedList<>();
-
-	entitesToDomainObjects(queryResults, results);
+	Collection<Employee> results = entitesToDomainObjects(queryResults);
 
 	return results;
     }
 
     @Override
-    public boolean deleteById(Object id) {
-
-	if (id == null) {
-	    throw new IllegalArgumentException("id is null");
-	}
-
-	WriteResult wr = ds.delete(EmployeeEntityBean.class, id);
-
-	if (wr.getN() > 0) {
-
-	    invalidateCache();
-
-	    return true;
-	}
-
-	return false;
+    protected Class<EmployeeEntityBean> getEntitytClass()
+    {
+        return EmployeeEntityBean.class;
     }
 
     @Override
-    public int deleteByIds(Collection<?> ids) {
-
-	if (ids == null) {
-	    throw new IllegalArgumentException("ids cannot be null");
-	}
-
-	if (ids.isEmpty()) {
-	    return 0;
-	}
-
-	WriteResult wr = ds.delete(EmployeeEntityBean.class, ids);
-
-	invalidateCache();
-
-	return wr.getN();
-    }
-
     protected EmployeeEntityBean newEntityObject() {
 
         return new EmployeeEntityBean();
     }
 
+    @Override
     protected Employee newDomainObject() {
 
         return new Employee();
     }
 
+    @Override
     protected void entityToDomainObject(EmployeeEntityBean employeeEntity, Employee employee) {
 
 	employee.setId(employeeEntity.getId());
@@ -267,18 +143,7 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	return;
     }
 
-    protected void entitesToDomainObjects(Collection<EmployeeEntityBean> employeeEntites, Collection<Employee> employees) {
-
-	for (EmployeeEntityBean e : employeeEntites) {
-
-	    Employee employee = newDomainObject();
-	    entityToDomainObject(e, employee);
-	    employees.add(employee);
-	}
-
-	return;
-    }
-
+    @Override
     protected void domainObjectToEntity(Employee employee, EmployeeEntityBean employeeEntity) {
 
 	employeeEntity.setName(employee.getName());
@@ -310,6 +175,7 @@ public class EmployeeDAOBean implements EmployeeDAO {
 	}
     }
 
+    @Override
     protected void invalidateCache() {
 
 	invalidateCacheById();

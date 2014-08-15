@@ -6,19 +6,9 @@ import org.test.business.api.domain.Employee;
 import org.test.business.api.domain.util.EmployeeSearchCriteria;
 import org.test.business.api.domain.util.SortCriteria;
 
-public interface EmployeeDAO {
-
-    Employee save(Employee employee);
-
-    Employee findById(Object id);
-
-    Collection<Employee> findByIds(Collection<?> ids);
+public interface EmployeeDAO extends DAO<Employee> {
 
     Collection<Employee> findByCriteria(EmployeeSearchCriteria criteria,
 	    SortCriteria sort, int offset, int limit);
-
-    boolean deleteById(Object id);
-
-    int deleteByIds(Collection<?> ids);
 
 }
