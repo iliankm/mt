@@ -6,17 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.test.business.api.domain.Employee;
 import org.test.business.api.domain.util.Identifiable;
 import org.test.business.control.dao.DAO;
-import org.test.business.entity.morphia.EmployeeEntityBean;
 
 import com.mongodb.WriteResult;
 
@@ -181,9 +178,5 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
 
         return domainObjects;
     }
-
-
-
-
 
 }
