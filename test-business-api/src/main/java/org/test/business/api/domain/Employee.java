@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.test.business.api.domain.util.Gender;
 import org.test.business.api.domain.util.Identifiable;
 
@@ -12,7 +11,7 @@ public class Employee implements Identifiable, Serializable {
 
     private static final long serialVersionUID = -7850236434515729926L;
 
-    private ObjectId id;
+    private String id;
 
     private String name;
 
@@ -27,11 +26,11 @@ public class Employee implements Identifiable, Serializable {
     private long salary;
 
     @Override
-    public ObjectId getId() {
+    public String getId() {
 	return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
 	this.id = id;
     }
 

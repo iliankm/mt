@@ -38,14 +38,14 @@ public class EmployeeDAOBean extends AbstractDAO<Employee, EmployeeEntityBean> i
 
     @Override
     @CacheResult(cacheName = CACHE_BY_ID)
-    public Employee findById(Object id) {
+    public Employee findById(String id) {
 
 	return super.findById(id);
     }
 
     @Override
     @CacheResult(cacheName = CACHE_BY_IDS)
-    public Collection<Employee> findByIds(Collection<?> ids) {
+    public Collection<Employee> findByIds(Collection<String> ids) {
 
 	return super.findByIds(ids);
     }

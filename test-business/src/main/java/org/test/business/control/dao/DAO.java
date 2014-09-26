@@ -6,12 +6,12 @@ public interface DAO<DO> {
 
     DO save(DO domainObject);
 
-    DO findById(Object id);
+    DO findById(String id);
 
-    Collection<DO> findByIds(Collection<?> ids);
+    Collection<DO> findByIds(Collection<String> ids);
 
-    boolean deleteById(Object id);
+    boolean deleteById(String id);
 
-    int deleteByIds(Collection<?> ids);
+    int deleteByIds(Collection<String> ids);
 
 }

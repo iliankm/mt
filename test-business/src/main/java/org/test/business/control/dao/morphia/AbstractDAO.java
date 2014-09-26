@@ -9,11 +9,11 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.test.business.api.domain.util.Identifiable;
 import org.test.business.control.dao.DAO;
+import org.test.business.control.dao.morphia.util.MongoDBUtils;
 
 import com.mongodb.WriteResult;
 
@@ -49,7 +49,7 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
          */
         EO entity;
         if (domainObject.getId() != null) {
-            entity = ds.get(getEntitytClass(), domainObject.getId());
+            entity = ds.get(getEntitytClass(), MongoDBUtils.objectIdFromString(domainObject.getId()));
         }
         else {
             entity = newEntityObject();
@@ -88,13 +88,13 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
     }
 
     @Override
-    public DO findById(Object id) {
+    public DO findById(String id) {
 
         if (id == null) {
             throw new IllegalArgumentException("id is null");
         }
 
-        EO entity = ds.get(getEntitytClass(), id);
+        EO entity = ds.get(getEntitytClass(), MongoDBUtils.objectIdFromString(id));
 
         DO domainObject = newDomainObject();
 
@@ -104,7 +104,7 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
     }
 
     @Override
-    public Collection<DO> findByIds(Collection<?> ids) {
+    public Collection<DO> findByIds(Collection<String> ids) {
 
         if (ids == null) {
             throw new IllegalArgumentException("ids cannot be null");
@@ -114,7 +114,7 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
             return Collections.emptyList();
         }
 
-        Query<EO> query = ds.get(getEntitytClass(), ids);
+        Query<EO> query = ds.get(getEntitytClass(), MongoDBUtils.objectIdsFromStrings(ids));
 
         List<EO> queryResults = query.asList();
 
@@ -128,13 +128,13 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
     }
 
     @Override
-    public boolean deleteById(Object id) {
+    public boolean deleteById(String id) {
 
         if (id == null) {
             throw new IllegalArgumentException("id is null");
         }
 
-        WriteResult wr = ds.delete(getEntitytClass(), id);
+        WriteResult wr = ds.delete(getEntitytClass(), MongoDBUtils.objectIdFromString(id));
 
         if (wr.getN() > 0) {
 
@@ -147,7 +147,7 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
     }
 
     @Override
-    public int deleteByIds(Collection<?> ids) {
+    public int deleteByIds(Collection<String> ids) {
 
         if (ids == null) {
             throw new IllegalArgumentException("ids cannot be null");
@@ -157,13 +157,12 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
             return 0;
         }
 
-        WriteResult wr = ds.delete(getEntitytClass(), ids);
+        WriteResult wr = ds.delete(getEntitytClass(), MongoDBUtils.objectIdsFromStrings(ids));
 
         invalidateCache();
 
         return wr.getN();
     }
-
 
     protected Collection<DO> entitesToDomainObjects(Collection<EO> entites) {
 
@@ -178,5 +177,4 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
 
         return domainObjects;
     }
-
 }

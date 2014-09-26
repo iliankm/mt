@@ -24,8 +24,8 @@ public abstract class BaseEntityBean implements Identifiable, Serializable {
     private Date lastModifiedDate;
 
     @Override
-    public ObjectId getId() {
-	return id;
+    public String getId() {
+	return id.toString();
     }
 
     public Date getCreationDate() {
