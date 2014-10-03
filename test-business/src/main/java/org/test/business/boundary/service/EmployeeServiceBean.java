@@ -11,72 +11,101 @@ import org.test.business.control.dao.EmployeeDAO;
 
 public class EmployeeServiceBean implements EmployeeService {
 
-    @SuppressWarnings("unused")
     @Inject
     private EmployeeDAO employeeDAO;
 
     @Override
-    public Employee create(String name, Gender gender)
-    {
-        // TODO Auto-generated method stub
-        return null;
+    public Employee create(String name, Gender gender) {
+
+        Employee employee = new Employee();
+
+        employee.setName(name);
+        employee.setGender(gender);
+
+        return employeeDAO.save(employee);
     }
 
     @Override
-    public Employee update(String name, Gender gender, String email, long salary)
-    {
-        // TODO Auto-generated method stub
-        return null;
+    public Employee update(String employeeId, String name, Gender gender, String email, long salary) {
+
+        Employee employee = employeeDAO.findById(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Employee with id: " + employeeId + " not found.");
+        }
+
+        employee.setName(name);
+        employee.setGender(gender);
+        employee.setEmail(email);
+        employee.setSalary(salary);
+
+        return employeeDAO.save(employee);
     }
 
     @Override
-    public Employee findById(String employeeId)
-    {
-        // TODO Auto-generated method stub
-        return null;
+    public Employee findById(String employeeId) {
+
+        return employeeDAO.findById(employeeId);
     }
 
     @Override
-    public Employee deleteById(String employeeId)
-    {
-        // TODO Auto-generated method stub
-        return null;
+    public boolean deleteById(String employeeId) {
+
+        return employeeDAO.deleteById(employeeId);
     }
 
     @Override
-    public void updateAddress(String employeeId, Address address)
-    {
-        // TODO Auto-generated method stub
+    public void updateAddress(String employeeId, Address address) {
 
+        Employee employee = employeeDAO.findById(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Employee with id: " + employeeId + " not found.");
+        }
+
+        employee.setAddress(address);
+
+        employeeDAO.save(employee);
     }
 
     @Override
-    public void addPhone(String employeeId, Phone phone)
-    {
-        // TODO Auto-generated method stub
+    public void addPhone(String employeeId, Phone phone) {
 
+        Employee employee = employeeDAO.findById(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Employee with id: " + employeeId + " not found.");
+        }
+
+        employee.getPhones().add(phone);
+
+        employeeDAO.save(employee);
     }
 
     @Override
-    public void deletePhone(String employeeId, Phone phone)
-    {
-        // TODO Auto-generated method stub
+    public void deletePhone(String employeeId, Phone phone) {
 
+        Employee employee = employeeDAO.findById(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Employee with id: " + employeeId + " not found.");
+        }
+
+        employee.getPhones().remove(phone);
+
+        employeeDAO.save(employee);
     }
 
     @Override
-    public void addSubstitute(String employeeId, String substituteEmployeeId)
-    {
-        // TODO Auto-generated method stub
+    public void addSubstitute(String employeeId, String substituteEmployeeId) {
 
+        employeeDAO.addSubstitute(employeeId, substituteEmployeeId);
     }
 
     @Override
-    public void deleteSubstitute(String employeeId, String substituteEmployeeId)
-    {
-        // TODO Auto-generated method stub
+    public void deleteSubstitute(String employeeId, String substituteEmployeeId) {
 
+        employeeDAO.deleteSubstitute(employeeId, substituteEmployeeId);
     }
-
 
 }

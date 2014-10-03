@@ -11,4 +11,8 @@ public interface EmployeeDAO extends DAO<Employee> {
     Collection<Employee> findByCriteria(EmployeeSearchCriteria criteria,
 	    SortCriteria sort, int offset, int limit);
 
+    void addSubstitute(String employeeId, String substituteEmployeeId);
+
+    void deleteSubstitute(String employeeId, String substituteEmployeeId);
+
 }

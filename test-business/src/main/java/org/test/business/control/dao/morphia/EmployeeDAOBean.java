@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
+
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
 import org.test.business.api.domain.Address;
@@ -16,6 +18,7 @@ import org.test.business.api.domain.Phone;
 import org.test.business.api.domain.util.EmployeeSearchCriteria;
 import org.test.business.api.domain.util.SortCriteria;
 import org.test.business.control.dao.EmployeeDAO;
+import org.test.business.control.dao.morphia.util.MongoDBUtils;
 import org.test.business.control.dao.morphia.util.OrderGenerator;
 import org.test.business.entity.morphia.AddressEntityBean;
 import org.test.business.entity.morphia.EmployeeEntityBean;
@@ -60,7 +63,7 @@ public class EmployeeDAOBean extends AbstractDAO<Employee, EmployeeEntityBean> i
 	    List<Criteria> _criteria = new LinkedList<>();
 
 	    if (criteria.getName() != null && !criteria.getName().isEmpty()) {
-		_criteria.add(query.criteria("name").contains(criteria.getName()));
+		_criteria.add(query.criteria("name").containsIgnoreCase(criteria.getName()));
 	    }
 
 	    if (criteria.getEmail() != null && !criteria.getEmail().isEmpty()) {
@@ -90,6 +93,62 @@ public class EmployeeDAOBean extends AbstractDAO<Employee, EmployeeEntityBean> i
 	Collection<Employee> results = entitesToDomainObjects(queryResults);
 
 	return results;
+    }
+
+    @Override
+    public void addSubstitute(String employeeId, String substituteEmployeeId) {
+
+        if (employeeId == null || substituteEmployeeId == null) {
+            throw new IllegalArgumentException("employeeId and substituteEmployeeId cannot be null.");
+        }
+
+        ObjectId employeeOId = MongoDBUtils.objectIdFromString(employeeId);
+
+        ObjectId substituteEmployeeOId = MongoDBUtils.objectIdFromString(substituteEmployeeId);
+
+        EmployeeEntityBean employeeEntity = ds.get(EmployeeEntityBean.class, employeeOId);
+
+        if (employeeEntity == null) {
+            throw new RuntimeException("Employee " + employeeId + " not found.");
+        }
+
+        EmployeeEntityBean substituteEmployeeEntity = ds.get(EmployeeEntityBean.class, substituteEmployeeOId);
+
+        if (substituteEmployeeEntity == null) {
+            throw new RuntimeException("Employee " + substituteEmployeeId + " not found.");
+        }
+
+        employeeEntity.getSubstituteIds().add(substituteEmployeeOId);
+
+        ds.save(employeeEntity);
+    }
+
+    @Override
+    public void deleteSubstitute(String employeeId, String substituteEmployeeId) {
+
+        if (employeeId == null || substituteEmployeeId == null) {
+            throw new IllegalArgumentException("employeeId and substituteEmployeeId cannot be null");
+        }
+
+        ObjectId employeeOId = MongoDBUtils.objectIdFromString(employeeId);
+
+        ObjectId substituteEmployeeOId = MongoDBUtils.objectIdFromString(substituteEmployeeId);
+
+        EmployeeEntityBean employeeEntity = ds.get(EmployeeEntityBean.class, employeeOId);
+
+        if (employeeEntity == null) {
+            throw new RuntimeException("Employee " + employeeId + " not found.");
+        }
+
+        EmployeeEntityBean substituteEmployeeEntity = ds.get(EmployeeEntityBean.class, substituteEmployeeOId);
+
+        if (substituteEmployeeEntity == null) {
+            throw new RuntimeException("Employee " + substituteEmployeeId + " not found.");
+        }
+
+        employeeEntity.getSubstituteIds().remove(substituteEmployeeOId);
+
+        ds.save(employeeEntity);
     }
 
     @Override

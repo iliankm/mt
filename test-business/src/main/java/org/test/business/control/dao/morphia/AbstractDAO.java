@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.test.business.api.domain.util.Identifiable;
@@ -55,6 +56,10 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
             entity = newEntityObject();
         }
 
+        if (entity == null) {
+            throw new RuntimeException("entity to update is null");
+        }
+
         /**
          * Domain to entity
          */
@@ -95,6 +100,9 @@ public abstract class AbstractDAO<DO extends Identifiable, EO extends Identifiab
         }
 
         EO entity = ds.get(getEntitytClass(), MongoDBUtils.objectIdFromString(id));
+
+        if (entity == null)
+            return null;
 
         DO domainObject = newDomainObject();
 

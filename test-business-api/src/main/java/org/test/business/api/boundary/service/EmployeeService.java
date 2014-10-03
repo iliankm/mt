@@ -9,11 +9,11 @@ public interface EmployeeService {
 
     Employee create(String name, Gender gender);
 
-    Employee update(String name, Gender gender, String email, long salary);
+    Employee update(String employeeId, String name, Gender gender, String email, long salary);
 
     Employee findById(String employeeId);
 
-    Employee deleteById(String employeeId);
+    boolean deleteById(String employeeId);
 
     void updateAddress(String employeeId, Address address);
 
