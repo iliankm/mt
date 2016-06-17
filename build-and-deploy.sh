@@ -5,15 +5,15 @@ mvn clean install -DskipTests
 
 echo "********************************************"
 echo "Removing old deployment files..."
-rm -f $JBOSS_HOME/standalone/deployments/test.ear.*
-rm -f $JBOSS_HOME/standalone/deployments/test.ear
-rm -R -f $JBOSS_HOME/standalone/deployments/test.ear
+rm -f $JBOSS_HOME/standalone/deployments/mt.ear.*
+rm -f $JBOSS_HOME/standalone/deployments/mt.ear
+rm -R -f $JBOSS_HOME/standalone/deployments/mt.ear
 
 echo "********************************************"
 echo "Copying new .ear to deployment folder..."
-cp test-ear/target/test.ear $JBOSS_HOME/standalone/deployments
+cp mt-ear/target/mt.ear $JBOSS_HOME/standalone/deployments
 
-touch $JBOSS_HOME/standalone/deployments/test.ear.dodeploy
+touch $JBOSS_HOME/standalone/deployments/mt.ear.dodeploy
 
 echo "********************************************"
 echo "Application built and deployed successfully!"
