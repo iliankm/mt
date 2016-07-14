@@ -5,15 +5,18 @@ mvn clean install -DskipTests
 
 echo "********************************************"
 echo "Removing old deployment files..."
-rm -f $JBOSS_HOME/standalone/deployments/mt.ear.*
-rm -f $JBOSS_HOME/standalone/deployments/mt.ear
-rm -R -f $JBOSS_HOME/standalone/deployments/mt.ear
+rm -f $WILDFLY_HOME/standalone/deployments/mt.ear.*
+rm -f $WILDFLY_HOME/standalone/deployments/mt.ear
+rm -R -f $WILDFLY_HOME/standalone/deployments/mt.ear
 
 echo "********************************************"
 echo "Copying new .ear to deployment folder..."
-cp mt-ear/target/mt.ear $JBOSS_HOME/standalone/deployments
+unzip mt-ear/target/mt.ear -d $WILDFLY_HOME/standalone/deployments/mt.ear
+unzip $WILDFLY_HOME/standalone/deployments/mt.ear/ROOT.war -d $WILDFLY_HOME/standalone/deployments/mt.ear/ROOT
+rm -f $WILDFLY_HOME/standalone/deployments/mt.ear/ROOT.war
+mv $WILDFLY_HOME/standalone/deployments/mt.ear/ROOT $WILDFLY_HOME/standalone/deployments/mt.ear/ROOT.war
 
-touch $JBOSS_HOME/standalone/deployments/mt.ear.dodeploy
+touch $WILDFLY_HOME/standalone/deployments/mt.ear.dodeploy
 
 echo "********************************************"
 echo "Application built and deployed successfully!"
