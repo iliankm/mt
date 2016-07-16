@@ -43,22 +43,10 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-web</artifactId>
+		    <groupId>javax</groupId>
+		    <artifactId>javaee-api</artifactId>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-web-common</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
+		</dependency>			
 
 		<dependency>
 			<groupId>com.iliankm</groupId>
