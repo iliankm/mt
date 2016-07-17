@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Routes, ROUTER_DIRECTIVES} from '@angular/router';
 
 export class AppComponent {
 
@@ -10,6 +11,6 @@ export class AppComponent {
 AppComponent.annotations = [
                             	new Component({
                             		selector: 'mt-app',
-                            		template: '<h1>Angular 2 App...</h1>'
+                            		template: '<div><router-outlet>Router outlet</router-outlet></div>'
                             	})
 ];
