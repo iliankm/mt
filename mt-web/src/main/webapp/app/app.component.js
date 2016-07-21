@@ -11,6 +11,6 @@ export class AppComponent {
 AppComponent.annotations = [
                             	new Component({
                             		selector: 'mt-app',
-                            		template: '<div><router-outlet>Router outlet</router-outlet></div>'
+                            		templateUrl: 'app/app.template.html'
                             	})
 ];

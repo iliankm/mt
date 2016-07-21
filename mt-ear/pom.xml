@@ -4,7 +4,7 @@
   <parent>
         <artifactId>mt</artifactId>
         <groupId>com.iliankm</groupId>
-        <version>SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>mt-ear</artifactId>
