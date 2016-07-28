@@ -12,6 +12,7 @@ AppComponent.annotations = [
                             	new Component({
                             		selector: 'mt-app',
                             		templateUrl: 'app/app.template.html',
-                            		styleUrls:  ['app/app.component.css']
+                            		styleUrls:  ['app/app.component.css'],
+                            		directives: [ROUTER_DIRECTIVES]
                             	})
 ];
