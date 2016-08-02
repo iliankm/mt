@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Routes, ROUTER_DIRECTIVES} from '@angular/router';
+import {Router, Routes, ROUTER_DIRECTIVES} from '@angular/router';
 
 import { ListComponent } from 'app/list/list.component';
 import { DetailsComponent } from 'app/details/details.component';
@@ -7,7 +7,18 @@ import { WizardComponent } from 'app/wizard/wizard.component';
 
 export class AppComponent {
 
-	constructor() {
+	constructor(router) {
+
+		this.router = router;
+	}
+
+	static get parameters() {
+
+	    return [[Router]];
+	}
+
+	navigateToWizard() {
+		this.router.navigate(['wizard'])
 	}
 
 }
