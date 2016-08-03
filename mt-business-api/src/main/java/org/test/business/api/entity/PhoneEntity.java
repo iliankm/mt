@@ -6,10 +6,5 @@ public interface PhoneEntity extends Entity {
 
     public PhoneType getType();
 
-    public void setType(PhoneType type);
-
     public String getPhone();
-
-    public void setPhone(String phone);
-
 }

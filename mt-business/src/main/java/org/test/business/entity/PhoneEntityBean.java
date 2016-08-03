@@ -16,24 +16,27 @@ public class PhoneEntityBean implements PhoneEntity {
     @NotNull(message = "validation_phone_is_mandatory")
     private String phone;
 
+    /**
+     * Default no-args constructor needed by persistence framework
+     */
+    @SuppressWarnings("unused")
+    private PhoneEntityBean() {}
+
+    public PhoneEntityBean(PhoneType type, String phone) {
+
+        this.type = type;
+        this.phone = phone;
+    }
+
     @Override
     public PhoneType getType() {
+
 	return type;
     }
 
     @Override
-    public void setType(PhoneType type) {
-	this.type = type;
-    }
-
-    @Override
     public String getPhone() {
+
 	return phone;
     }
-
-    @Override
-    public void setPhone(String phone) {
-	this.phone = phone;
-    }
-
 }

@@ -8,6 +8,10 @@ import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.annotations.Version;
 import org.test.business.api.entity.BaseEntity;
 
+/**
+ * BaseEntityBean with auto-generated (by persistence framework) fields
+ *
+ */
 public abstract class BaseEntityBean implements BaseEntity {
 
     private static final long serialVersionUID = 2628771360357245371L;
@@ -23,22 +27,26 @@ public abstract class BaseEntityBean implements BaseEntity {
     private Date lastModifiedDate;
 
     @Override
-    public ObjectId getId() {
-	return id;
+    public String getId() {
+
+	return id.toHexString();
     }
 
     @Override
     public Date getCreationDate() {
-	return creationDate;
+
+	return new Date(creationDate.getTime());
     }
 
     @Override
     public Date getLastModifiedDate() {
-	return lastModifiedDate;
+
+	return new Date(lastModifiedDate.getTime());
     }
 
     @PrePersist
-    public void prePersist() {
+    private void prePersist() {
+
 	this.creationDate = (creationDate == null) ? new Date() : creationDate;
 
 	this.lastModifiedDate = (lastModifiedDate == null) ? creationDate : new Date();
