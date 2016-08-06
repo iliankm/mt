@@ -19,11 +19,11 @@ public class PhoneEntityBean implements PhoneEntity {
     /**
      * Default no-args constructor needed by persistence framework
      */
-    @SuppressWarnings("unused")
     private PhoneEntityBean() {}
 
     public PhoneEntityBean(PhoneType type, String phone) {
 
+    	this();
         this.type = type;
         this.phone = phone;
     }

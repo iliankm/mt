@@ -83,6 +83,11 @@ public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity
         private long salary;
         private Set<String> substituteIds;
 
+        public static Builder get() {
+
+        	return new Builder();
+        }
+
         public Builder name(String name) {
 
             this.name = name;

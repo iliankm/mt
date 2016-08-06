@@ -8,59 +8,97 @@ import org.test.business.api.entity.AddressEntity;
 @Embedded
 public class AddressEntityBean implements AddressEntity {
 
-    private static final long serialVersionUID = 6014825721289910144L;
+	private static final long serialVersionUID = 6014825721289910144L;
 
-    @NotNull(message = "validation_address_street_is_mandatory")
-    private String street;
+	@NotNull(message = "validation_address_street_is_mandatory")
+	private String street;
 
-    @NotNull(message = "validation_address_zip_is_mandatory")
-    private String zip;
+	@NotNull(message = "validation_address_zip_is_mandatory")
+	private String zip;
 
-    @NotNull(message = "validation_address_street_is_mandatory")
-    private String city;
+	@NotNull(message = "validation_address_street_is_mandatory")
+	private String city;
 
-    @NotNull(message = "validation_address_country_is_mandatory")
-    private String country;
+	@NotNull(message = "validation_address_country_is_mandatory")
+	private String country;
 
-    @Override
-    public String getStreet() {
+    /**
+     * Default no-args constructor needed by persistence framework
+     */
+	private AddressEntityBean() {}
 
-	return street;
-    }
+	private AddressEntityBean(Builder builder) {
 
-    @Override
-    public void setStreet(String street) {
-	this.street = street;
-    }
+		this.street = builder.street;
+		this.zip = builder.zip;
+		this.city = builder.city;
+		this.country = builder.country;
+	}
 
-    @Override
-    public String getZip() {
-	return zip;
-    }
+	/**
+	 * Builder for AddressEntityBean
+	 */
+	public static class Builder {
 
-    @Override
-    public void setZip(String zip) {
-	this.zip = zip;
-    }
+		private String street;
+		private String zip;
+		private String city;
+		private String country;
 
-    @Override
-    public String getCity() {
-	return city;
-    }
+		public static Builder get() {
 
-    @Override
-    public void setCity(String city) {
-	this.city = city;
-    }
+			return new Builder();
+		}
 
-    @Override
-    public String getCountry() {
-	return country;
-    }
+		public Builder street(String street) {
 
-    @Override
-    public void setCountry(String country) {
-	this.country = country;
-    }
+			this.street = street;
+			return this;
+		}
+
+		public Builder zip(String zip) {
+
+			this.zip = zip;
+			return this;
+		}
+
+		public Builder city(String city) {
+
+			this.city = city;
+			return this;
+		}
+
+		public Builder country(String country) {
+
+			this.country = country;
+			return this;
+		}
+
+		public AddressEntityBean build() {
+
+			return new AddressEntityBean(this);
+		}
+	}
+
+	@Override
+	public String getStreet() {
+
+		return street;
+	}
+
+	@Override
+	public String getZip() {
+		return zip;
+	}
+
+	@Override
+	public String getCity() {
+		return city;
+	}
+
+	@Override
+	public String getCountry() {
+		return country;
+	}
 
 }
