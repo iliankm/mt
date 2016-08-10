@@ -3,8 +3,10 @@ package org.mt.business.control.dao.util;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.Objects;
 
+import javax.cache.annotation.CacheRemoveAll;
+import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 
 import org.mongodb.morphia.Datastore;
@@ -19,67 +21,56 @@ import com.mongodb.WriteResult;
  * @param <EC> Entity concrete class (annotated with Morphia annotations) and implements EI.
  */
 public abstract class AbstractDAO <EI, EC extends EI> {
-    
-    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Inject
     protected Datastore ds;
-    
+
     public abstract Class<EC> getEntityClazz();
 
+    @CacheRemoveAll
     public void save(EI entity) {
 
-	if (entity == null) {
-	    throw new IllegalArgumentException("entity is null");
-	}
+	Objects.requireNonNull(entity);
 
 	ds.save(entity);
-	
-	invalidateCache();
     }
 
+    @CacheRemoveAll
     public void save(Collection<EI> entities) {
 
-	if (entities == null) {
-	    throw new IllegalArgumentException("entities cannot be null");
-	}
+        Objects.requireNonNull(entities);
 
-	if (!entities.isEmpty()) {
-	    
-	    ds.save(entities);
-	    
-	    invalidateCache();
-	}
+        if (entities.isEmpty()) {
+            throw new IllegalArgumentException("Empty entities collection passed for save.");
+        }
+
+        ds.save(entities);
     }
 
+    @CacheResult
     public EI findById(Object id) {
 
-	if (id == null) {
-	    throw new IllegalArgumentException("id is null");
-	}
-	
-	logger.info(this.getEntityClazz().getName() + "with id: " + id + " is to be loaded from db!!!");
+        Objects.requireNonNull(id);
 
 	return ds.get(getEntityClazz(), id);
     }
 
     @SuppressWarnings("unchecked")
+    @CacheResult
     public List<EI> findByIds(Collection<?> ids) {
 
-	if (ids == null) {
-	    throw new IllegalArgumentException("ids cannot be null");
-	}
+        Objects.requireNonNull(ids);
 
 	if (ids.isEmpty()) {
-	    return Collections.emptyList();
+	    throw new IllegalArgumentException("Empty ids collection passed.");
 	}
 
-	Query<EC> query = ds.get(getEntityClazz(), ids);
+	final Query<EC> query = ds.get(getEntityClazz(), ids);
 
-	List<EI> results = (List<EI>) query.asList();
+	final List<EI> results = (List<EI>) query.asList();
 
 	if (results == null) {
-	    results = Collections.emptyList();
+	    return Collections.emptyList();
 	}
 
 	return results;
@@ -90,44 +81,33 @@ public abstract class AbstractDAO <EI, EC extends EI> {
 	return ds.getCount(getEntityClazz());
     }
 
+    @CacheRemoveAll
     public boolean deleteById(Object id) {
 
-	if (id == null) {
-	    throw new IllegalArgumentException("id is null");
-	}
+        Objects.requireNonNull(id);
 
-	WriteResult wr = ds.delete(getEntityClazz(), id);
+	final WriteResult wr = ds.delete(getEntityClazz(), id);
 
 	if (wr.getN() > 0) {
-	    
-	    invalidateCache();
-	    
+
 	    return true;
 	}
 
 	return false;
     }
 
+    @CacheRemoveAll
     public int deleteByIds(Collection<?> ids) {
 
-	if (ids == null) {
-	    throw new IllegalArgumentException("ids cannot be null");
-	}
+        Objects.requireNonNull(ids);
 
-	if (ids.isEmpty()) {
-	    return 0;
-	}
+        if (ids.isEmpty()) {
+            throw new IllegalArgumentException("Empty ids collection passed.");
+        }
 
-	WriteResult wr = ds.delete(getEntityClazz(), ids);
-	
-	invalidateCache();
+	final WriteResult wr = ds.delete(getEntityClazz(), ids);
 
 	return wr.getN();
     }
-    
-    protected void invalidateCache() {
-	
-	logger.info("Cache is being invalidated.");
-    };
 
 }

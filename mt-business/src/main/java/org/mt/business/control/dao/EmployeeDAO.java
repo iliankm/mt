@@ -1,11 +1,10 @@
 package org.mt.business.control.dao;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.cache.annotation.CacheRemoveAll;
+import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 
@@ -18,31 +17,29 @@ import org.mt.business.control.dao.util.AbstractDAO;
 import org.mt.business.control.dao.util.OrderGenerator;
 import org.mt.business.entity.EmployeeEntityBean;
 
+@CacheDefaults(cacheName = "EMPLOYEE_CACHE")
 public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean> {
-    
-    private static final String CACHE_BY_ID = "emp-cache-by-id";
-    
-    private static final String CACHE_BY_IDS = "emp-cache-by-ids";
-    
-    private static final String CACHE_BY_CRITERIA = "emp-cache-by-criteria";
 
     @Inject
     private OrderGenerator orderGenerator;
-    
+
+    @SuppressWarnings("unused")
     @Inject
     private Logger log;
 
     @Override
     public Class<EmployeeEntityBean> getEntityClazz() {
+
 	return EmployeeEntityBean.class;
     }
 
-    @CacheResult(cacheName = CACHE_BY_CRITERIA)
+    @CacheResult
     public List<? extends EmployeeEntity> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset, int limit) {
-	Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
+
+	final Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
 
 	if (criteria != null) {
-	    List<Criteria> _criteria = new LinkedList<>();
+	    final List<Criteria> _criteria = new LinkedList<>();
 
 	    if (criteria.getName() != null && !criteria.getName().isEmpty()) {
 		_criteria.add(query.criteria("name").contains(criteria.getName()));
@@ -60,7 +57,7 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 	}
 
 	if (sort != null) {
-	    String orderCondition = orderGenerator.generate(sort);
+	    final String orderCondition = orderGenerator.generate(sort);
 	    if (orderCondition != null && !orderCondition.isEmpty()) {
 		query.order(orderCondition);
 	    }
@@ -70,53 +67,9 @@ public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean>
 
 	query.limit(limit);
 
-	List<EmployeeEntityBean> results = query.asList();
+	final List<EmployeeEntityBean> results = query.asList();
 
 	return results;
 
     }
-    
-    @CacheResult(cacheName = "employee-test")
-    public String test(String a) {
-	
-	log.info("Method test(" + a + ") just invoked." );
-	
-	return a + "1";
-    }
-
-    @Override
-    @CacheResult(cacheName = CACHE_BY_ID)
-    public EmployeeEntity findById(Object id) {
-	
-	return super.findById(id);
-    }
-
-    @Override
-    @CacheResult(cacheName = CACHE_BY_IDS)
-    public List<EmployeeEntity> findByIds(Collection<?> ids) {
-	
-	return super.findByIds(ids);
-    }
-
-    @Override
-    protected void invalidateCache() {
-	
-	super.invalidateCache();
-	
-	invalidateCacheById();
-	
-	invalidateCacheByIds();
-	
-	invalidateCacheByCriteria();
-    }
-    
-    @CacheRemoveAll(cacheName = CACHE_BY_ID)
-    private void invalidateCacheById() {}
-    
-    @CacheRemoveAll(cacheName = CACHE_BY_IDS)
-    private void invalidateCacheByIds() {}
-    
-    @CacheRemoveAll(cacheName = CACHE_BY_CRITERIA)
-    private void invalidateCacheByCriteria() {}
-
 }
