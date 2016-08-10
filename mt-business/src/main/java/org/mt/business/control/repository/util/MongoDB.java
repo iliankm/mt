@@ -1,4 +1,4 @@
-package org.mt.business.control.dao.util;
+package org.mt.business.control.repository.util;
 
 import java.net.UnknownHostException;
 import java.util.logging.Logger;

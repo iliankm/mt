@@ -1,4 +1,4 @@
-package org.mt.business.control.dao.util;
+package org.mt.business.control.repository.util;
 
 import javax.enterprise.inject.Produces;
 

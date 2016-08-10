@@ -1,9 +1,9 @@
 package org.mt.business.control.dao.util.test;
 
-import org.mt.business.control.dao.util.AbstractDAO;
-import org.mt.business.control.dao.util.MongoDB;
+import org.mt.business.control.repository.util.AbstractRepository;
+import org.mt.business.control.repository.util.MongoDB;
 
-public class TestDAO extends AbstractDAO<TestEntity, TestEntityImpl> {
+public class TestDAO extends AbstractRepository<TestEntity, TestEntityImpl> {
 
     public TestDAO() {
 	this.ds = MongoDB.instance().getDatastore();

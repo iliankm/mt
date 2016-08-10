@@ -1,4 +1,4 @@
-package org.mt.business.control.dao.util;
+package org.mt.business.control.repository.util;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import com.mongodb.WriteResult;
  * @param <EI> Entity interface
  * @param <EC> Entity concrete class (annotated with Morphia annotations) and implements EI.
  */
-public abstract class AbstractDAO <EI, EC extends EI> {
+public abstract class AbstractRepository <EI, EC extends EI> {
 
     @Inject
     protected Datastore ds;

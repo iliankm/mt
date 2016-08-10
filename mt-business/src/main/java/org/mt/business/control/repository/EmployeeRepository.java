@@ -1,4 +1,4 @@
-package org.mt.business.control.dao;
+package org.mt.business.control.repository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,12 +13,12 @@ import org.mongodb.morphia.query.Query;
 import org.mt.business.api.entity.EmployeeEntity;
 import org.mt.business.api.entity.util.EmployeeSearchCriteria;
 import org.mt.business.api.entity.util.SortCriteria;
-import org.mt.business.control.dao.util.AbstractDAO;
-import org.mt.business.control.dao.util.OrderGenerator;
+import org.mt.business.control.repository.util.AbstractRepository;
+import org.mt.business.control.repository.util.OrderGenerator;
 import org.mt.business.entity.EmployeeEntityBean;
 
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")
-public class EmployeeDAO extends AbstractDAO<EmployeeEntity, EmployeeEntityBean> {
+public class EmployeeRepository extends AbstractRepository<EmployeeEntity, EmployeeEntityBean> {
 
     @Inject
     private OrderGenerator orderGenerator;

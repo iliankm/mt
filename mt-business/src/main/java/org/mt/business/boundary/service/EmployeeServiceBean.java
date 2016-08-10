@@ -4,23 +4,23 @@ import javax.inject.Inject;
 
 import org.mt.business.api.boundary.service.EmployeeService;
 import org.mt.business.api.entity.EmployeeEntity;
-import org.mt.business.control.dao.EmployeeDAO;
+import org.mt.business.control.repository.EmployeeRepository;
 
 public class EmployeeServiceBean implements EmployeeService {
 
     @Inject
-    private EmployeeDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
 
     @Override
     public EmployeeEntity findById(Object id) {
 
-	return employeeDAO.findById(id);
+	return employeeRepository.findById(id);
     }
 
     @Override
     public void save(EmployeeEntity employee) {
 
-	employeeDAO.save(employee);
+	employeeRepository.save(employee);
     }
 
 }

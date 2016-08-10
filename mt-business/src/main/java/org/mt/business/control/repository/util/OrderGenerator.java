@@ -1,4 +1,4 @@
-package org.mt.business.control.dao.util;
+package org.mt.business.control.repository.util;
 
 import java.util.Map;
 import java.util.Set;

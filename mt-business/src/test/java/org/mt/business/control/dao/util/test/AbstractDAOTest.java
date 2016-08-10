@@ -16,7 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.mt.business.control.dao.util.MongoDB;
+import org.mt.business.control.repository.util.MongoDB;
 
 public class AbstractDAOTest {
 
