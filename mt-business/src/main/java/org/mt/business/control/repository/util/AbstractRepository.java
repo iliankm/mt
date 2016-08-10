@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
@@ -11,6 +13,8 @@ import javax.inject.Inject;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mt.business.api.entity.util.SortCriteria;
+import org.mt.business.api.entity.util.SortCriteria.SortDirection;
 
 import com.mongodb.WriteResult;
 
@@ -24,6 +28,18 @@ public abstract class AbstractRepository <EI, EC extends EI> {
 
     @Inject
     protected Datastore ds;
+
+    /**
+     * Transformer function for SortCriteria to string appropriate for Morphia order condition
+     */
+    protected static final Function<SortCriteria, String> ORDER_TRANSFORMER = sc -> {
+
+        final List<String> fields = sc.getCriteria().entrySet().stream()
+                .map(e -> SortDirection.desc.equals(e.getValue()) ? "-" + e.getKey() : e.getKey())
+                .collect(Collectors.toList());
+
+        return fields != null && !fields.isEmpty() ? String.join(",", fields) : "";
+    };
 
     public abstract Class<EC> getEntityClazz();
 

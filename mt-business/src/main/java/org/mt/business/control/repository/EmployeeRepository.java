@@ -14,14 +14,11 @@ import org.mt.business.api.entity.EmployeeEntity;
 import org.mt.business.api.entity.util.EmployeeSearchCriteria;
 import org.mt.business.api.entity.util.SortCriteria;
 import org.mt.business.control.repository.util.AbstractRepository;
-import org.mt.business.control.repository.util.OrderGenerator;
 import org.mt.business.entity.EmployeeEntityBean;
 
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")
 public class EmployeeRepository extends AbstractRepository<EmployeeEntity, EmployeeEntityBean> {
 
-    @Inject
-    private OrderGenerator orderGenerator;
 
     @SuppressWarnings("unused")
     @Inject
@@ -57,10 +54,7 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntity, Emplo
 	}
 
 	if (sort != null) {
-	    final String orderCondition = orderGenerator.generate(sort);
-	    if (orderCondition != null && !orderCondition.isEmpty()) {
-		query.order(orderCondition);
-	    }
+	    query.order(ORDER_TRANSFORMER.apply(sort));
 	}
 
 	query.offset(offset);
