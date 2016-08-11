@@ -1,38 +1,64 @@
 package org.mt.business.api.entity.util;
 
-import java.io.Serializable;
+/**
+ *
+ * Employee search criteria immutable object.
+ *
+ */
+public class EmployeeSearchCriteria {
 
-public class EmployeeSearchCriteria implements Serializable {
+    private final String name;
 
-    private static final long serialVersionUID = 814715872993628096L;
+    private final Gender gender;
 
-    private String name;
+    private final String email;
 
-    private Gender gender;
+    private EmployeeSearchCriteria(Builder builder) {
+	this.name = builder.name;
+	this.gender = builder.gender;
+	this.email = builder.email;
+    }
 
-    private String email;
+    public static class Builder {
+
+	private String name;
+	private Gender gender;
+	private String email;
+
+	public Builder get() {
+	    return new Builder();
+	}
+
+	public Builder name(String name) {
+	    this.name = name;
+	    return this;
+	}
+
+	public Builder gender(Gender gender) {
+	    this.gender = gender;
+	    return this;
+	}
+
+	public Builder email(String email) {
+	    this.email = email;
+	    return this;
+	}
+
+	public EmployeeSearchCriteria build() {
+	    return new EmployeeSearchCriteria(this);
+	}
+    }
 
     public String getName() {
 	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
     }
 
     public Gender getGender() {
 	return gender;
     }
 
-    public void setGender(Gender gender) {
-	this.gender = gender;
-    }
-
     public String getEmail() {
 	return email;
     }
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
 }
