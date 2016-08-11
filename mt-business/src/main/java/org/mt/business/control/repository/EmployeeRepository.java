@@ -19,7 +19,6 @@ import org.mt.business.entity.EmployeeEntityBean;
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")
 public class EmployeeRepository extends AbstractRepository<EmployeeEntity, EmployeeEntityBean> {
 
-
     @SuppressWarnings("unused")
     @Inject
     private Logger log;
@@ -31,7 +30,8 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntity, Emplo
     }
 
     @CacheResult
-    public List<? extends EmployeeEntity> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset, int limit) {
+    public List<? extends EmployeeEntity> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset,
+	    int limit) {
 
 	final Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
 
@@ -50,7 +50,7 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntity, Emplo
 		_criteria.add(query.criteria("gender").equal(criteria.getGender().name()));
 	    }
 
-	    query.and((Criteria[])_criteria.toArray());
+	    query.and((Criteria[]) _criteria.toArray());
 	}
 
 	if (sort != null) {

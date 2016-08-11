@@ -32,20 +32,18 @@ public class MongoDB {
 
     private MongoDB() {
 
-	MongoClientOptions mongoOptions = MongoClientOptions.builder()
-		.socketTimeout(SOCKET_TIMEOUT).connectTimeout(CONNECT_TIMEOUT).build();
+	MongoClientOptions mongoOptions = MongoClientOptions.builder().socketTimeout(SOCKET_TIMEOUT)
+		.connectTimeout(CONNECT_TIMEOUT).build();
 	MongoClient mongoClient;
 	try {
-	    mongoClient = new MongoClient(
-		    new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
+	    mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
 	} catch (UnknownHostException e) {
 	    throw new RuntimeException("Error initializing MongoDB", e);
 	}
 
 	mongoClient.setWriteConcern(WriteConcern.SAFE);
 
-	datastore = new Morphia().mapPackage("org.mt.business.entity")
-		.createDatastore(mongoClient, DB_NAME);
+	datastore = new Morphia().mapPackage("org.mt.business.entity").createDatastore(mongoClient, DB_NAME);
 
 	datastore.ensureIndexes();
 
@@ -61,6 +59,7 @@ public class MongoDB {
      * Creating the mongo connection is expensive - (re)use a singleton for <br>
      * performance reasons <br>
      * Both the underlying Java driver and Datastore are thread safe
+     * 
      * @return
      */
     public Datastore getDatastore() {

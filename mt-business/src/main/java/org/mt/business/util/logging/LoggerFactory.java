@@ -6,10 +6,10 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
 public class LoggerFactory {
-    
+
     @Produces
     public static Logger createLogger(InjectionPoint injectionPoint) {
-	
+
 	String name = injectionPoint.getMember().getDeclaringClass().getName();
 	Logger logger = Logger.getLogger(name);
 

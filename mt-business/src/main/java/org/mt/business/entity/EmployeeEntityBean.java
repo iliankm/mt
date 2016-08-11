@@ -24,8 +24,7 @@ import org.mt.business.api.entity.util.Gender;
  *
  */
 @Entity(value = "employee", noClassnameStored = false)
-public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity
-{
+public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity {
     private static final long serialVersionUID = -2454104054295746441L;
 
     @NotNull(message = "validation_employee_name_is_mandatory")
@@ -56,18 +55,19 @@ public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity
     /*
      * Default no-args constructor needed by persistence framework
      */
-    private EmployeeEntityBean() {}
+    private EmployeeEntityBean() {
+    }
 
     private EmployeeEntityBean(Builder builder) {
 
-        this.name = builder.name;
-        this.gender = builder.gender;
-        this.address = builder.address;
-        this.email = builder.email;
-        this.phones = Collections.unmodifiableList(builder.phones);
-        this.salary = builder.salary;
-        this.substituteIds = builder.substituteIds != null
-                ? builder.substituteIds.stream().map(sid -> new ObjectId(sid)).collect(Collectors.toSet()) : null;
+	this.name = builder.name;
+	this.gender = builder.gender;
+	this.address = builder.address;
+	this.email = builder.email;
+	this.phones = Collections.unmodifiableList(builder.phones);
+	this.salary = builder.salary;
+	this.substituteIds = builder.substituteIds != null
+		? builder.substituteIds.stream().map(sid -> new ObjectId(sid)).collect(Collectors.toSet()) : null;
     }
 
     /**
@@ -75,107 +75,107 @@ public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity
      */
     public static class Builder {
 
-        private String name;
-        private Gender gender;
-        private AddressEntityBean address;
-        private String email;
-        private List<PhoneEntityBean> phones;
-        private long salary;
-        private Set<String> substituteIds;
+	private String name;
+	private Gender gender;
+	private AddressEntityBean address;
+	private String email;
+	private List<PhoneEntityBean> phones;
+	private long salary;
+	private Set<String> substituteIds;
 
-        public static Builder get() {
+	public static Builder get() {
 
-        	return new Builder();
-        }
+	    return new Builder();
+	}
 
-        public Builder name(String name) {
+	public Builder name(String name) {
 
-            this.name = name;
-            return this;
-        }
+	    this.name = name;
+	    return this;
+	}
 
-        public Builder gender(Gender gender) {
+	public Builder gender(Gender gender) {
 
-            this.gender = gender;
-            return this;
-        }
+	    this.gender = gender;
+	    return this;
+	}
 
-        public Builder address(AddressEntityBean address) {
+	public Builder address(AddressEntityBean address) {
 
-            this.address = address;
-            return this;
-        }
+	    this.address = address;
+	    return this;
+	}
 
-        public Builder email(String email) {
+	public Builder email(String email) {
 
-            this.email = email;
-            return this;
-        }
+	    this.email = email;
+	    return this;
+	}
 
-        public Builder phones(List<PhoneEntityBean> phones) {
+	public Builder phones(List<PhoneEntityBean> phones) {
 
-            this.phones = phones;
-            return this;
-        }
+	    this.phones = phones;
+	    return this;
+	}
 
-        public Builder salary(long salary) {
+	public Builder salary(long salary) {
 
-            this.salary = salary;
-            return this;
-        }
+	    this.salary = salary;
+	    return this;
+	}
 
-        public Builder substituteIds(Set<String> substituteIds) {
+	public Builder substituteIds(Set<String> substituteIds) {
 
-            this.substituteIds = substituteIds;
-            return this;
-        }
+	    this.substituteIds = substituteIds;
+	    return this;
+	}
 
-        public EmployeeEntityBean build() {
+	public EmployeeEntityBean build() {
 
-            return new EmployeeEntityBean(this);
-        }
+	    return new EmployeeEntityBean(this);
+	}
     }
 
     @Override
     public String getName() {
 
-        return name;
+	return name;
     }
 
     @Override
     public Gender getGender() {
 
-        return gender;
+	return gender;
     }
 
     @Override
     public AddressEntity getAddress() {
 
-        return address;
+	return address;
     }
 
     @Override
     public String getEmail() {
 
-        return email;
+	return email;
     }
 
     @Override
     public List<? extends PhoneEntity> getPhones() {
 
-        return phones != null ? Collections.unmodifiableList(phones) : Collections.emptyList();
+	return phones != null ? Collections.unmodifiableList(phones) : Collections.emptyList();
     }
 
     @Override
     public long getSalary() {
 
-        return salary;
+	return salary;
     }
 
     @Override
     public Set<String> getSubstituteIds() {
 
-        return substituteIds != null ? substituteIds.stream().map(oid -> oid.toHexString()).collect(Collectors.toSet())
-                : Collections.emptySet();
+	return substituteIds != null ? substituteIds.stream().map(oid -> oid.toHexString()).collect(Collectors.toSet())
+		: Collections.emptySet();
     }
 }

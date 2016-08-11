@@ -21,24 +21,28 @@ import com.mongodb.WriteResult;
 /**
  * Abstract DAO class for base CRUD operations on entities. <br>
  *
- * @param <EI> Entity interface
- * @param <EC> Entity concrete class (annotated with Morphia annotations) and implements EI.
+ * @param <EI>
+ *            Entity interface
+ * @param <EC>
+ *            Entity concrete class (annotated with Morphia annotations) and
+ *            implements EI.
  */
-public abstract class AbstractRepository <EI, EC extends EI> {
+public abstract class AbstractRepository<EI, EC extends EI> {
 
     @Inject
     protected Datastore ds;
 
     /**
-     * Transformer function for SortCriteria to string appropriate for Morphia order condition
+     * Transformer function for SortCriteria to string appropriate for Morphia
+     * order condition
      */
     protected static final Function<SortCriteria, String> ORDER_TRANSFORMER = sc -> {
 
-        final List<String> fields = sc.getCriteria().entrySet().stream()
-                .map(e -> SortDirection.desc.equals(e.getValue()) ? "-" + e.getKey() : e.getKey())
-                .collect(Collectors.toList());
+	final List<String> fields = sc.getCriteria().entrySet().stream()
+		.map(e -> SortDirection.desc.equals(e.getValue()) ? "-" + e.getKey() : e.getKey())
+		.collect(Collectors.toList());
 
-        return fields != null && !fields.isEmpty() ? String.join(",", fields) : "";
+	return fields != null && !fields.isEmpty() ? String.join(",", fields) : "";
     };
 
     public abstract Class<EC> getEntityClazz();
@@ -54,19 +58,19 @@ public abstract class AbstractRepository <EI, EC extends EI> {
     @CacheRemoveAll
     public void save(Collection<EI> entities) {
 
-        Objects.requireNonNull(entities);
+	Objects.requireNonNull(entities);
 
-        if (entities.isEmpty()) {
-            throw new IllegalArgumentException("Empty entities collection passed for save.");
-        }
+	if (entities.isEmpty()) {
+	    throw new IllegalArgumentException("Empty entities collection passed for save.");
+	}
 
-        ds.save(entities);
+	ds.save(entities);
     }
 
     @CacheResult
     public EI findById(Object id) {
 
-        Objects.requireNonNull(id);
+	Objects.requireNonNull(id);
 
 	return ds.get(getEntityClazz(), id);
     }
@@ -75,7 +79,7 @@ public abstract class AbstractRepository <EI, EC extends EI> {
     @CacheResult
     public List<EI> findByIds(Collection<?> ids) {
 
-        Objects.requireNonNull(ids);
+	Objects.requireNonNull(ids);
 
 	if (ids.isEmpty()) {
 	    throw new IllegalArgumentException("Empty ids collection passed.");
@@ -100,7 +104,7 @@ public abstract class AbstractRepository <EI, EC extends EI> {
     @CacheRemoveAll
     public boolean deleteById(Object id) {
 
-        Objects.requireNonNull(id);
+	Objects.requireNonNull(id);
 
 	final WriteResult wr = ds.delete(getEntityClazz(), id);
 
@@ -115,11 +119,11 @@ public abstract class AbstractRepository <EI, EC extends EI> {
     @CacheRemoveAll
     public int deleteByIds(Collection<?> ids) {
 
-        Objects.requireNonNull(ids);
+	Objects.requireNonNull(ids);
 
-        if (ids.isEmpty()) {
-            throw new IllegalArgumentException("Empty ids collection passed.");
-        }
+	if (ids.isEmpty()) {
+	    throw new IllegalArgumentException("Empty ids collection passed.");
+	}
 
 	final WriteResult wr = ds.delete(getEntityClazz(), ids);
 

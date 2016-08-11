@@ -247,5 +247,4 @@ public class AbstractDAOTest {
 	return testEntity;
     }
 
-
 }
