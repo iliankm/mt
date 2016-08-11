@@ -17,10 +17,4 @@ public class EmployeeServiceBean implements EmployeeService {
 	return employeeRepository.findById(id);
     }
 
-    @Override
-    public void save(EmployeeEntity employee) {
-
-	employeeRepository.save(employee);
-    }
-
 }

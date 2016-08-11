@@ -57,7 +57,7 @@ public class TestServlet extends HttpServlet {
 
 	EmployeeEntity emp3 = entityInstancer.create(EmployeeEntity.class);
 	// emp3.setName("Iliyan");
-	employeeService.save(emp3);
+	//employeeService.save(emp3);
 
 	Object id = emp3.getId();
 

@@ -10,14 +10,13 @@ import javax.inject.Inject;
 
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
-import org.mt.business.api.entity.EmployeeEntity;
 import org.mt.business.api.entity.util.EmployeeSearchCriteria;
 import org.mt.business.api.entity.util.SortCriteria;
 import org.mt.business.control.repository.util.AbstractRepository;
 import org.mt.business.entity.EmployeeEntityBean;
 
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")
-public class EmployeeRepository extends AbstractRepository<EmployeeEntity, EmployeeEntityBean> {
+public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
     @SuppressWarnings("unused")
     @Inject
@@ -30,7 +29,7 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntity, Emplo
     }
 
     @CacheResult
-    public List<? extends EmployeeEntity> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset,
+    public List<EmployeeEntityBean> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset,
 	    int limit) {
 
 	final Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());

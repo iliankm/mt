@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mt.business.api.entity.BaseEntity;
 import org.mt.business.api.entity.util.SortCriteria;
 import org.mt.business.api.entity.util.SortCriteria.SortDirection;
 
@@ -21,13 +22,11 @@ import com.mongodb.WriteResult;
 /**
  * Abstract DAO class for base CRUD operations on entities. <br>
  *
- * @param <EI>
- *            Entity interface
  * @param <EC>
  *            Entity concrete class (annotated with Morphia annotations) and
- *            implements EI.
+ *            implements BaseEntity.
  */
-public abstract class AbstractRepository<EI, EC extends EI> {
+public abstract class AbstractRepository<EC extends BaseEntity> {
 
     @Inject
     protected Datastore ds;
@@ -48,7 +47,7 @@ public abstract class AbstractRepository<EI, EC extends EI> {
     public abstract Class<EC> getEntityClazz();
 
     @CacheRemoveAll
-    public void save(EI entity) {
+    public void save(EC entity) {
 
 	Objects.requireNonNull(entity);
 
@@ -56,7 +55,7 @@ public abstract class AbstractRepository<EI, EC extends EI> {
     }
 
     @CacheRemoveAll
-    public void save(Collection<EI> entities) {
+    public void save(Collection<EC> entities) {
 
 	Objects.requireNonNull(entities);
 
@@ -68,16 +67,15 @@ public abstract class AbstractRepository<EI, EC extends EI> {
     }
 
     @CacheResult
-    public EI findById(Object id) {
+    public EC findById(Object id) {
 
 	Objects.requireNonNull(id);
 
 	return ds.get(getEntityClazz(), id);
     }
 
-    @SuppressWarnings("unchecked")
     @CacheResult
-    public List<EI> findByIds(Collection<?> ids) {
+    public List<EC> findByIds(Collection<?> ids) {
 
 	Objects.requireNonNull(ids);
 
@@ -87,7 +85,7 @@ public abstract class AbstractRepository<EI, EC extends EI> {
 
 	final Query<EC> query = ds.get(getEntityClazz(), ids);
 
-	final List<EI> results = (List<EI>) query.asList();
+	final List<EC> results = query.asList();
 
 	if (results == null) {
 	    return Collections.emptyList();
