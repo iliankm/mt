@@ -32,8 +32,9 @@ public class MongoDB {
 
     private MongoDB() {
 
-	MongoClientOptions mongoOptions = MongoClientOptions.builder().socketTimeout(SOCKET_TIMEOUT)
+	final MongoClientOptions mongoOptions = MongoClientOptions.builder().socketTimeout(SOCKET_TIMEOUT)
 		.connectTimeout(CONNECT_TIMEOUT).build();
+
 	MongoClient mongoClient;
 	try {
 	    mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
@@ -59,8 +60,8 @@ public class MongoDB {
      * Creating the mongo connection is expensive - (re)use a singleton for <br>
      * performance reasons <br>
      * Both the underlying Java driver and Datastore are thread safe
-     * 
-     * @return
+     *
+     * @return the Datastore instance
      */
     public Datastore getDatastore() {
 
