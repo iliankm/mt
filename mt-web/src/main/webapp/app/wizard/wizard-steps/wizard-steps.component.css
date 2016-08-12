@@ -1,16 +1,1 @@
-import { Component } from '@angular/core';
-
-export class WizardStepComponent {
-
-	constructor() {
-	}
-
-}
-
-WizardStepComponent.annotations = [
-                            	new Component({
-                            		selector: 'wizard-step',
-                            		templateUrl: 'app/wizard/wizard-steps/wizard-step.template.html',
-                            		styleUrls:  []
-                            	})
-];
+.bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
