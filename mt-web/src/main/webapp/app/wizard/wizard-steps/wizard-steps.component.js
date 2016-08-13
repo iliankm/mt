@@ -27,10 +27,8 @@ export class WizardStepsComponent {
 	}
 
 	ngAfterContentInit() {
-		//debugger
 		this.updateCurrentStep(this._current);
 	}
-
 }
 
 WizardStepsComponent.annotations = [
@@ -39,7 +37,7 @@ WizardStepsComponent.annotations = [
                             		templateUrl: 'app/wizard/wizard-steps/wizard-steps.template.html',
                             		styleUrls:  ['app/wizard/wizard-steps/wizard-steps.component.css'],
                             		directives: [WizardStepComponent],
-                            		queries: {stepComponents: new ContentChildren(forwardRef(() => WizardStepComponent))},
+                            		queries: {stepComponents: new ContentChildren(WizardStepComponent)},
                             		inputs: ['current']
                             	})
 ];
