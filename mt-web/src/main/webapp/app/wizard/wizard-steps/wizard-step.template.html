@@ -1,8 +1,8 @@
-<div class="col-xs-2 bs-wizard-step visited">
-	<div class="text-xs-center bs-wizard-stepnum">Step 1</div>
+<div class="col-xs-2 bs-wizard-step" [class.visited]="isVisited || isCurrent" [class.disabled]="!isVisited && !isCurrent" [class.current]="isCurrent">
+	<div class="text-xs-center bs-wizard-stepnum">{{title}}</div>
 	<div class="progress">
 		<div class="progress-bar"></div>
 	</div>
 	<a href="#" class="bs-wizard-dot"></a>
-	<div class="bs-wizard-info text-xs-center">Lorem ipsum dolor sit amet.</div>
+	<div class="bs-wizard-info text-xs-center">{{info}}</div>
 </div>
