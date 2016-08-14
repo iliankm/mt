@@ -13,4 +13,9 @@ Frontend:</br>
   package manager: npm</br>
   ES6 modules loader: SystemJS</br>
   css: Bootstrap 4</br>
+  </br>
+Build with maven and the project is packaged as .ear that is deployable on any valid Java EE 7 application server.</br>
+
+
+  
   
