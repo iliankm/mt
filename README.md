@@ -1,5 +1,5 @@
 
-<h2>The seed for Java EE with MongoDB and Angular 2 apps</h2>
+<h2>The seed for Java EE with MongoDB and Angular 2.</h2>
 
 <h4>This application is a starter JavaEE web app with Angular 2 frontend.</h4> 
 
