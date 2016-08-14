@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 
 export class WizardStepComponent {
 
@@ -8,6 +8,13 @@ export class WizardStepComponent {
 		this.name = null;
 		this.title = null;
 		this.info = null;
+		this.select = new EventEmitter();
+	}
+
+	onClick() {
+		if (!this.isCurrent && this.isVisited) {
+			this.select.emit(this.name);
+		}
 	}
 }
 
@@ -16,6 +23,7 @@ WizardStepComponent.annotations = [
                             		selector: 'wizard-step',
                             		templateUrl: 'app/wizard/wizard-steps/wizard-step.template.html',
                             		styleUrls:  ['app/wizard/wizard-steps/wizard-step.component.css'],
-                            		inputs: ['name', 'isVisited', 'title', 'info']
+                            		inputs: ['name', 'isVisited', 'title', 'info'],
+                            		outputs: ['select']
                             	})
 ];

@@ -7,6 +7,10 @@ export class WizardComponent {
 	constructor() {
 	}
 
+	onSelectStep(event) {
+		console.log(event);
+	}
+
 }
 
 WizardComponent.annotations = [

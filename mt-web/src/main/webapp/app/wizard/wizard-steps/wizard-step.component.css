@@ -12,4 +12,5 @@
 :host .disabled .bs-wizard-dot:after {opacity: 0;}
 :host:first-child .progress {left: 50%; width: 50%;}
 :host:last-child .progress {width: 50%;}
-:host .disabled a.bs-wizard-dot{ pointer-events: none; }
+:host .visited a.bs-wizard-dot {cursor: pointer;}
+:host .disabled a.bs-wizard-dot {pointer-events: none;}
