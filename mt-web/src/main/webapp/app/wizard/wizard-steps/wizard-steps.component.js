@@ -27,7 +27,18 @@ export class WizardStepsComponent {
 	}
 
 	ngAfterContentInit() {
+		//update current step
 		this.updateCurrentStep(this._current);
+
+		//calculate and update each step size property
+		if (this.stepComponents && this.stepComponents.length > 0) {
+			let size = Math.floor(12/this.stepComponents.length);
+			size = size >= 1 ? size : 1;
+
+			this.stepComponents.forEach(function(cmp){
+				cmp.size = size;
+			});
+		}
 	}
 }
 

@@ -8,6 +8,7 @@ export class WizardStepComponent {
 		this.name = null;
 		this.title = null;
 		this.info = null;
+		this.size = 1;
 		this.select = new EventEmitter();
 	}
 

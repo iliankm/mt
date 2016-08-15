@@ -9,7 +9,8 @@
     '@angular':                   'node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs',
-    'traceur':                    'node_modules/traceur/bin/traceur.js'
+    'traceur':                    'node_modules/traceur/bin/traceur.js',
+    'jquery':                     'node_modules/jquery/dist/jquery.min.js'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
