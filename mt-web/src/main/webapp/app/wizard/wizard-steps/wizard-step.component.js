@@ -17,7 +17,7 @@ export class WizardStepComponent {
 
 	constructor() {
 		this.isCurrent = false;
-		this.wizardStep = null;
+		this.wizardStep = new WizardStep("", "", "", false);;
 		this.size = 1;
 		this.select = new EventEmitter();
 	}
@@ -25,6 +25,15 @@ export class WizardStepComponent {
 	onClick() {
 		this.select.emit(this.wizardStep);
 	}
+
+	setClasses() {
+		return {
+			current: this.isCurrent,
+			visited: this.wizardStep.isVisited,
+			disabled: !this.wizardStep.isVisited
+		}
+	}
+
 }
 
 WizardStepComponent.annotations = [

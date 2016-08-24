@@ -6,14 +6,14 @@ export class WizardStepsComponent {
 
 	constructor() {
 		this.wizardSteps = [];
-		this._current = null;
+		this._current = new WizardStep("", "", "", false);
 		this.select = new EventEmitter();
 	}
 
 	set current(current) {
+		current.isVisited = true;
 		this._current = current;
 		this._updateCurrentStep(current);
-		current.isVisited = true;
 	}
 
 	get current() {
@@ -29,18 +29,20 @@ export class WizardStepsComponent {
 	}
 
 	ngAfterViewInit() {
-		//update current step
-		this._updateCurrentStep(this._current);
+		setTimeout(()=>{
+			//update current step
+			this._updateCurrentStep(this._current);
 
-		//calculate and update each step size property
-		if (this.stepComponents && this.stepComponents.length > 0) {
-			let size = Math.floor(12/this.stepComponents.length);
-			size = size >= 1 ? size : 1;
+			//calculate and update each step size property
+			if (this.stepComponents && this.stepComponents.length > 0) {
+				let size = Math.floor(12/this.stepComponents.length);
+				size = size >= 1 ? size : 1;
 
-			this.stepComponents.forEach(function(cmp){
-				cmp.size = size;
-			});
-		}
+				this.stepComponents.forEach(function(cmp){
+					cmp.size = size;
+				});
+			}
+		});
 	}
 
 	onSelect(wizardStep) {

@@ -6,12 +6,12 @@ export class WizardComponent {
 
 	constructor() {
 		this.step1 = new WizardStep("step1", "Step 1", "Info info...", true);
-		this.step2 = new WizardStep("step2", "Step 2", "Info info...", true);
+		this.step2 = new WizardStep("step2", "Step 2", "Info info...", false);
 		this.step3 = new WizardStep("step3", "Step 3", "Info info...", false);
 
 		this.steps = [this.step1, this.step2, this.step3];
 
-		this.currentStep = this.step2;
+		this.currentStep = this.step1;
 	}
 
 	onSelectStep(event) {
