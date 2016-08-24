@@ -1,6 +1,1 @@
-<wizard-steps [current]="'step1'">
-	<wizard-step [name]="'step1'" [title]="'Step 1'" [info]="'Info info info....'" [isVisited]="true" (select)="onSelectStep($event)"></wizard-step>
-	<wizard-step [name]="'step2'" [title]="'Step 2'" [info]="'Infooooo infoooooo infooooo....'" [isVisited]="true" (select)="onSelectStep($event)"></wizard-step>
-	<wizard-step [name]="'step3'" [title]="'Step 3'" [info]="'aaa....'" (select)="onSelectStep($event)"></wizard-step>
-	<wizard-step [name]="'step4'" [title]="'Step 4'" [info]="'bbbbb'" (select)="onSelectStep($event)"></wizard-step>
-</wizard-steps>
+<wizard-steps [wizardSteps]="steps" [current]="currentStep" (select)="onSelectStep($event)"></wizard-steps>

@@ -1,21 +1,29 @@
 import { Component, EventEmitter } from '@angular/core';
 
+/**
+ * WizardStep model class
+ */
+export class WizardStep {
+
+	constructor(name, title, info, isVisited) {
+		this.name = name;
+		this.title = title;
+		this.info = info;
+		this.isVisited = isVisited;
+	}
+}
+
 export class WizardStepComponent {
 
 	constructor() {
 		this.isCurrent = false;
-		this.isVisited = false;
-		this.name = null;
-		this.title = null;
-		this.info = null;
+		this.wizardStep = null;
 		this.size = 1;
 		this.select = new EventEmitter();
 	}
 
 	onClick() {
-		if (!this.isCurrent && this.isVisited) {
-			this.select.emit(this.name);
-		}
+		this.select.emit(this.wizardStep);
 	}
 }
 
@@ -24,7 +32,7 @@ WizardStepComponent.annotations = [
                             		selector: 'wizard-step',
                             		templateUrl: 'app/wizard/wizard-steps/wizard-step.template.html',
                             		styleUrls:  ['app/wizard/wizard-steps/wizard-step.component.css'],
-                            		inputs: ['name', 'isVisited', 'title', 'info'],
+                            		inputs: ['wizardStep'],
                             		outputs: ['select']
                             	})
 ];
