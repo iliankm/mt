@@ -46,9 +46,18 @@ export class WizardStepsComponent {
 	}
 
 	onSelect(wizardStep) {
-		if (wizardStep.isVisited && this.current.name !== wizardStep.name) {
-			this.current = wizardStep;
-			this.select.emit(wizardStep);
+		var me = this;
+
+		if (wizardStep.isVisited && me.current.name !== wizardStep.name) {
+			//find current step in the array and reference it
+			let old = $.grep(me.wizardSteps, function(wz){return wz.name === me.current.name})[0];
+
+			me.current = wizardStep;
+
+			me.select.emit({
+				'old': old,
+				'new': wizardStep
+			});
 		}
 	}
 }
