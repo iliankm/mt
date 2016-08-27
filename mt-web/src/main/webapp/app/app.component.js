@@ -11,6 +11,7 @@ export class AppComponent {
 	constructor(router) {
 
 		this.router = router;
+		this.RES = MT.Resources;
 	}
 
 	static get parameters() {

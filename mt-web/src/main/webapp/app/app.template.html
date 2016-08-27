@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
-	<a class="navbar-brand" href="#">MT Project</a>
+	<a class="navbar-brand" href="#">{{RES.get('main.title')}}</a>
 	<div id="navbar">
 		<div class="pull-xs-left"></div>
 		<div class="pull-xs-right"></div>
@@ -9,10 +9,10 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
-			<button type="button" (click)="navigateToWizard()" class="btn btn-primary btn-sm">Create</button>
+			<button type="button" (click)="navigateToWizard()" class="btn btn-primary btn-sm">{{RES.get('main.sidebar.create')}}</button>
 			<ul class="nav nav-sidebar">
-				<li class="nav-item"><a class="nav-link" routerLink="list/all" routerLinkActive="active">Employees</a></li>
-				<li class="nav-item "><a class="nav-link" routerLink="list/archived" routerLinkActive="active">Archived</a></li>
+				<li class="nav-item"><a class="nav-link" routerLink="list/all" routerLinkActive="active">{{RES.get('main.sidebar.employees')}}</a></li>
+				<li class="nav-item "><a class="nav-link" routerLink="list/archived" routerLinkActive="active">{{RES.get('main.sidebar.archived')}}</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-9 col-md-10 col-sm-offset-3 col-md-offset-2 main">

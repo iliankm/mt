@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  *
  * This servlet serves javascript module that might be used for getting formatted text resource by it's key.
@@ -61,7 +63,7 @@ public class ResourcesServlet extends HttpServlet {
         final JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
         resourceBundle.keySet().forEach(key -> {
-            jsonObjectBuilder.add(key, resourceBundle.getString(key));
+            jsonObjectBuilder.add(key, StringEscapeUtils.escapeJava(resourceBundle.getString(key)));
         });
 
         return jsonObjectBuilder.build().toString();

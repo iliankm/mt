@@ -17,7 +17,7 @@ String.format = function() {
 
 var MT = MT || {};
 
-MT.MessageResources = (function() {
+MT.Resources = (function() {
 
 	var RESOURCES = @RESOURCES@;
 
