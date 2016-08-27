@@ -1,4 +1,5 @@
-import { provideRouter} from '@angular/router';
+import { ModuleWithProviders }  from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import { PageNotFoundComponent } from 'app/page-not-found/page-not-found.component';
 import { ListComponent } from 'app/list/list.component';
@@ -13,6 +14,4 @@ const routes = [
 	{ path: '**', component: PageNotFoundComponent }
 ];
 
-export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes)
-];
+export const routing = RouterModule.forRoot(routes);;
