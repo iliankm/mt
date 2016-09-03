@@ -1,10 +1,11 @@
 <form>
 
 	<!-- Employee name -->
-	<div class="form-group row has-danger">
+	<div class="form-group row required has-danger" [class.has-danger]="name.errors && (name.dirty || name.touched)">
 		<label for="example-text-input" class="col-xs-2 col-form-label">{{RES.get('main.wizard.employee.name')}}</label>
 		<div class="col-xs-10">
-			<input class="form-control" type="text" required maxlength="100">
+			<input class="form-control" type="text" required maxlength="100" name="name" #name="ngModel" [(ngModel)]="data.name">
+			<div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">Required field</div>
 			<small class="form-text text-muted">{{RES.get('main.wizard.employee.name.help_text')}}</small>
 		</div>
 	</div>

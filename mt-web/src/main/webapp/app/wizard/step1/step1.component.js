@@ -5,6 +5,10 @@ export class Step1Component {
 	constructor() {
 
 		this.RES = MT.Resources;
+
+		this.data = {
+				name: ""
+		};
 	}
 }
 
