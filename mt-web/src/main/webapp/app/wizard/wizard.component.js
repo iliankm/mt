@@ -11,9 +11,9 @@ export class WizardComponent {
 
 		this.RES = MT.Resources;
 
-		this.step1 = new WizardStep("step1", MT.Resources.get('main.wizard.steps.step1.title'), MT.Resources.get('main.wizard.steps.step1.info'), true);
-		this.step2 = new WizardStep("step2", MT.Resources.get('main.wizard.steps.step2.title'), MT.Resources.get('main.wizard.steps.step2.info'), true);
-		this.step3 = new WizardStep("step3", MT.Resources.get('main.wizard.steps.step3.title'), MT.Resources.get('main.wizard.steps.step3.info'), true);
+		this.step1 = new WizardStep("step1", MT.Resources.get('wizard.steps.step1.title'), MT.Resources.get('wizard.steps.step1.info'), true);
+		this.step2 = new WizardStep("step2", MT.Resources.get('wizard.steps.step2.title'), MT.Resources.get('wizard.steps.step2.info'), true);
+		this.step3 = new WizardStep("step3", MT.Resources.get('wizard.steps.step3.title'), MT.Resources.get('wizard.steps.step3.info'), true);
 
 		this.steps = [this.step1, this.step2, this.step3];
 
