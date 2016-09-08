@@ -1,12 +1,25 @@
 <form>
 
 	<!-- Employee name -->
-	<div class="form-group row required has-danger" [class.has-danger]="name.errors && (name.dirty || name.touched)">
-		<label for="example-text-input" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.name')}}</label>
-		<div class="col-xs-10">
+	<div class="form-group row required" [class.has-danger]="name.errors && (name.dirty || name.touched)">
+		<label for="name" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.name')}}</label>
+		<div class="col-xs-8">
 			<input class="form-control" type="text" required maxlength="100" name="name" #name="ngModel" [(ngModel)]="data.name">
 			<div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">{{RES.get('commons.required_field')}}</div>
 			<small class="form-text text-muted">{{RES.get('wizard.employee.name.help_text')}}</small>
+		</div>
+	</div>
+
+	<!-- Gender -->
+	<div class="form-group row required" [class.has-danger]="gender.errors && (gender.dirty || gender.touched)">
+		<label for="gender" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.gender')}}</label>
+		<div class="col-xs-8">
+			<select class="form-control" required name="gender" #gender="ngModel" [(ngModel)]="data.gender">
+				<option value="MALE">{{RES.get('wizard.employee.gender.male')}}</option>
+				<option value="FEMALE">{{RES.get('wizard.employee.gender.female')}}</option>
+			</select>
+			<div class="form-control-feedback" *ngIf="gender.errors && (gender.dirty || gender.touched)">{{RES.get('commons.required_field')}}</div>
+			<small class="form-text text-muted">{{RES.get('wizard.employee.gender.help_text')}}</small>
 		</div>
 	</div>
 
