@@ -23,4 +23,37 @@
 		</div>
 	</div>
 
-</form>
+	<!-- Address -->
+	<div class="form-group row required">
+		<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.address')}}</label>
+		<div class="col-xs-8">
+			<div class="form-group row">
+				<!-- Country -->
+				<div class="col-xs-6" [class.has-danger]="country.errors && (country.dirty || country.touched)">
+					<country-select name="country" #country="ngModel" [(ngModel)]="data.address.country" required></country-select>
+					<div class="form-control-feedback" *ngIf="country.errors && (country.dirty || country.touched)">{{RES.get('commons.required_field')}}</div>
+					<small class="form-text text-muted">{{RES.get('wizard.employee.address.country.help_text')}}</small>
+				</div>
+				<!-- City -->
+				<div class="col-xs-6" [class.has-danger]="city.errors && (city.dirty || city.touched)">
+					<input class="form-control" type="text" required maxlength="50" name="city" #city="ngModel" [(ngModel)]="data.address.city">
+					<div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">{{RES.get('commons.required_field')}}</div>
+					<small class="form-text text-muted">{{RES.get('wizard.employee.address.city.help_text')}}</small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<!-- Street -->
+				<div class="col-xs-6" [class.has-danger]="street.errors && (street.dirty || street.touched)">
+					<input class="form-control" type="text" required maxlength="100" name="street" #street="ngModel" [(ngModel)]="data.address.street">
+					<div class="form-control-feedback" *ngIf="street.errors && (street.dirty || street.touched)">{{RES.get('commons.required_field')}}</div>
+					<small class="form-text text-muted">{{RES.get('wizard.employee.address.street.help_text')}}</small>
+				</div>
+				<!-- ZIP -->
+				<div class="col-xs-6" [class.has-danger]="zip.errors && (zip.dirty || zip.touched)">
+					<input class="form-control" type="text" required maxlength="10" name="zip" #zip="ngModel" [(ngModel)]="data.address.zip">
+					<div class="form-control-feedback" *ngIf="zip.errors && (zip.dirty || zip.touched)">{{RES.get('commons.required_field')}}</div>
+					<small class="form-text text-muted">{{RES.get('wizard.employee.address.zip.help_text')}}</small>
+				</div>
+			</div>
+		</div>
+	</div>

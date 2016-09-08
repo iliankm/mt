@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CountrySelectComponent } from 'app/components/country-select/country-select.component';
 
 export class Step1Component {
 
@@ -7,7 +8,15 @@ export class Step1Component {
 		this.RES = MT.Resources;
 
 		this.data = {
-				name: ""
+				name: "",
+				gender: "",
+				address: {
+					country: "",
+					city: "",
+					street: "",
+					zip: ""
+				}
+
 		};
 	}
 }
@@ -17,6 +26,6 @@ Step1Component.annotations = [
                             		selector: 'step1',
                             		templateUrl: 'app/wizard/step1/step1.template.html',
                             		styleUrls:  [],
-                            		directives: []
+                            		directives: [CountrySelectComponent]
                             	})
 ];
