@@ -66,7 +66,7 @@ export class CountrySelectComponent {
 CountrySelectComponent.annotations = [
                             	new Component({
                             		selector: 'country-select',
-                            		templateUrl: 'app/components/country-select/country-select.template.html',
+                            		templateUrl: 'app/commons/components/country-select/country-select.template.html',
                             		providers: [
 	                            		            /**
 	                            		             * register ControlValueAccessor

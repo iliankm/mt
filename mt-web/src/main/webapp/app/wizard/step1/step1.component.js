@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CountrySelectComponent } from 'app/components/country-select/country-select.component';
+import { CountrySelectComponent } from 'app/commons/components/country-select/country-select.component';
 
 export class Step1Component {
 
