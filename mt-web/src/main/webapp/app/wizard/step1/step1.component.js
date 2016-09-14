@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { CountrySelectComponent } from 'app/commons/components/country-select/country-select.component';
+import {Component} from '@angular/core';
+import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
+import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 
 export class Step1Component {
 
@@ -26,6 +27,6 @@ Step1Component.annotations = [
                             		selector: 'step1',
                             		templateUrl: 'app/wizard/step1/step1.template.html',
                             		styleUrls:  [],
-                            		directives: [CountrySelectComponent]
+                            		directives: [CountrySelectComponent, ValidateEmailDirective]
                             	})
 ];

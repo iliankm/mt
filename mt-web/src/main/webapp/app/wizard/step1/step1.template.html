@@ -57,3 +57,14 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Email -->
+	<div class="form-group row" [class.has-danger]="email.errors && (email.dirty || email.touched)">
+		<label for="email" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.email')}}</label>
+		<div class="col-xs-8">
+			<input class="form-control" type="text" maxlength="100" validateEmail name="email" #email="ngModel" [(ngModel)]="data.email">
+			<div class="form-control-feedback" *ngIf="email.errors && email.errors.validateEmail && (email.dirty || email.touched)">{{RES.get('commons.invalid_mail')}}</div>
+			<small class="form-text text-muted">{{RES.get('wizard.employee.email.help_text')}}</small>
+		</div>
+	</div>
+
