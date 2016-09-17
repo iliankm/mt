@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from 'app/page-not-found/page-not-found.component';
 import {ListComponent} from 'app/list/list.component';
 import {DetailsComponent} from 'app/details/details.component';
-import {WizardComponent} from 'app/wizard/wizard.component';
+import {WizardModule} from 'app/wizard/wizard.module';
 
 export class AppModule {
 
@@ -18,13 +18,17 @@ export class AppModule {
 AppModule.annotations = [
                         	new NgModule({
 
-                        		imports: [BrowserModule, FormsModule, routing],
+                        		imports: [
+                        		          BrowserModule,
+                        		          FormsModule,
+                        		          routing,
+                        		          WizardModule
+                        		          ],
 
                         		declarations: [AppComponent,
                         		               PageNotFoundComponent,
                         		               ListComponent,
-                        		               DetailsComponent,
-                        		               WizardComponent
+                        		               DetailsComponent
                         		              ],
 
                         		providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
