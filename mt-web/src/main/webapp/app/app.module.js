@@ -6,9 +6,9 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {routing} from './app.routes';
 
 import {AppComponent} from './app.component';
-import {PageNotFoundComponent} from 'app/page-not-found/page-not-found.component';
-import {ListComponent} from 'app/list/list.component';
-import {DetailsComponent} from 'app/details/details.component';
+import {PageNotFoundModule} from 'app/page-not-found/page-not-found.module';
+import {ListModule} from 'app/list/list.module';
+import {DetailsModule} from 'app/details/details.module';
 import {WizardModule} from 'app/wizard/wizard.module';
 
 export class AppModule {
@@ -22,14 +22,13 @@ AppModule.annotations = [
                         		          BrowserModule,
                         		          FormsModule,
                         		          routing,
-                        		          WizardModule
+                        		          PageNotFoundModule,
+                        		          WizardModule,
+                        		          DetailsModule,
+                        		          ListModule
                         		          ],
 
-                        		declarations: [AppComponent,
-                        		               PageNotFoundComponent,
-                        		               ListComponent,
-                        		               DetailsComponent
-                        		              ],
+                        		declarations: [AppComponent],
 
                         		providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
 
