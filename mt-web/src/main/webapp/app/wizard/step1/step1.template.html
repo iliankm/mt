@@ -1,25 +1,26 @@
 <form>
 
-	<!-- Employee name -->
-	<div class="form-group row required" [class.has-danger]="name.errors && (name.dirty || name.touched)">
+	<!-- Employee name and gender -->
+	<div class="form-group row required">
 		<label for="name" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.name')}}</label>
 		<div class="col-xs-8">
-			<input class="form-control" type="text" required maxlength="100" name="name" #name="ngModel" [(ngModel)]="data.name">
-			<div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">{{RES.get('commons.required_field')}}</div>
-			<small class="form-text text-muted">{{RES.get('wizard.employee.name.help_text')}}</small>
-		</div>
-	</div>
-
-	<!-- Gender -->
-	<div class="form-group row required" [class.has-danger]="gender.errors && (gender.dirty || gender.touched)">
-		<label for="gender" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.gender')}}</label>
-		<div class="col-xs-8">
-			<select class="form-control" required name="gender" #gender="ngModel" [(ngModel)]="data.gender">
-				<option value="MALE">{{RES.get('wizard.employee.gender.male')}}</option>
-				<option value="FEMALE">{{RES.get('wizard.employee.gender.female')}}</option>
-			</select>
-			<div class="form-control-feedback" *ngIf="gender.errors && (gender.dirty || gender.touched)">{{RES.get('commons.required_field')}}</div>
-			<small class="form-text text-muted">{{RES.get('wizard.employee.gender.help_text')}}</small>
+			<div class="form-group row">
+				<!-- Employee name -->
+				<div class="col-xs-9" [class.has-danger]="name.errors && (name.dirty || name.touched)">
+					<input class="form-control" type="text" required maxlength="100" name="name" #name="ngModel" [(ngModel)]="data.name">
+					<div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">{{RES.get('commons.required_field')}}</div>
+					<small class="form-text text-muted">{{RES.get('wizard.employee.name.help_text')}}</small>
+				</div>
+				<!-- Employee gender -->
+				<div class="col-xs-3" [class.has-danger]="gender.errors && (gender.dirty || gender.touched)">
+					<select class="form-control" required name="gender" #gender="ngModel" [(ngModel)]="data.gender">
+						<option value="MALE">{{RES.get('wizard.employee.gender.male')}}</option>
+						<option value="FEMALE">{{RES.get('wizard.employee.gender.female')}}</option>
+					</select>
+					<div class="form-control-feedback" *ngIf="gender.errors && (gender.dirty || gender.touched)">{{RES.get('commons.required_field')}}</div>
+					<small class="form-text text-muted">{{RES.get('wizard.employee.gender.help_text')}}</small>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -67,4 +68,36 @@
 			<small class="form-text text-muted">{{RES.get('wizard.employee.email.help_text')}}</small>
 		</div>
 	</div>
+
+	<!-- Phone form -->
+	<form>
+
+		<div class="form-group row">
+			<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.phones')}}</label>
+			<div class="col-xs-8">
+				<div class="form-group row">
+					<!-- Phone Number -->
+					<div class="col-xs-3" [class.has-danger]="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)">
+						<input class="form-control" type="text" required maxlength="50" name="phoneNumber" #phoneNumber="ngModel" [(ngModel)]="phone.number">
+						<div class="form-control-feedback" *ngIf="phoneNumber.errors && phoneNumber.errors.required && (phoneNumber.dirty || phoneNumber.touched)">{{RES.get('commons.required_field')}}</div>
+						<small class="form-text text-muted">{{RES.get('wizard.employee.phones.number.help_text')}}</small>
+					</div>
+					<!-- Phone Type -->
+					<div class="col-xs-3" [class.has-danger]="phoneType.errors && (phoneType.dirty || phoneType.touched)">
+						<select class="form-control" required name="phoneType" #phoneType="ngModel" [(ngModel)]="phone.type">
+							<option value="MOBILE">{{RES.get('wizard.employee.phones.mobile')}}</option>
+							<option value="LANDLINE">{{RES.get('wizard.employee.phones.landline')}}</option>
+						</select>
+						<div class="form-control-feedback" *ngIf="phoneType.errors && (phoneType.dirty || phoneType.touched)">{{RES.get('commons.required_field')}}</div>
+						<small class="form-text text-muted">{{RES.get('wizard.employee.phones.type.help_text')}}</small>
+					</div>
+					<!-- Phone add button -->
+					<div class="col-xs-3">
+						<button type="button" class="btn btn-secondary ">{{RES.get('commons.add')}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
 

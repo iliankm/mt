@@ -16,8 +16,13 @@ export class Step1Component {
 					city: "",
 					street: "",
 					zip: ""
-				}
+				},
+				phones: []
+		};
 
+		this.phone = {
+				number: "",
+				type: ""
 		};
 	}
 }

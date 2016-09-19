@@ -2,3 +2,7 @@
     content: "*";
     padding-left: 3%;
 }
+
+.bg-highlight {
+	background-color: #f7f7f9;
+}
