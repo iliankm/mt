@@ -20,10 +20,32 @@ export class Step1Component {
 				phones: []
 		};
 
+		this.phoneTypes = {
+			MOBILE: "MOBILE",
+			LANDLINE: "LANDLINE"
+		};
+
 		this.phone = {
 				number: "",
 				type: ""
 		};
+	}
+
+	ngAfterViewInit() {
+		//initialize tooltips
+		$('[data-toggle="tooltip"]').tooltip();
+	}
+
+	onAddPhone(form) {
+
+		this.data.phones.push({number: this.phone.number, type: this.phone.type});
+
+		form.reset();
+	}
+
+	onDeletePhone(ind) {
+
+		this.data.phones.splice(ind, 1);
 	}
 }
 
