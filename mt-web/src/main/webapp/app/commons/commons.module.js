@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
+import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 
 export class CommonsModule {
 
@@ -16,13 +17,15 @@ CommonsModule.annotations = [
 
                         		declarations: [
                         		               	CountrySelectComponent,
-                        		               	ValidateEmailDirective
+                        		               	ValidateEmailDirective,
+                        		               	ValidatePhoneDirective
                         		              ],
 
                           		exports: [
-                       		               		CountrySelectComponent,
-                       		               		ValidateEmailDirective
-                       		               	  ],
+                   		               		CountrySelectComponent,
+                   		               		ValidateEmailDirective,
+                   		               		ValidatePhoneDirective
+                   		               	  ],
 
                         		providers: []
 

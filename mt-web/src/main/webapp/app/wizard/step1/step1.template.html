@@ -102,10 +102,12 @@
 				<!-- Phone Number -->
 				<div class="col-xs-3"
 					[class.has-danger]="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)">
-					<input class="form-control" type="text" required maxlength="50"
+					<input class="form-control" type="text" required validatePhone maxlength="50"
 						name="phoneNumber" #phoneNumber="ngModel" ngModel>
 					<div class="form-control-feedback"
 						*ngIf="phoneNumber.errors && phoneNumber.errors.required && (phoneNumber.dirty || phoneNumber.touched)">{{RES.get('commons.required_field')}}</div>
+					<div class="form-control-feedback"
+						*ngIf="phoneNumber.errors && phoneNumber.errors.validatePhone && (phoneNumber.dirty || phoneNumber.touched)">{{RES.get('commons.invalid_phone')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.phones.number.help_text')}}</small>
 				</div>
 				<!-- Phone Type -->

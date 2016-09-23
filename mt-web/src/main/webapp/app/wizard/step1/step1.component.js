@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
+import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 
 export class Step1Component {
 
@@ -39,6 +40,6 @@ Step1Component.annotations = [
                             		selector: 'step1',
                             		templateUrl: 'app/wizard/step1/step1.template.html',
                             		styleUrls:  [],
-                            		directives: [CountrySelectComponent, ValidateEmailDirective]
+                            		directives: [CountrySelectComponent, ValidateEmailDirective, ValidatePhoneDirective]
                             	})
 ];
