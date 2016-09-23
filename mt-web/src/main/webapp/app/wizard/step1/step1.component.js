@@ -8,27 +8,12 @@ export class Step1Component {
 
 		this.RES = MT.Resources;
 
-		this.data = {
-				name: "",
-				gender: "",
-				address: {
-					country: "",
-					city: "",
-					street: "",
-					zip: ""
-				},
-				phones: []
-		};
-
 		this.phoneTypes = {
 			MOBILE: "MOBILE",
 			LANDLINE: "LANDLINE"
 		};
 
-		this.phone = {
-				number: "",
-				type: ""
-		};
+		this.phones = [];
 	}
 
 	ngAfterViewInit() {
@@ -36,16 +21,16 @@ export class Step1Component {
 		$('[data-toggle="tooltip"]').tooltip();
 	}
 
-	onAddPhone(form) {
+	onPhoneFormSubmit(form) {
 
-		this.data.phones.push({number: this.phone.number, type: this.phone.type});
+		this.phones.push({number: form.value.phoneNumber, type: form.value.phoneType});
 
 		form.reset();
 	}
 
 	onDeletePhone(ind) {
 
-		this.data.phones.splice(ind, 1);
+		this.phones.splice(ind, 1);
 	}
 }
 

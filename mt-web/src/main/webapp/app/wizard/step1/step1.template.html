@@ -1,4 +1,4 @@
-<form>
+<form #employeeForm="ngForm">
 
 	<!-- Employee name and gender -->
 	<div class="form-group row required">
@@ -9,7 +9,7 @@
 				<div class="col-xs-9"
 					[class.has-danger]="name.errors && (name.dirty || name.touched)">
 					<input class="form-control" type="text" required maxlength="100"
-						name="name" #name="ngModel" [(ngModel)]="data.name">
+						name="name" #name="ngModel" ngModel>
 					<div class="form-control-feedback"
 						*ngIf="name.errors && (name.dirty || name.touched)">{{RES.get('commons.required_field')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.name.help_text')}}</small>
@@ -18,7 +18,7 @@
 				<div class="col-xs-3"
 					[class.has-danger]="gender.errors && (gender.dirty || gender.touched)">
 					<select class="form-control" required name="gender"
-						#gender="ngModel" [(ngModel)]="data.gender">
+						#gender="ngModel" ngModel>
 						<option value="MALE">{{RES.get('wizard.employee.gender.male')}}</option>
 						<option value="FEMALE">{{RES.get('wizard.employee.gender.female')}}</option>
 					</select>
@@ -39,7 +39,7 @@
 				<div class="col-xs-6"
 					[class.has-danger]="country.errors && (country.dirty || country.touched)">
 					<country-select name="country" #country="ngModel"
-						[(ngModel)]="data.address.country" required></country-select>
+						ngModel required></country-select>
 					<div class="form-control-feedback"
 						*ngIf="country.errors && (country.dirty || country.touched)">{{RES.get('commons.required_field')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.address.country.help_text')}}</small>
@@ -48,7 +48,7 @@
 				<div class="col-xs-6"
 					[class.has-danger]="city.errors && (city.dirty || city.touched)">
 					<input class="form-control" type="text" required maxlength="50"
-						name="city" #city="ngModel" [(ngModel)]="data.address.city">
+						name="city" #city="ngModel" ngModel>
 					<div class="form-control-feedback"
 						*ngIf="city.errors && (city.dirty || city.touched)">{{RES.get('commons.required_field')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.address.city.help_text')}}</small>
@@ -59,7 +59,7 @@
 				<div class="col-xs-6"
 					[class.has-danger]="street.errors && (street.dirty || street.touched)">
 					<input class="form-control" type="text" required maxlength="100"
-						name="street" #street="ngModel" [(ngModel)]="data.address.street">
+						name="street" #street="ngModel" ngModel>
 					<div class="form-control-feedback"
 						*ngIf="street.errors && (street.dirty || street.touched)">{{RES.get('commons.required_field')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.address.street.help_text')}}</small>
@@ -68,7 +68,7 @@
 				<div class="col-xs-6"
 					[class.has-danger]="zip.errors && (zip.dirty || zip.touched)">
 					<input class="form-control" type="text" required maxlength="10"
-						name="zip" #zip="ngModel" [(ngModel)]="data.address.zip">
+						name="zip" #zip="ngModel" ngModel>
 					<div class="form-control-feedback"
 						*ngIf="zip.errors && (zip.dirty || zip.touched)">{{RES.get('commons.required_field')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.address.zip.help_text')}}</small>
@@ -83,7 +83,7 @@
 		<label for="email" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.email')}}</label>
 		<div class="col-xs-8">
 			<input class="form-control" type="text" maxlength="100" validateEmail
-				name="email" #email="ngModel" [(ngModel)]="data.email">
+				name="email" #email="ngModel" ngModel>
 			<div class="form-control-feedback"
 				*ngIf="email.errors && email.errors.validateEmail && (email.dirty || email.touched)">{{RES.get('commons.invalid_mail')}}</div>
 			<small class="form-text text-muted">{{RES.get('wizard.employee.email.help_text')}}</small>
@@ -93,7 +93,7 @@
 </form>
 
 <!-- Phone form -->
-<form #phoneForm="ngForm">
+<form #phoneForm="ngForm" (ngSubmit)="onPhoneFormSubmit(phoneForm)">
 
 	<div class="form-group row">
 		<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.phones')}}</label>
@@ -103,8 +103,7 @@
 				<div class="col-xs-3"
 					[class.has-danger]="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)">
 					<input class="form-control" type="text" required maxlength="50"
-						name="phoneNumber" #phoneNumber="ngModel"
-						[(ngModel)]="phone.number">
+						name="phoneNumber" #phoneNumber="ngModel" ngModel>
 					<div class="form-control-feedback"
 						*ngIf="phoneNumber.errors && phoneNumber.errors.required && (phoneNumber.dirty || phoneNumber.touched)">{{RES.get('commons.required_field')}}</div>
 					<small class="form-text text-muted">{{RES.get('wizard.employee.phones.number.help_text')}}</small>
@@ -113,7 +112,7 @@
 				<div class="col-xs-3"
 					[class.has-danger]="phoneType.errors && (phoneType.dirty || phoneType.touched)">
 					<select class="form-control" required name="phoneType"
-						#phoneType="ngModel" [(ngModel)]="phone.type">
+						#phoneType="ngModel" ngModel>
 						<option value="{{phoneTypes.MOBILE}}">{{RES.get('wizard.employee.phones.mobile')}}</option>
 						<option value="{{phoneTypes.LANDLINE}}">{{RES.get('wizard.employee.phones.landline')}}</option>
 					</select>
@@ -123,8 +122,7 @@
 				</div>
 				<!-- Phone add button -->
 				<div class="col-xs-3">
-					<button type="button" class="btn btn-secondary"
-						[disabled]="!phoneForm.form.valid" (click)="onAddPhone(phoneForm)">{{RES.get('commons.add')}}</button>
+					<button type="submit" class="btn btn-secondary"	[disabled]="!phoneForm.form.valid">{{RES.get('commons.add')}}</button>
 				</div>
 			</div>
 		</div>
@@ -136,11 +134,11 @@
 <div class="row">
 	<div class="offset-xs-2 col-xs-4">
 		<!-- Empty phones list tag -->
-		<span class="tag tag-info" *ngIf="!data.phones || data.phones.length == 0">{{RES.get('wizard.employee.phones.no_phones_added')}}</span>
+		<span class="tag tag-info" *ngIf="!phones || phones.length == 0">{{RES.get('wizard.employee.phones.no_phones_added')}}</span>
 
 		<!-- Phones list -->
-		<div class="list-group" *ngIf="data.phones && data.phones.length > 0">
-			<a class="list-group-item list-group-item-action" *ngFor="let p of data.phones; let i = index">
+		<div class="list-group" *ngIf="phones && phones.length > 0">
+			<a class="list-group-item list-group-item-action" *ngFor="let p of phones; let i = index">
 				<div class="row">
 					<div class="col-xs-10">
 						<h5 class="list-group-item-heading">{{p.number}}</h5>
