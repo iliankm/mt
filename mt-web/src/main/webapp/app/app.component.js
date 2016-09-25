@@ -1,23 +1,24 @@
 import { Component } from '@angular/core';
 import {Router, Routes, ROUTER_DIRECTIVES} from '@angular/router';
+import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 
 export class AppComponent {
 
-	constructor(router) {
-
-		this.router = router;
-		this.RES = MT.Resources;
-	}
-
 	static get parameters() {
 
-	    return [[Router]];
+	    return [[Router], [MessagesService]];
+	}
+
+	constructor(router, messagesService) {
+
+		this.router = router;
+
+		this.RES = messagesService;
 	}
 
 	navigateToWizard() {
 		this.router.navigate(['/wizard'])
 	}
-
 }
 
 AppComponent.annotations = [

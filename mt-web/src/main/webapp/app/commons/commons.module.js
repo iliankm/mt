@@ -1,10 +1,14 @@
-import {NgModule} from '@angular/core';
+import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {FormsModule}   from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
 
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
+
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
+
+import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 
 export class CommonsModule {
 
@@ -13,7 +17,7 @@ export class CommonsModule {
 CommonsModule.annotations = [
                         	new NgModule({
 
-                        		imports: [FormsModule, BrowserModule],
+                        		imports: [FormsModule, BrowserModule, HttpModule],
 
                         		declarations: [
                         		               	CountrySelectComponent,
@@ -27,7 +31,15 @@ CommonsModule.annotations = [
                    		               		ValidatePhoneDirective
                    		               	  ],
 
-                        		providers: []
+                        		providers: [
+                        		            MessagesService,
+                        		            {
+                        		            	provide: APP_INITIALIZER,
+                        		                useFactory: (messagesService) => () => messagesService.load(),
+                        		                deps: [MessagesService],
+                        		                multi: true
+                        		            }
+                        		            ]
 
                         	})
                         ];

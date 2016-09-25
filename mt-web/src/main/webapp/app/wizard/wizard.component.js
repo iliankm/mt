@@ -4,16 +4,22 @@ import {WizardStep, WizardStepComponent} from 'app/wizard/wizard-steps/wizard-st
 import {Step1Component} from 'app/wizard/step1/step1.component';
 import {Step2Component} from 'app/wizard/step2/step2.component';
 import {Step3Component} from 'app/wizard/step3/step3.component';
+import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 
 export class WizardComponent {
 
-	constructor() {
+	static get parameters() {
 
-		this.RES = MT.Resources;
+	    return [[MessagesService]];
+	}
 
-		this.step1 = new WizardStep("step1", MT.Resources.get('wizard.steps.step1.title'), MT.Resources.get('wizard.steps.step1.info'), true);
-		this.step2 = new WizardStep("step2", MT.Resources.get('wizard.steps.step2.title'), MT.Resources.get('wizard.steps.step2.info'), true);
-		this.step3 = new WizardStep("step3", MT.Resources.get('wizard.steps.step3.title'), MT.Resources.get('wizard.steps.step3.info'), true);
+	constructor(messagesService) {
+
+		this.RES = messagesService;
+
+		this.step1 = new WizardStep("step1", this.RES.get('wizard.steps.step1.title'), this.RES.get('wizard.steps.step1.info'), true);
+		this.step2 = new WizardStep("step2", this.RES.get('wizard.steps.step2.title'), this.RES.get('wizard.steps.step2.info'), true);
+		this.step3 = new WizardStep("step3", this.RES.get('wizard.steps.step3.title'), this.RES.get('wizard.steps.step3.info'), true);
 
 		this.steps = [this.step1, this.step2, this.step3];
 

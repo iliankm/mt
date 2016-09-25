@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
+import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 
 export class Step3Component {
 
-	constructor() {
+	static get parameters() {
 
-		this.RES = MT.Resources;
+	    return [[MessagesService]];
+	}
+
+	constructor(messagesService) {
+
+		this.RES = messagesService;
 	}
 }
 

@@ -2,12 +2,18 @@ import {Component} from '@angular/core';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
+import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 
 export class Step1Component {
 
-	constructor() {
+	static get parameters() {
 
-		this.RES = MT.Resources;
+	    return [[MessagesService]];
+	}
+
+	constructor(messagesService) {
+
+		this.RES = messagesService;
 
 		this.phoneTypes = {
 			MOBILE: "MOBILE",
