@@ -14,10 +14,10 @@ public class RestApplication extends Application {
 
 	final Set<Class<?>> classes = new HashSet<Class<?>>();
 
-        classes.add(org.mt.web.resource.ExceptionMapper.class);
-        classes.add(org.mt.web.resource.messages.MessagesResource.class);
+	classes.add(org.mt.web.resource.ExceptionMapper.class);
+	classes.add(org.mt.web.resource.messages.MessagesResource.class);
 
-        return classes;
+	return classes;
     }
 
 }
