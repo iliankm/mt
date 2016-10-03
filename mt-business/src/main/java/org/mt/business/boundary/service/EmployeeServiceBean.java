@@ -3,8 +3,8 @@ package org.mt.business.boundary.service;
 import javax.inject.Inject;
 
 import org.mt.business.api.boundary.service.EmployeeService;
-import org.mt.business.api.entity.EmployeeEntity;
-import org.mt.business.control.repository.EmployeeRepository;
+import org.mt.business.api.domain.employee.Employee;
+import org.mt.business.control.repository.employee.EmployeeRepository;
 
 public class EmployeeServiceBean implements EmployeeService {
 
@@ -12,7 +12,7 @@ public class EmployeeServiceBean implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public EmployeeEntity findById(Object id) {
+    public Employee findById(Object id) {
 
 	return employeeRepository.findById(id);
     }

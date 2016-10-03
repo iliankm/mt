@@ -1,4 +1,4 @@
-package org.mt.business.control.repository.util;
+package org.mt.business.control.repository.employee;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,9 +13,9 @@ import javax.inject.Inject;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.mt.business.api.entity.BaseEntity;
-import org.mt.business.api.entity.util.SortCriteria;
-import org.mt.business.api.entity.util.SortCriteria.SortDirection;
+import org.mt.business.api.domain.IdentifiableObject;
+import org.mt.business.api.domain.SortCriteria;
+import org.mt.business.api.domain.SortCriteria.SortDirection;
 
 import com.mongodb.WriteResult;
 
@@ -26,7 +26,7 @@ import com.mongodb.WriteResult;
  *            Entity concrete class (annotated with Morphia annotations) and
  *            implements BaseEntity.
  */
-public abstract class AbstractRepository<EC extends BaseEntity> {
+public abstract class AbstractRepository<EC extends IdentifiableObject> {
 
     @Inject
     protected Datastore ds;

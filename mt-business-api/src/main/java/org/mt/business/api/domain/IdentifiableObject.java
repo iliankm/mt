@@ -1,8 +1,8 @@
-package org.mt.business.api.entity;
+package org.mt.business.api.domain;
 
 import java.util.Date;
 
-public interface BaseEntity extends Entity {
+public interface IdentifiableObject extends DomainObject {
 
     public String getId();
 

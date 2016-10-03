@@ -1,4 +1,4 @@
-package org.mt.business.api.entity.util;
+package org.mt.business.api.domain;
 
 import java.io.Serializable;
 import java.util.Collections;

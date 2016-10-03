@@ -1,12 +1,12 @@
-package org.mt.business.entity;
+package org.mt.business.domain.employee;
 
 import javax.validation.constraints.NotNull;
 
 import org.mongodb.morphia.annotations.Embedded;
-import org.mt.business.api.entity.AddressEntity;
+import org.mt.business.api.domain.employee.Address;
 
 @Embedded
-public class AddressEntityBean implements AddressEntity {
+public class AddressEntityBean implements Address {
 
     private static final long serialVersionUID = 6014825721289910144L;
 

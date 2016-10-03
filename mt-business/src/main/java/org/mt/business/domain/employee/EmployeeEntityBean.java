@@ -1,4 +1,4 @@
-package org.mt.business.entity;
+package org.mt.business.domain.employee;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,17 +14,18 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Indexed;
-import org.mt.business.api.entity.AddressEntity;
-import org.mt.business.api.entity.EmployeeEntity;
-import org.mt.business.api.entity.PhoneEntity;
-import org.mt.business.api.entity.util.Gender;
+import org.mt.business.api.domain.employee.Address;
+import org.mt.business.api.domain.employee.Employee;
+import org.mt.business.api.domain.employee.Gender;
+import org.mt.business.api.domain.employee.Phone;
+import org.mt.business.domain.BaseEntityBean;
 
 /**
  * Immutable EmployeeEntity
  *
  */
 @Entity(value = "employee", noClassnameStored = false)
-public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity {
+public class EmployeeEntityBean extends BaseEntityBean implements Employee {
     private static final long serialVersionUID = -2454104054295746441L;
 
     @NotNull(message = "validation_employee_name_is_mandatory")
@@ -149,7 +150,7 @@ public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity
     }
 
     @Override
-    public AddressEntity getAddress() {
+    public Address getAddress() {
 
 	return address;
     }
@@ -161,7 +162,7 @@ public class EmployeeEntityBean extends BaseEntityBean implements EmployeeEntity
     }
 
     @Override
-    public List<? extends PhoneEntity> getPhones() {
+    public List<? extends Phone> getPhones() {
 
 	return phones != null ? Collections.unmodifiableList(phones) : Collections.emptyList();
     }

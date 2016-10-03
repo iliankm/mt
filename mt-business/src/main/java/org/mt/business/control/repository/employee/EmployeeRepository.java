@@ -1,4 +1,4 @@
-package org.mt.business.control.repository;
+package org.mt.business.control.repository.employee;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,10 +10,9 @@ import javax.inject.Inject;
 
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
-import org.mt.business.api.entity.util.EmployeeSearchCriteria;
-import org.mt.business.api.entity.util.SortCriteria;
-import org.mt.business.control.repository.util.AbstractRepository;
-import org.mt.business.entity.EmployeeEntityBean;
+import org.mt.business.api.domain.SortCriteria;
+import org.mt.business.api.domain.employee.EmployeeSearchCriteria;
+import org.mt.business.domain.employee.EmployeeEntityBean;
 
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")
 public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {

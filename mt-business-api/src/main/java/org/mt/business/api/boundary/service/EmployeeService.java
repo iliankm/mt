@@ -1,9 +1,9 @@
 package org.mt.business.api.boundary.service;
 
-import org.mt.business.api.entity.EmployeeEntity;
+import org.mt.business.api.domain.employee.Employee;
 
 public interface EmployeeService {
 
-    public EmployeeEntity findById(Object id);
+    public Employee findById(Object id);
 
 }
