@@ -1,12 +1,6 @@
 package org.mt.business.api.boundary.service.employee.argument;
 
-
-import org.mt.business.api.domain.employee.Address;
-
-public class AddressArgument implements Address {
-
-
-    private static final long serialVersionUID = -8819800109811328160L;
+public class AddressArgument {
 
     private String street;
 
@@ -75,23 +69,19 @@ public class AddressArgument implements Address {
 	}
     }
 
-    @Override
     public String getStreet() {
 
 	return street;
     }
 
-    @Override
     public String getZip() {
 	return zip;
     }
 
-    @Override
     public String getCity() {
 	return city;
     }
 
-    @Override
     public String getCountry() {
 	return country;
     }
