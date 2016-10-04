@@ -12,6 +12,7 @@ import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
 import org.mt.business.api.domain.SortCriteria;
 import org.mt.business.api.domain.employee.EmployeeSearchCriteria;
+import org.mt.business.control.repository.AbstractRepository;
 import org.mt.business.domain.employee.EmployeeEntityBean;
 
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")

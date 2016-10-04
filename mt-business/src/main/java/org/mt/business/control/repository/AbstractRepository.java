@@ -1,4 +1,4 @@
-package org.mt.business.control.repository.employee;
+package org.mt.business.control.repository;
 
 import java.util.Collection;
 import java.util.Collections;

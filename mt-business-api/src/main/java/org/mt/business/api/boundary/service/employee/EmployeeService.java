@@ -1,4 +1,4 @@
-package org.mt.business.api.boundary.service;
+package org.mt.business.api.boundary.service.employee;
 
 import org.mt.business.api.domain.employee.Employee;
 

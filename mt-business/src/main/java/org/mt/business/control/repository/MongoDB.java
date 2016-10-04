@@ -1,4 +1,4 @@
-package org.mt.business.control.repository.employee;
+package org.mt.business.control.repository;
 
 import java.net.UnknownHostException;
 import java.util.logging.Logger;

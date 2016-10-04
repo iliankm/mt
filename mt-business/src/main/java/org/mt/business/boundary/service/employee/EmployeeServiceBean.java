@@ -1,8 +1,8 @@
-package org.mt.business.boundary.service;
+package org.mt.business.boundary.service.employee;
 
 import javax.inject.Inject;
 
-import org.mt.business.api.boundary.service.EmployeeService;
+import org.mt.business.api.boundary.service.employee.EmployeeService;
 import org.mt.business.api.domain.employee.Employee;
 import org.mt.business.control.repository.employee.EmployeeRepository;
 
