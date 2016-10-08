@@ -6,4 +6,6 @@ public interface RestEndpoints {
 
     String MESSAGES = "messages";
 
+    String EMPLOYEES = "employees";
+
 }
