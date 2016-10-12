@@ -19,8 +19,8 @@
 					[class.has-danger]="gender.errors && (gender.dirty || gender.touched)">
 					<select class="form-control" required name="gender"
 						#gender="ngModel" ngModel>
-						<option value="MALE">{{RES.get('wizard.employee.gender.male')}}</option>
-						<option value="FEMALE">{{RES.get('wizard.employee.gender.female')}}</option>
+						<option value="{{GENDERS.MALE}}">{{RES.get('wizard.employee.gender.male')}}</option>
+						<option value="{{GENDERS.FEMALE}}">{{RES.get('wizard.employee.gender.female')}}</option>
 					</select>
 					<div class="form-control-feedback"
 						*ngIf="gender.errors && (gender.dirty || gender.touched)">{{RES.get('commons.required_field')}}</div>
@@ -115,8 +115,8 @@
 					[class.has-danger]="phoneType.errors && (phoneType.dirty || phoneType.touched)">
 					<select class="form-control" required name="phoneType"
 						#phoneType="ngModel" ngModel>
-						<option value="{{phoneTypes.MOBILE}}">{{RES.get('wizard.employee.phones.mobile')}}</option>
-						<option value="{{phoneTypes.LANDLINE}}">{{RES.get('wizard.employee.phones.landline')}}</option>
+						<option value="{{PHONE_TYPES.MOBILE}}">{{RES.get('wizard.employee.phones.mobile')}}</option>
+						<option value="{{PHONE_TYPES.LANDLINE}}">{{RES.get('wizard.employee.phones.landline')}}</option>
 					</select>
 					<div class="form-control-feedback"
 						*ngIf="phoneType.errors && (phoneType.dirty || phoneType.touched)">{{RES.get('commons.required_field')}}</div>
@@ -149,8 +149,8 @@
 						<button type="button" class="btn btn-sm btn-outline-danger" (click)="onDeletePhone(i)">&#10060;</button>
 					</div>
 				</div>
-				<p class="list-group-item-text" *ngIf="p.type==phoneTypes.MOBILE">{{RES.get('wizard.employee.phones.mobile')}}</p>
-				<p class="list-group-item-text" *ngIf="p.type==phoneTypes.LANDLINE">{{RES.get('wizard.employee.phones.landline')}}</p>
+				<p class="list-group-item-text" *ngIf="p.type==PHONE_TYPES.MOBILE">{{RES.get('wizard.employee.phones.mobile')}}</p>
+				<p class="list-group-item-text" *ngIf="p.type==PHONE_TYPES.LANDLINE">{{RES.get('wizard.employee.phones.landline')}}</p>
 			</a>
 		</div>
 	</div>

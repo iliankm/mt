@@ -3,6 +3,8 @@ import {CountrySelectComponent} from 'app/commons/components/country-select/coun
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
+import {PHONE_TYPES} from 'app/commons/services/employees/phone.model.js';
+import {GENDERS} from 'app/commons/services/employees/employee.model.js';
 
 export class Step1Component {
 
@@ -15,10 +17,9 @@ export class Step1Component {
 
 		this.RES = messagesService;
 
-		this.phoneTypes = {
-			MOBILE: "MOBILE",
-			LANDLINE: "LANDLINE"
-		};
+		this.PHONE_TYPES = PHONE_TYPES;
+
+		this.GENDERS = GENDERS;
 
 		this.phones = [];
 	}

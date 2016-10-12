@@ -9,6 +9,7 @@ import {ValidateEmailDirective} from 'app/commons/directives/validate-email/vali
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
+import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
 
 export class CommonsModule {
 
@@ -38,7 +39,8 @@ CommonsModule.annotations = [
                         		                useFactory: (messagesService) => () => messagesService.load(),
                         		                deps: [MessagesService],
                         		                multi: true
-                        		            }
+                        		            },
+                        		            EmployeesService
                         		            ]
 
                         	})
