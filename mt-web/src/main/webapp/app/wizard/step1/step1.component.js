@@ -3,6 +3,7 @@ import {CountrySelectComponent} from 'app/commons/components/country-select/coun
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
+import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
 import {PHONE_TYPES} from 'app/commons/services/employees/phone.model.js';
 import {GENDERS} from 'app/commons/services/employees/employee.model.js';
 
@@ -10,12 +11,14 @@ export class Step1Component {
 
 	static get parameters() {
 
-	    return [[MessagesService]];
+	    return [[MessagesService], [EmployeesService]];
 	}
 
-	constructor(messagesService) {
+	constructor(messagesService, employeesService) {
 
 		this.RES = messagesService;
+
+		this.employeesService = employeesService;
 
 		this.PHONE_TYPES = PHONE_TYPES;
 
