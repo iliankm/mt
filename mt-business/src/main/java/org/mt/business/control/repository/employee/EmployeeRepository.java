@@ -2,14 +2,19 @@ package org.mt.business.control.repository.employee;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 
+import org.mongodb.morphia.mapping.Mapper;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
+import org.mt.business.api.boundary.service.employee.argument.CreateUpdateEmployeeArgument;
 import org.mt.business.api.domain.SortCriteria;
 import org.mt.business.api.domain.employee.EmployeeSearchCriteria;
 import org.mt.business.control.repository.AbstractRepository;
@@ -64,5 +69,30 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
 	return results;
 
+    }
+
+    public int update(Object id, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+
+	Objects.requireNonNull(id);
+
+	Objects.requireNonNull(createUpdateEmployeeArgument);
+
+	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
+
+	ops.set("name", createUpdateEmployeeArgument.getName());
+
+	ops.set("email", createUpdateEmployeeArgument.getEmail());
+
+	ops.set("gender", createUpdateEmployeeArgument.getGender());
+
+	ops.set("address", createUpdateEmployeeArgument.getAddress());
+
+	ops.set("phones", createUpdateEmployeeArgument.getPhones());
+
+	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(id);
+
+	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
+
+	return updateResults.getUpdatedCount();
     }
 }

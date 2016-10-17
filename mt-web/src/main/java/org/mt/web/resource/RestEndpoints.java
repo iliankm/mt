@@ -8,4 +8,6 @@ public interface RestEndpoints {
 
     String EMPLOYEES = "employees";
 
+    String EMPLOYEE = "{id}";
+
 }

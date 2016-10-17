@@ -1,7 +1,7 @@
 import {PHONE_TYPES, Phone} from 'app/commons/services/employees/phone.model.js';
 import {Address} from 'app/commons/services/employees/address.model.js';
 
-export class CreateEmployeeArgument {
+export class CreateUpdateEmployeeArgument {
 
 	constructor(data) {
 		this.name = data.name;

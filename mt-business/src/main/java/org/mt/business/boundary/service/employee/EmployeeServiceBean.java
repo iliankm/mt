@@ -7,8 +7,9 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import org.mt.business.api.boundary.service.employee.EmployeeService;
-import org.mt.business.api.boundary.service.employee.argument.CreateEmployeeArgument;
+import org.mt.business.api.boundary.service.employee.argument.CreateUpdateEmployeeArgument;
 import org.mt.business.api.domain.employee.Employee;
+import org.mt.business.api.exception.ResourceNotFoundException;
 import org.mt.business.control.repository.employee.EmployeeRepository;
 import org.mt.business.domain.employee.AddressEntityBean;
 import org.mt.business.domain.employee.EmployeeEntityBean;
@@ -24,34 +25,54 @@ public class EmployeeServiceBean implements EmployeeService {
 
 	Objects.requireNonNull(id);
 
-	return employeeRepository.findById(id);
+	final Employee employee = employeeRepository.findById(id);
+
+	if (employee == null) {
+	    throw new ResourceNotFoundException();
+	}
+
+	return employee;
     }
 
     @Override
-    public Employee create(CreateEmployeeArgument createEmployeeArgument) {
+    public Employee create(CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
-	Objects.requireNonNull(createEmployeeArgument);
+	Objects.requireNonNull(createUpdateEmployeeArgument);
 
-	//create AddressEntityBean
+	// create AddressEntityBean
 	final AddressEntityBean address = AddressEntityBean.Builder.get()
-		.country(createEmployeeArgument.getAddress().getCountry())
-		.city(createEmployeeArgument.getAddress().getCity())
-		.street(createEmployeeArgument.getAddress().getStreet())
-		.zip(createEmployeeArgument.getAddress().getZip()).build();
+		.country(createUpdateEmployeeArgument.getAddress().getCountry())
+		.city(createUpdateEmployeeArgument.getAddress().getCity())
+		.street(createUpdateEmployeeArgument.getAddress().getStreet())
+		.zip(createUpdateEmployeeArgument.getAddress().getZip()).build();
 
-	//create list of PhoneEntityBean-s
-	final List<PhoneEntityBean> phones = createEmployeeArgument.getPhones().stream()
+	// create list of PhoneEntityBean-s
+	final List<PhoneEntityBean> phones = createUpdateEmployeeArgument.getPhones().stream()
 		.map(p -> new PhoneEntityBean(p.getType(), p.getPhone())).collect(Collectors.toList());
 
-	//create EmployeeEntityBean
-	final EmployeeEntityBean employee = EmployeeEntityBean.Builder.get().name(createEmployeeArgument.getName())
-		.email(createEmployeeArgument.getEmail()).gender(createEmployeeArgument.getGender()).address(address)
-		.phones(phones).build();
+	// create EmployeeEntityBean
+	final EmployeeEntityBean employee = EmployeeEntityBean.Builder.get()
+		.name(createUpdateEmployeeArgument.getName()).email(createUpdateEmployeeArgument.getEmail())
+		.gender(createUpdateEmployeeArgument.getGender()).address(address).phones(phones).build();
 
-	//persist employee
+	// persist employee
 	employeeRepository.save(employee);
 
 	return employee;
+    }
+
+    @Override
+    public void update(Object employeeId, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+
+	Objects.requireNonNull(employeeId);
+
+	Objects.requireNonNull(createUpdateEmployeeArgument);
+
+	final int updatedCount = employeeRepository.update(employeeId, createUpdateEmployeeArgument);
+
+	if (updatedCount == 0) {
+	    throw new ResourceNotFoundException();
+	}
     }
 
 }

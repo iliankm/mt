@@ -17,9 +17,9 @@ export class WizardComponent {
 
 		this.RES = messagesService;
 
-		this.step1 = new WizardStep("step1", this.RES.get('wizard.steps.step1.title'), this.RES.get('wizard.steps.step1.info'), true);
-		this.step2 = new WizardStep("step2", this.RES.get('wizard.steps.step2.title'), this.RES.get('wizard.steps.step2.info'), true);
-		this.step3 = new WizardStep("step3", this.RES.get('wizard.steps.step3.title'), this.RES.get('wizard.steps.step3.info'), true);
+		this.step1 = new WizardStep("step1", this.RES.get('wizard.steps.step1.title'), this.RES.get('wizard.steps.step1.info'), false);
+		this.step2 = new WizardStep("step2", this.RES.get('wizard.steps.step2.title'), this.RES.get('wizard.steps.step2.info'), false);
+		this.step3 = new WizardStep("step3", this.RES.get('wizard.steps.step3.title'), this.RES.get('wizard.steps.step3.info'), false);
 
 		this.steps = [this.step1, this.step2, this.step3];
 

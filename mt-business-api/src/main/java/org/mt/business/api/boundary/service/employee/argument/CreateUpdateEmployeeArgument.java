@@ -1,5 +1,6 @@
 package org.mt.business.api.boundary.service.employee.argument;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.mt.business.api.domain.employee.Gender;
@@ -8,7 +9,7 @@ import org.mt.business.api.domain.employee.Gender;
  * Immutable CreateEmployeeArgument
  *
  */
-public class CreateEmployeeArgument {
+public class CreateUpdateEmployeeArgument {
 
     private String name;
 
@@ -23,10 +24,10 @@ public class CreateEmployeeArgument {
     /**
      * Default no-args constructor
      */
-    private CreateEmployeeArgument() {
+    private CreateUpdateEmployeeArgument() {
     }
 
-    private CreateEmployeeArgument(Builder builder) {
+    private CreateUpdateEmployeeArgument(Builder builder) {
 	this.name = builder.name;
 	this.gender = builder.gender;
 	this.address = builder.address;
@@ -71,8 +72,8 @@ public class CreateEmployeeArgument {
 	    return this;
 	}
 
-	public CreateEmployeeArgument build() {
-	    return new CreateEmployeeArgument(this);
+	public CreateUpdateEmployeeArgument build() {
+	    return new CreateUpdateEmployeeArgument(this);
 	}
     }
 
@@ -93,7 +94,7 @@ public class CreateEmployeeArgument {
     }
 
     public List<PhoneArgument> getPhones() {
-        return phones;
+        return phones == null ? Collections.emptyList() : Collections.unmodifiableList(phones);
     }
 
 }
