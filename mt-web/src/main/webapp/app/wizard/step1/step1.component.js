@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
@@ -11,10 +12,12 @@ export class Step1Component {
 
 	static get parameters() {
 
-	    return [[MessagesService], [EmployeesService]];
+	    return [[Router], [MessagesService], [EmployeesService]];
 	}
 
-	constructor(messagesService, employeesService) {
+	constructor(router, messagesService, employeesService) {
+
+		this.router = router;
 
 		this.RES = messagesService;
 
@@ -42,6 +45,14 @@ export class Step1Component {
 	onDeletePhone(ind) {
 
 		this.phones.splice(ind, 1);
+	}
+
+	onCancel() {
+		this.router.navigate(['/list/all'])
+	}
+
+	onNext() {
+		alert('next');
 	}
 }
 

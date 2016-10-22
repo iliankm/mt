@@ -156,5 +156,14 @@
 	</div>
 </div>
 
-
-
+<!-- Buttons -->
+<div class="row m-t-3">
+	<!-- Cancel button -->
+	<div class="offset-xs-2 col-xs-2">
+		<button type="button" class="btn btn-secondary" (click)="onCancel()">{{RES.get('commons.cancel')}}</button>
+	</div>
+	<!-- Next button -->
+	<div class="offset-xs-5 col-xs-1">
+		<button type="button" class="btn btn-outline-primary" (click)="onNext()">{{RES.get('commons.next')}}</button>
+	</div>
+</div>
