@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
@@ -17,17 +17,20 @@ export class Step1Component {
 
 	constructor(router, messagesService, employeesService) {
 
+		//Router from DI
 		this.router = router;
-
+		//MessageService from DI
 		this.RES = messagesService;
-
+		//EmployeesService from DI
 		this.employeesService = employeesService;
-
+		//phone types
 		this.PHONE_TYPES = PHONE_TYPES;
-
+		//gender types
 		this.GENDERS = GENDERS;
-
+		//added phones
 		this.phones = [];
+		//save event - fired when data is successfully saved
+		this.save = new EventEmitter();
 	}
 
 	ngAfterViewInit() {
@@ -48,11 +51,22 @@ export class Step1Component {
 	}
 
 	onCancel() {
+
 		this.router.navigate(['/list/all'])
 	}
 
 	onNext() {
-		alert('next');
+
+		this.createOrUpdate();
+	}
+
+	/**
+	 * Validate data then create (or update) employee.
+	 * Fire 'save' event if data is saved with success.
+	 */
+	createOrUpdate() {
+
+		this.save.emit({});
 	}
 }
 
@@ -61,6 +75,7 @@ Step1Component.annotations = [
                             		selector: 'step1',
                             		templateUrl: 'app/wizard/step1/step1.template.html',
                             		styleUrls:  [],
-                            		directives: [CountrySelectComponent, ValidateEmailDirective, ValidatePhoneDirective]
+                            		directives: [CountrySelectComponent, ValidateEmailDirective, ValidatePhoneDirective],
+                            		outputs: ['save']
                             	})
 ];
