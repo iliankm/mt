@@ -25,7 +25,7 @@ export class EmployeesService extends BaseService {
 	 *
 	 * @param {CreateUpdateEmployeeArgument}
 	 *                createUpdateEmployeeArgument - creation argument
-	 * @return {Observable for String} - id of the created employee
+	 * @return {Observable for string} - id of the created employee
 	 */
 	create(createUpdateEmployeeArgument) {
 
@@ -37,10 +37,10 @@ export class EmployeesService extends BaseService {
 	/**
 	 * Update employee by argument
 	 *
-	 * @param {String} id - id of the updated employee
+	 * @param {string} id - id of the updated employee
 	 * @param {CreateUpdateEmployeeArgument}
 	 *                createUpdateEmployeeArgument - update argument
-	 * @return {Observable for String} - id of the updated employee
+	 * @return {Observable for string} - id of the updated employee
 	 */
 	update(id, createUpdateEmployeeArgument) {
 
