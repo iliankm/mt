@@ -44,7 +44,7 @@ export class EmployeesService extends BaseService {
 	 */
 	update(id, createUpdateEmployeeArgument) {
 
-		return this.http.post(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
+		return this.http.put(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
 				.map(r => r.json())
 				.catch(this.handleError);
 	}
