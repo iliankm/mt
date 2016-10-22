@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
@@ -66,7 +66,23 @@ export class Step1Component {
 	 */
 	createOrUpdate() {
 
-		this.save.emit({});
+		if (this.validate()) {
+			this.save.emit({});
+		}
+	}
+
+	/**
+	 * Validate step 1 data
+	 *
+	 * @return {boolean} true if data is valid, false otherwise
+	 */
+	validate() {
+
+		$.each(this.employeeForm.controls, (k, v) => {
+			if (v.markAsTouched) {v.markAsTouched()}
+		});
+
+		return this.employeeForm.valid;
 	}
 }
 
@@ -76,6 +92,7 @@ Step1Component.annotations = [
                             		templateUrl: 'app/wizard/step1/step1.template.html',
                             		styleUrls:  [],
                             		directives: [CountrySelectComponent, ValidateEmailDirective, ValidatePhoneDirective],
+                            		queries: {employeeForm: new ViewChild('employeeForm')},
                             		outputs: ['save']
                             	})
 ];
