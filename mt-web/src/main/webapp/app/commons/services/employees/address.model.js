@@ -10,10 +10,10 @@ export class Address {
 	 * @param {string} data.country - country
 	 */
 	constructor(data) {
-		this.street = data.street;
-		this.zip = data.zip;
-		this.city = data.city;
-		this.country = data.country;
+		this.street = data && data.street || null;
+		this.zip = data && data.zip || null;
+		this.city = data && data.city || null;
+		this.country = data && data.country || null;
 	}
 
 	/**

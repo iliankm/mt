@@ -13,8 +13,8 @@ export class Phone {
 	 * @param {string} data.phone - phone number
 	 */
 	constructor(data) {
-		this.type = data.type;
-		this.phone = data.phone;
+		this.type = data && data.type || null;
+		this.phone = data && data.phone || null;
 	}
 
 	/**

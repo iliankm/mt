@@ -20,11 +20,11 @@ export class CreateUpdateEmployeeArgument {
 	 * @param {string} data.phones[].phone - phone number
 	 */
 	constructor(data) {
-		this.name = data.name;
-		this.gender = data.gender;
-		this.address = new Address(data.address);
-		this.email = data.email;
-		this.phones = data.phones.map(d => new Phone(d));
+		this.name = data && data.name || null;
+		this.gender = data && data.gender || null;
+		this.address = data && data.address ? new Address(data.address) : null;
+		this.email = data && data.email || null;
+		this.phones = data && data.phones ? data.phones.map(d => new Phone(d)) : null;
 	}
 
 	/**
