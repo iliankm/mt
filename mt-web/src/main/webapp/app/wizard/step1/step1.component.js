@@ -42,7 +42,7 @@ export class Step1Component {
 
 	onPhoneFormSubmit(form) {
 
-	    this.phones.push({number: form.value.phoneNumber, type: form.value.phoneType});
+	    this.phones.push({phone: form.value.phoneNumber, type: form.value.phoneType});
 	    form.reset();
 	}
 
@@ -66,12 +66,23 @@ export class Step1Component {
 	 * data is saved with success.
 	 */
 	createOrUpdate() {
-	    console.log(this.employeeForm);
 
 	    if (this.validate()) {
 
 		let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
+		    name: this.employeeForm.value.name,
+		    gender: this.employeeForm.value.gender,
+		    address: {
+			street: this.employeeForm.value.street,
+			zip: this.employeeForm.value.zip,
+			city: this.employeeForm.value.city,
+			country: this.employeeForm.value.country
+		    },
+		    email: this.employeeForm.value.email,
+		    phones: this.phones
 		});
+
+		console.log(createUpdateEmployeeArgument);
 
 		this.save.emit({});
 	    }
