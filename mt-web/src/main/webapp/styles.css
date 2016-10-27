@@ -1,3 +1,7 @@
+input:required {
+    box-shadow:none;
+}
+
 .form-group.required LABEL:after {
     content: "*";
     padding-left: 3%;

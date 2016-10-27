@@ -5,7 +5,9 @@ import {ValidateEmailDirective} from 'app/commons/directives/validate-email/vali
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
-import {PHONE_TYPES} from 'app/commons/services/employees/phone.model.js';
+import {PHONE_TYPES, Phone} from 'app/commons/services/employees/phone.model.js';
+import {Address} from 'app/commons/services/employees/address.model.js';
+import {CreateUpdateEmployeeArgument} from 'app/commons/services/employees/create-update-employee.argument.js';
 import {GENDERS} from 'app/commons/services/employees/employee.model.js';
 
 export class Step1Component {
@@ -17,58 +19,62 @@ export class Step1Component {
 
 	constructor(router, messagesService, employeesService) {
 
-		//Router from DI
-		this.router = router;
-		//MessageService from DI
-		this.RES = messagesService;
-		//EmployeesService from DI
-		this.employeesService = employeesService;
-		//phone types
-		this.PHONE_TYPES = PHONE_TYPES;
-		//gender types
-		this.GENDERS = GENDERS;
-		//added phones
-		this.phones = [];
-		//save event - fired when data is successfully saved
-		this.save = new EventEmitter();
+	    // Router from DI
+	    this.router = router;
+	    // MessageService from DI
+	    this.RES = messagesService;
+	    // EmployeesService from DI
+	    this.employeesService = employeesService;
+	    // phone types
+	    this.PHONE_TYPES = PHONE_TYPES;
+	    // gender types
+	    this.GENDERS = GENDERS;
+	    // added phones
+	    this.phones = [];
+	    // save event - fired when data is successfully saved
+	    this.save = new EventEmitter();
 	}
 
 	ngAfterViewInit() {
-		//initialize tooltips
-		$('[data-toggle="tooltip"]').tooltip();
+	    // initialize tooltips
+	    $('[data-toggle="tooltip"]').tooltip();
 	}
 
 	onPhoneFormSubmit(form) {
 
-		this.phones.push({number: form.value.phoneNumber, type: form.value.phoneType});
-
-		form.reset();
+	    this.phones.push({number: form.value.phoneNumber, type: form.value.phoneType});
+	    form.reset();
 	}
 
 	onDeletePhone(ind) {
 
-		this.phones.splice(ind, 1);
+	    this.phones.splice(ind, 1);
 	}
 
 	onCancel() {
 
-		this.router.navigate(['/list/all'])
+	    this.router.navigate(['/list/all'])
 	}
 
 	onNext() {
 
-		this.createOrUpdate();
+	    this.createOrUpdate();
 	}
 
 	/**
-	 * Validate data then create (or update) employee.
-	 * Fire 'save' event if data is saved with success.
+	 * Validate data then create (or update) employee. Fire 'save' event if
+	 * data is saved with success.
 	 */
 	createOrUpdate() {
+	    console.log(this.employeeForm);
 
-		if (this.validate()) {
-			this.save.emit({});
-		}
+	    if (this.validate()) {
+
+		let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
+		});
+
+		this.save.emit({});
+	    }
 	}
 
 	/**
@@ -78,11 +84,11 @@ export class Step1Component {
 	 */
 	validate() {
 
-		$.each(this.employeeForm.controls, (k, v) => {
-			if (v.markAsTouched) {v.markAsTouched()}
-		});
+	    $.each(this.employeeForm.controls, (k, v) => {
+		if (v.markAsTouched) {v.markAsTouched()}
+	    });
 
-		return this.employeeForm.valid;
+	    return this.employeeForm.valid;
 	}
 }
 
