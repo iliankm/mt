@@ -4,8 +4,8 @@ export class BaseService {
 
 	handleError(response) {
 
-		console.error(response);
+	    console.error(response);
 
-		return Observable.throw(response.json().error || 'Server error');
+	    return Observable.throw((!$.isEmptyObject(response.text()) && response.json().error) || 'Server error');
 	}
 }

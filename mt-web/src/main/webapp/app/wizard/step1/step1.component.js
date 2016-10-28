@@ -33,6 +33,9 @@ export class Step1Component {
 	    this.phones = [];
 	    // save event - fired when data is successfully saved
 	    this.save = new EventEmitter();
+
+	    //employee id
+	    this.employeeId = null;
 	}
 
 	ngAfterViewInit() {
@@ -67,8 +70,11 @@ export class Step1Component {
 	 */
 	createOrUpdate() {
 
+	    let me = this;
+
 	    if (this.validate()) {
 
+		//create CreateUpdateEmployeeArgument
 		let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
 		    name: this.employeeForm.value.name,
 		    gender: this.employeeForm.value.gender,
@@ -82,9 +88,22 @@ export class Step1Component {
 		    phones: this.phones
 		});
 
+		if ($.isEmptyObject(this.employeeId)) {
+		    //create employee
+		    this.employeesService.create(createUpdateEmployeeArgument).subscribe(id => {
+			me.employeeId = id;
+			this.save.emit({id: id});
+		    });
+		} else {
+		    //update employee
+		    this.employeesService.update(this.employeeId, createUpdateEmployeeArgument).subscribe(id => {
+			this.save.emit({id: id});
+		    });
+		}
+
 		console.log(createUpdateEmployeeArgument);
 
-		this.save.emit({});
+
 	    }
 	}
 

@@ -16,6 +16,7 @@ public class RestApplication extends Application {
 
 	classes.add(org.mt.web.resource.ExceptionMapper.class);
 	classes.add(org.mt.web.resource.messages.MessagesResource.class);
+	classes.add(org.mt.web.resource.employees.EmployeesResource.class);
 
 	return classes;
     }

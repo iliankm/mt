@@ -3,16 +3,17 @@ import {Http} from '@angular/http';
 import {BaseService} from 'app/commons/services/base.service.js';
 import {CreateUpdateEmployeeArgument} from 'app/commons/services/employees/create-update-employee.argument.js';
 import 'rxjs/add/operator/catch';
+import 'rxjs/Rx';
 
-const ENDPOINT_EMPLOYEES = "employees";
+const ENDPOINT_EMPLOYEES = "resources/employees";
 
 export class EmployeesService extends BaseService {
 
 	constructor(http) {
 
-		super();
+	    super();
 
-		this.http = http;
+	    this.http = http;
 	}
 
 	static get parameters() {
@@ -29,9 +30,9 @@ export class EmployeesService extends BaseService {
 	 */
 	create(createUpdateEmployeeArgument) {
 
-		return this.http.post(ENDPOINT_EMPLOYEES, createUpdateEmployeeArgument.toJSON())
-				.map(r => r.json())
-				.catch(this.handleError);
+	    return this.http.post(ENDPOINT_EMPLOYEES, createUpdateEmployeeArgument.toJSON())
+		.map(r => r.json())
+		.catch(this.handleError);
 	}
 
 	/**
@@ -44,9 +45,9 @@ export class EmployeesService extends BaseService {
 	 */
 	update(id, createUpdateEmployeeArgument) {
 
-		return this.http.put(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
-				.map(r => r.json())
-				.catch(this.handleError);
+	    return this.http.put(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
+		.map(r => r.json())
+		.catch(this.handleError);
 	}
 
 }
