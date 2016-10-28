@@ -2,10 +2,14 @@ import {Observable} from 'rxjs/Observable';
 
 export class BaseService {
 
-	handleError(response) {
+    handleError(response) {
 
-	    console.error(response);
+	console.error(response);
 
-	    return Observable.throw((!$.isEmptyObject(response.text()) && response.json().error) || 'Server error');
+	if (!$.isEmptyObject(response.text()) && response.json().error) {
+	    return Observable.throw(response.json().error);
+	} else {
+	    return Observable.throw('Server error');
 	}
+    }
 }
