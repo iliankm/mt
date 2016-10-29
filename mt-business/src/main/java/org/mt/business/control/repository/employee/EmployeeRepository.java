@@ -1,5 +1,6 @@
 package org.mt.business.control.repository.employee;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -112,6 +113,8 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 	ops.set("address", createUpdateEmployeeArgument.getAddress());
 
 	ops.set("phones", createUpdateEmployeeArgument.getPhones());
+
+	ops.set("lastModifiedDate", new Date());
 
 	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
 
