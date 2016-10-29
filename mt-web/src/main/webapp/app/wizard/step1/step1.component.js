@@ -74,36 +74,32 @@ export class Step1Component {
 
 	    if (this.validate()) {
 
-		//create CreateUpdateEmployeeArgument
-		let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
-		    name: this.employeeForm.value.name,
-		    gender: this.employeeForm.value.gender,
-		    address: {
-			street: this.employeeForm.value.street,
-			zip: this.employeeForm.value.zip,
-			city: this.employeeForm.value.city,
-			country: this.employeeForm.value.country
-		    },
-		    email: this.employeeForm.value.email,
-		    phones: this.phones
-		});
+			//create CreateUpdateEmployeeArgument
+			let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
+			    name: this.employeeForm.value.name,
+			    gender: this.employeeForm.value.gender,
+			    address: {
+			    	street: this.employeeForm.value.street,
+			    	zip: this.employeeForm.value.zip,
+			    	city: this.employeeForm.value.city,
+			    	country: this.employeeForm.value.country
+			    },
+			    email: this.employeeForm.value.email,
+			    phones: this.phones
+			});
 
-		if ($.isEmptyObject(this.employeeId)) {
-		    //create employee
-		    this.employeesService.create(createUpdateEmployeeArgument).subscribe(id => {
-			me.employeeId = id;
-			this.save.emit({id: id});
-		    });
-		} else {
-		    //update employee
-		    this.employeesService.update(this.employeeId, createUpdateEmployeeArgument).subscribe(id => {
-			this.save.emit({id: id});
-		    });
-		}
-
-		console.log(createUpdateEmployeeArgument);
-
-
+			if ($.isEmptyObject(this.employeeId)) {
+			    //create employee
+			    this.employeesService.create(createUpdateEmployeeArgument).subscribe(id => {
+			    	me.employeeId = id;
+			    	this.save.emit({id: id});
+			    });
+			} else {
+			    //update employee
+			    this.employeesService.update(this.employeeId, createUpdateEmployeeArgument).subscribe(id => {
+			    	this.save.emit({id: id});
+			    });
+			}
 	    }
 	}
 

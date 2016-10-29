@@ -31,7 +31,7 @@ export class EmployeesService extends BaseService {
 	create(createUpdateEmployeeArgument) {
 
 	    return this.http.post(ENDPOINT_EMPLOYEES, createUpdateEmployeeArgument.toJSON())
-		.map(r => r.json())
+		.map(r => r.text())
 		.catch(this.handleError);
 	}
 
@@ -46,7 +46,7 @@ export class EmployeesService extends BaseService {
 	update(id, createUpdateEmployeeArgument) {
 
 	    return this.http.put(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
-		.map(r => r.json())
+		.map(r => r.text())
 		.catch(this.handleError);
 	}
 

@@ -6,9 +6,11 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.cache.annotation.CacheDefaults;
+import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.mapping.Mapper;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
@@ -31,6 +33,27 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
     public Class<EmployeeEntityBean> getEntityClazz() {
 
 	return EmployeeEntityBean.class;
+    }
+
+    @Override
+    @CacheRemoveAll
+    public void save(EmployeeEntityBean entity) {
+
+	super.save(entity);
+    }
+
+    @Override
+    @CacheResult
+    public EmployeeEntityBean findById(String id) {
+
+	return super.findById(id);
+    }
+
+    @Override
+    @CacheRemoveAll
+    public boolean deleteById(String id) {
+
+	return super.deleteById(id);
     }
 
     @CacheResult
@@ -71,7 +94,8 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
     }
 
-    public int update(Object id, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+    @CacheRemoveAll
+    public int update(String id, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
 	Objects.requireNonNull(id);
 
@@ -89,7 +113,7 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
 	ops.set("phones", createUpdateEmployeeArgument.getPhones());
 
-	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(id);
+	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
 
 	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
 

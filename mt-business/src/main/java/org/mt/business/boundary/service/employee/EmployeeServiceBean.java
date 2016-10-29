@@ -21,7 +21,7 @@ public class EmployeeServiceBean implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Employee findById(Object id) {
+    public Employee findById(String id) {
 
 	Objects.requireNonNull(id);
 
@@ -62,7 +62,7 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public void update(Object employeeId, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+    public void update(String employeeId, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
 	Objects.requireNonNull(employeeId);
 

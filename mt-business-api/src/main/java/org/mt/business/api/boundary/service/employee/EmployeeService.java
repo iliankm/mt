@@ -5,10 +5,10 @@ import org.mt.business.api.domain.employee.Employee;
 
 public interface EmployeeService {
 
-    Employee findById(Object id);
+    Employee findById(String id);
 
     Employee create(CreateUpdateEmployeeArgument createUpdateEmployeeArgument);
 
-    void update(Object employeeId, CreateUpdateEmployeeArgument createUpdateEmployeeArgument);
+    void update(String employeeId, CreateUpdateEmployeeArgument createUpdateEmployeeArgument);
 
 }
