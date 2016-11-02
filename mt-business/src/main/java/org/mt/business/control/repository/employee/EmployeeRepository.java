@@ -10,6 +10,7 @@ import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.mapping.Mapper;
@@ -38,7 +39,7 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
     @Override
     @CacheRemoveAll
-    public void save(EmployeeEntityBean entity) {
+    public void save(@Valid EmployeeEntityBean entity) {
 
 	super.save(entity);
     }
@@ -96,7 +97,7 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
     }
 
     @CacheRemoveAll
-    public int update(String id, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+    public int update(String id, @Valid CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
 	Objects.requireNonNull(id);
 

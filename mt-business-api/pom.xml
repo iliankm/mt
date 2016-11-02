@@ -14,10 +14,15 @@
 	<name>mt-business-api</name>
 
 	<dependencies>
+
 		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
+
 	</dependencies>
+
+
 
 </project>

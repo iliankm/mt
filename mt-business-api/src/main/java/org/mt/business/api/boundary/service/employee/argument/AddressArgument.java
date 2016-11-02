@@ -1,13 +1,19 @@
 package org.mt.business.api.boundary.service.employee.argument;
 
+import javax.validation.constraints.NotNull;
+
 public class AddressArgument {
 
+    @NotNull(message = "validation_address_street_is_mandatory")
     private String street;
 
+    @NotNull(message = "validation_address_zip_is_mandatory")
     private String zip;
 
+    @NotNull(message = "validation_address_street_is_mandatory")
     private String city;
 
+    @NotNull(message = "validation_address_country_is_mandatory")
     private String country;
 
     /**

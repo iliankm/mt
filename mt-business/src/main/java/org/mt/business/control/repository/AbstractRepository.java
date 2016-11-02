@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -42,7 +43,7 @@ public abstract class AbstractRepository<EC extends IdentifiableObject> {
 
     public abstract Class<EC> getEntityClazz();
 
-    public void save(EC entity) {
+    public void save(@Valid EC entity) {
 
 	Objects.requireNonNull(entity);
 

@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.mt.business.api.boundary.service.employee.EmployeeService;
 import org.mt.business.api.boundary.service.employee.argument.CreateUpdateEmployeeArgument;
@@ -35,7 +36,7 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public Employee create(CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+    public Employee create(@Valid CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
 	Objects.requireNonNull(createUpdateEmployeeArgument);
 
@@ -62,7 +63,7 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public void update(String employeeId, CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
+    public void update(String employeeId, @Valid CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
 	Objects.requireNonNull(employeeId);
 

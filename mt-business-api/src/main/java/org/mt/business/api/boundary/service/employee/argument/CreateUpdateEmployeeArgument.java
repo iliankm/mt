@@ -3,6 +3,11 @@ package org.mt.business.api.boundary.service.employee.argument;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.mt.business.api.domain.RegExp;
 import org.mt.business.api.domain.employee.Gender;
 
 /**
@@ -11,14 +16,20 @@ import org.mt.business.api.domain.employee.Gender;
  */
 public class CreateUpdateEmployeeArgument {
 
+    @NotNull(message = "validation_employee_name_is_mandatory")
     private String name;
 
+    @NotNull(message = "validation_employee_gender_is_mandatory")
     private Gender gender;
 
+    @NotNull(message = "validation_employee_address_is_mandatory")
+    @Valid
     private AddressArgument address;
 
+    @Pattern(regexp = RegExp.EMAIL, message = "validation_employee_email_invalid")
     private String email;
 
+    @Valid
     private List<PhoneArgument> phones;
 
     /**

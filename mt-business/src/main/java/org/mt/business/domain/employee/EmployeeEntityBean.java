@@ -14,6 +14,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mt.business.api.domain.RegExp;
 import org.mt.business.api.domain.employee.Address;
 import org.mt.business.api.domain.employee.Employee;
 import org.mt.business.api.domain.employee.Gender;
@@ -40,7 +41,7 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
     @Embedded
     private AddressEntityBean address;
 
-    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message = "validation_employee_email_invalid")
+    @Pattern(regexp = RegExp.EMAIL, message = "validation_employee_email_invalid")
     @Indexed
     private String email;
 
