@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -27,7 +26,12 @@ import org.mt.business.domain.BaseEntityBean;
  */
 @Entity(value = "employee", noClassnameStored = false)
 public class EmployeeEntityBean extends BaseEntityBean implements Employee {
+
     private static final long serialVersionUID = -2454104054295746441L;
+
+    @NotNull(message = "validation_employee_id_number_is_mandatory")
+    @Indexed(unique = true)
+    private String identificationNumber;
 
     @NotNull(message = "validation_employee_name_is_mandatory")
     @Indexed
@@ -36,21 +40,17 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
     @NotNull(message = "validation_employee_gender_is_mandatory")
     private Gender gender;
 
-    @NotNull(message = "validation_employee_address_is_mandatory")
-    @Valid
-    @Embedded
-    private AddressEntityBean address;
-
     @Pattern(regexp = RegExp.EMAIL, message = "validation_employee_email_invalid")
     @Indexed
     private String email;
 
+    @Valid
+    @Embedded
+    private AddressEntityBean address;
+
     @Embedded
     @Valid
     private List<PhoneEntityBean> phones;
-
-    @Min(value = 0, message = "validation_employee_salary_invalid")
-    private long salary;
 
     private Set<ObjectId> substituteIds;
 
@@ -62,12 +62,12 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
 
     private EmployeeEntityBean(Builder builder) {
 
+	this.identificationNumber = builder.identificationNumber;
 	this.name = builder.name;
 	this.gender = builder.gender;
 	this.address = builder.address;
 	this.email = builder.email;
 	this.phones = Collections.unmodifiableList(builder.phones);
-	this.salary = builder.salary;
 	this.substituteIds = builder.substituteIds != null
 		? builder.substituteIds.stream().map(sid -> new ObjectId(sid)).collect(Collectors.toSet()) : null;
     }
@@ -77,17 +77,23 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
      */
     public static class Builder {
 
+	private String identificationNumber;
 	private String name;
 	private Gender gender;
 	private AddressEntityBean address;
 	private String email;
 	private List<PhoneEntityBean> phones;
-	private long salary;
 	private Set<String> substituteIds;
 
 	public static Builder get() {
 
 	    return new Builder();
+	}
+
+	public Builder identificationNumber(String identificationNumber) {
+
+	    this.identificationNumber = identificationNumber;
+	    return this;
 	}
 
 	public Builder name(String name) {
@@ -120,11 +126,6 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
 	    return this;
 	}
 
-	public Builder salary(long salary) {
-
-	    this.salary = salary;
-	    return this;
-	}
 
 	public Builder substituteIds(Set<String> substituteIds) {
 
@@ -169,9 +170,9 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
     }
 
     @Override
-    public long getSalary() {
+    public String getIdentificationNumber() {
 
-	return salary;
+	return identificationNumber;
     }
 
     @Override

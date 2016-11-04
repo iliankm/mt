@@ -7,18 +7,17 @@ import org.mt.business.api.domain.IdentifiableObject;
 
 public interface Employee extends IdentifiableObject {
 
-    public String getName();
+    String getIdentificationNumber();
 
-    public Gender getGender();
+    String getName();
 
-    public Address getAddress();
+    Gender getGender();
 
-    public String getEmail();
+    Address getAddress();
 
-    public List<? extends Phone> getPhones();
+    String getEmail();
 
-    public long getSalary();
+    List<? extends Phone> getPhones();
 
-    public Set<String> getSubstituteIds();
-
+    Set<String> getSubstituteIds();
 }

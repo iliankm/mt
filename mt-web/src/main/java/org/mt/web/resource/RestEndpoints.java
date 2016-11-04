@@ -10,4 +10,8 @@ public interface RestEndpoints {
 
     String EMPLOYEE = "{id}";
 
+    String EMPLOYEE_ADDRESS = "{id}/address";
+
+    String EMPLOYEE_PHONES = "{id}/phones";
+
 }

@@ -1,5 +1,6 @@
 package org.mt.business.boundary.service.employee;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -8,7 +9,9 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.mt.business.api.boundary.service.employee.EmployeeService;
+import org.mt.business.api.boundary.service.employee.argument.AddressArgument;
 import org.mt.business.api.boundary.service.employee.argument.CreateUpdateEmployeeArgument;
+import org.mt.business.api.boundary.service.employee.argument.PhoneArgument;
 import org.mt.business.api.domain.employee.Employee;
 import org.mt.business.api.exception.ResourceNotFoundException;
 import org.mt.business.control.repository.employee.EmployeeRepository;
@@ -40,21 +43,11 @@ public class EmployeeServiceBean implements EmployeeService {
 
 	Objects.requireNonNull(createUpdateEmployeeArgument);
 
-	// create AddressEntityBean
-	final AddressEntityBean address = AddressEntityBean.Builder.get()
-		.country(createUpdateEmployeeArgument.getAddress().getCountry())
-		.city(createUpdateEmployeeArgument.getAddress().getCity())
-		.street(createUpdateEmployeeArgument.getAddress().getStreet())
-		.zip(createUpdateEmployeeArgument.getAddress().getZip()).build();
-
-	// create list of PhoneEntityBean-s
-	final List<PhoneEntityBean> phones = createUpdateEmployeeArgument.getPhones().stream()
-		.map(p -> new PhoneEntityBean(p.getType(), p.getPhone())).collect(Collectors.toList());
-
 	// create EmployeeEntityBean
 	final EmployeeEntityBean employee = EmployeeEntityBean.Builder.get()
+		.identificationNumber(createUpdateEmployeeArgument.getIdentificationNumber())
 		.name(createUpdateEmployeeArgument.getName()).email(createUpdateEmployeeArgument.getEmail())
-		.gender(createUpdateEmployeeArgument.getGender()).address(address).phones(phones).build();
+		.gender(createUpdateEmployeeArgument.getGender()).build();
 
 	// persist employee
 	employeeRepository.save(employee);
@@ -70,6 +63,40 @@ public class EmployeeServiceBean implements EmployeeService {
 	Objects.requireNonNull(createUpdateEmployeeArgument);
 
 	final int updatedCount = employeeRepository.update(employeeId, createUpdateEmployeeArgument);
+
+	if (updatedCount == 0) {
+	    throw new ResourceNotFoundException();
+	}
+    }
+
+    @Override
+    public void update(String employeeId, @Valid AddressArgument addressArgument) {
+
+	Objects.requireNonNull(employeeId);
+
+	Objects.requireNonNull(addressArgument);
+
+	final AddressEntityBean address = AddressEntityBean.Builder.get().country(addressArgument.getCountry())
+		.city(addressArgument.getCity()).street(addressArgument.getStreet()).zip(addressArgument.getZip())
+		.build();
+
+	final int updatedCount = employeeRepository.update(employeeId, address);
+
+	if (updatedCount == 0) {
+	    throw new ResourceNotFoundException();
+	}
+    }
+
+    @Override
+    public void update(String employeeId, @Valid List<PhoneArgument> phonesArgument) {
+
+	Objects.requireNonNull(employeeId);
+
+	final List<PhoneEntityBean> phones = phonesArgument == null ? Collections.emptyList()
+		: phonesArgument.stream().map(pa -> new PhoneEntityBean(pa.getType(), pa.getPhone()))
+			.collect(Collectors.toList());
+
+	final int updatedCount = employeeRepository.update(employeeId, phones);
 
 	if (updatedCount == 0) {
 	    throw new ResourceNotFoundException();

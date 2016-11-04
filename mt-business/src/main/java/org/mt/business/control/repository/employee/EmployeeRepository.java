@@ -1,5 +1,6 @@
 package org.mt.business.control.repository.employee;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +23,9 @@ import org.mt.business.api.boundary.service.employee.argument.CreateUpdateEmploy
 import org.mt.business.api.domain.SortCriteria;
 import org.mt.business.api.domain.employee.EmployeeSearchCriteria;
 import org.mt.business.control.repository.AbstractRepository;
+import org.mt.business.domain.employee.AddressEntityBean;
 import org.mt.business.domain.employee.EmployeeEntityBean;
+import org.mt.business.domain.employee.PhoneEntityBean;
 
 @CacheDefaults(cacheName = "EMPLOYEE_CACHE")
 public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
@@ -105,15 +108,51 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
 	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
 
+	ops.set("identificationNumber", createUpdateEmployeeArgument.getIdentificationNumber());
+
 	ops.set("name", createUpdateEmployeeArgument.getName());
 
 	ops.set("email", createUpdateEmployeeArgument.getEmail());
 
 	ops.set("gender", createUpdateEmployeeArgument.getGender());
 
-	ops.set("address", createUpdateEmployeeArgument.getAddress());
+	ops.set("lastModifiedDate", new Date());
 
-	ops.set("phones", createUpdateEmployeeArgument.getPhones());
+	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
+
+	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
+
+	return updateResults.getUpdatedCount();
+    }
+
+    @CacheRemoveAll
+    public int update(String id, @Valid AddressEntityBean address) {
+
+	Objects.requireNonNull(id);
+
+	Objects.requireNonNull(address);
+
+	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
+
+	ops.set("address", address);
+
+	ops.set("lastModifiedDate", new Date());
+
+	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
+
+	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
+
+	return updateResults.getUpdatedCount();
+    }
+
+    @CacheRemoveAll
+    public int update(String id, @Valid List<PhoneEntityBean> phones) {
+
+	Objects.requireNonNull(id);
+
+	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
+
+	ops.set("phones", phones != null ? phones : Collections.emptyList());
 
 	ops.set("lastModifiedDate", new Date());
 
