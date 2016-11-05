@@ -29,10 +29,11 @@ export class WizardComponent {
 	}
 
 	onSelectStep(event) {
+
 		this.currentStep = event['new'];
 	}
 
-	onStep1Save(event) {
+	onEmployeeCreated(event) {
 
 		if (event['id']) {
 			this.step2Component.employeeId = event['id'];
@@ -41,9 +42,19 @@ export class WizardComponent {
 		}
 	}
 
-	onStep1Next(event) {
+	onStep1Next() {
 
 		this.currentStep = this.step2;
+	}
+
+	onStep2Next() {
+
+		this.currentStep = this.step3;
+	}
+
+	onStep2Back() {
+
+		this.currentStep = this.step1;
 	}
 
 }

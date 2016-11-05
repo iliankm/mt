@@ -26,12 +26,13 @@ export class Step2Component {
 	    this.PHONE_TYPES = PHONE_TYPES;
 	    // added phones
 	    this.phones = [];
-	    // next event - fired when Next button is clisked and data is successfully saved
+	    // next event - fired when Next button is clisked and data is
+		// successfully saved
 	    this.next = new EventEmitter();
 	    // back event - fired when Previous button is clicked
 	    this.back = new EventEmitter();
 
-	    //employee id
+	    // employee id
 	    this.employeeId = null;
 	}
 
@@ -53,15 +54,17 @@ export class Step2Component {
 
 	onNext() {
 
-		this.update().then(r => {
-			this.next.emit();
-		});
+		this.update().then(
+				r => {this.next.emit()},
+				err => {});
 	}
 
 	/**
 	 * Validate data then update employee address.
 	 *
-	 * @return {Promise}
+	 * @return {Promise} - the Promise is resolved if data is updated
+	 *         successfully and rejected if validation failed or some server
+	 *         error occured.
 	 */
 	update() {
 
@@ -71,7 +74,7 @@ export class Step2Component {
 
 		    if (this.validate()) {
 
-				//create Address
+				// create Address
 				let address = new Address({
 			    	street: this.addressForm.value.street,
 			    	zip: this.addressForm.value.zip,
@@ -79,10 +82,13 @@ export class Step2Component {
 			    	country: this.addressForm.value.country
 				});
 
-			    //update employee address
-			    this.employeesService.updateAddress(this.employeeId, address).subscribe(id => {
-			    	resolve();
-			    });
+			    // update employee address
+			    this.employeesService.updateAddress(this.employeeId, address)
+			    	.subscribe(
+			    			id => {resolve()},
+			    			err => {reject()});
+		    } else {
+		    	reject();
 		    }
 	    });
 	}

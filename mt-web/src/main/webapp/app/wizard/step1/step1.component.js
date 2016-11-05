@@ -23,12 +23,12 @@ export class Step1Component {
 	    this.employeesService = employeesService;
 	    // gender types
 	    this.GENDERS = GENDERS;
-	    // save event - fired when data is successfully saved
-	    this.save = new EventEmitter();
-	    // next event - fired when Next is clisked and data is successfully saved
+	    // created event - fired when employee is successfully created
+	    this.created = new EventEmitter();
+	    // next event - fired when Next is clisked and data is successfully
 	    this.next = new EventEmitter();
 
-	    //employee id
+	    // employee id
 	    this.employeeId = null;
 	}
 
@@ -46,16 +46,18 @@ export class Step1Component {
 
 		let me = this;
 
-	    this.createOrUpdate().then(id => {
-	    	me.next.emit();
-	    });
+	    this.createOrUpdate().then(
+	    		id => {me.next.emit()},
+	    		err => {});
 	}
 
 	/**
-	 * Validate data then create (or update) employee. Fire 'save' event if
-	 * data is saved with success.
+	 * Validate data then create (or update) employee. Fire 'save' event if data
+	 * is saved with success.
 	 *
-	 * @return {Promise for string} - id of the created employee
+	 * @return {Promise for string} - The Promise is resolved with id of the
+	 *         created employee. The Promise is rejected if validation failed or
+	 *         some server error occured.
 	 */
 	createOrUpdate() {
 
@@ -65,7 +67,7 @@ export class Step1Component {
 
 		    if (me.validate()) {
 
-				//create CreateUpdateEmployeeArgument
+				// create CreateUpdateEmployeeArgument
 				let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
 					identificationNumber: me.employeeForm.value.idnum,
 					name: me.employeeForm.value.name,
@@ -74,19 +76,23 @@ export class Step1Component {
 				});
 
 				if ($.isEmptyObject(me.employeeId)) {
-				    //create employee
-				    me.employeesService.create(createUpdateEmployeeArgument).subscribe(id => {
-				    	me.employeeId = id;
-				    	me.save.emit({id: id});
-				    	resolve(id);
-				    });
+				    // create employee
+				    me.employeesService.create(createUpdateEmployeeArgument)
+				    	.subscribe(id => {
+					    	me.employeeId = id;
+					    	me.created.emit({id: id});
+					    	resolve(id);
+				    	},
+				    	err => {reject(err)});
 				} else {
-				    //update employee
-				    me.employeesService.update(me.employeeId, createUpdateEmployeeArgument).subscribe(id => {
-				    	me.save.emit({id: id});
-				    	resolve(id);
-				    });
+				    // update employee
+				    me.employeesService.update(me.employeeId, createUpdateEmployeeArgument)
+				    	.subscribe(
+				    			id => {resolve(id)},
+				    			err => {reject(err)});
 				}
+		    } else {
+		    	reject();
 		    }
 	    });
 	}
@@ -113,6 +119,6 @@ Step1Component.annotations = [
                             		styleUrls:  [],
                             		directives: [ValidateEmailDirective],
                             		queries: {employeeForm: new ViewChild('employeeForm')},
-                            		outputs: ['save', 'next']
+                            		outputs: ['created', 'next']
                             	})
 ];

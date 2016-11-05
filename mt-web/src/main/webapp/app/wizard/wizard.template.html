@@ -3,9 +3,9 @@
 
 <div class="mt-3">
 
-	<step1 [hidden]="currentStep.name!==step1.name" (save)="onStep1Save($event)" (next)="onStep1Next($event)"></step1>
+	<step1 [hidden]="currentStep.name!==step1.name" (created)="onEmployeeCreated($event)" (next)="onStep1Next()"></step1>
 
-	<step2 [hidden]="currentStep.name!==step2.name"></step2>
+	<step2 [hidden]="currentStep.name!==step2.name" (next)="onStep2Next()" (back)="onStep2Back()"></step2>
 
 	<step3 [hidden]="currentStep.name!==step3.name"></step3>
 
