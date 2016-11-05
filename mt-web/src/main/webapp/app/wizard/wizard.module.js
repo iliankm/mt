@@ -10,6 +10,7 @@ import {WizardStepComponent} from 'app/wizard/wizard-steps/wizard-step.component
 import {Step1Component} from 'app/wizard/step1/step1.component';
 import {Step2Component} from 'app/wizard/step2/step2.component';
 import {Step3Component} from 'app/wizard/step3/step3.component';
+import {Step4Component} from 'app/wizard/step4/step4.component';
 
 export class WizardModule {
 
@@ -26,7 +27,8 @@ WizardModule.annotations = [
                    		               			WizardStepsComponent,
                        		               		Step1Component,
                        		               		Step2Component,
-                       		               		Step3Component
+                       		               		Step3Component,
+                       		               		Step4Component
                         		              ],
 
                           		exports: [
@@ -35,7 +37,8 @@ WizardModule.annotations = [
                		               			WizardStepsComponent,
                    		               		Step1Component,
                    		               		Step2Component,
-                   		               		Step3Component
+                   		               		Step3Component,
+                   		               		Step4Component
                    		               	  ],
 
                         		providers: []

@@ -1,12 +1,8 @@
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
-import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
-import {PHONE_TYPES, Phone} from 'app/commons/services/employees/phone.model.js';
-import {Address} from 'app/commons/services/employees/address.model.js';
 import {CreateUpdateEmployeeArgument} from 'app/commons/services/employees/create-update-employee.argument.js';
 import {GENDERS} from 'app/commons/services/employees/employee.model.js';
 
@@ -25,14 +21,12 @@ export class Step1Component {
 	    this.RES = messagesService;
 	    // EmployeesService from DI
 	    this.employeesService = employeesService;
-	    // phone types
-	    this.PHONE_TYPES = PHONE_TYPES;
 	    // gender types
 	    this.GENDERS = GENDERS;
-	    // added phones
-	    this.phones = [];
 	    // save event - fired when data is successfully saved
 	    this.save = new EventEmitter();
+	    // next event - fired when Next is clisked and data is successfully saved
+	    this.next = new EventEmitter();
 
 	    //employee id
 	    this.employeeId = null;
@@ -43,17 +37,6 @@ export class Step1Component {
 	    $('[data-toggle="tooltip"]').tooltip();
 	}
 
-	onPhoneFormSubmit(form) {
-
-	    this.phones.push({phone: form.value.phoneNumber, type: form.value.phoneType});
-	    form.reset();
-	}
-
-	onDeletePhone(ind) {
-
-	    this.phones.splice(ind, 1);
-	}
-
 	onCancel() {
 
 	    this.router.navigate(['/list/all'])
@@ -61,46 +44,51 @@ export class Step1Component {
 
 	onNext() {
 
-	    this.createOrUpdate();
+		let me = this;
+
+	    this.createOrUpdate().then(id => {
+	    	me.next.emit();
+	    });
 	}
 
 	/**
 	 * Validate data then create (or update) employee. Fire 'save' event if
 	 * data is saved with success.
+	 *
+	 * @return {Promise for string} - id of the created employee
 	 */
 	createOrUpdate() {
 
 	    let me = this;
 
-	    if (this.validate()) {
+	    return new Promise((resolve, reject) => {
 
-			//create CreateUpdateEmployeeArgument
-			let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
-			    name: this.employeeForm.value.name,
-			    gender: this.employeeForm.value.gender,
-			    address: {
-			    	street: this.employeeForm.value.street,
-			    	zip: this.employeeForm.value.zip,
-			    	city: this.employeeForm.value.city,
-			    	country: this.employeeForm.value.country
-			    },
-			    email: this.employeeForm.value.email,
-			    phones: this.phones
-			});
+		    if (me.validate()) {
 
-			if ($.isEmptyObject(this.employeeId)) {
-			    //create employee
-			    this.employeesService.create(createUpdateEmployeeArgument).subscribe(id => {
-			    	me.employeeId = id;
-			    	this.save.emit({id: id});
-			    });
-			} else {
-			    //update employee
-			    this.employeesService.update(this.employeeId, createUpdateEmployeeArgument).subscribe(id => {
-			    	this.save.emit({id: id});
-			    });
-			}
-	    }
+				//create CreateUpdateEmployeeArgument
+				let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
+					identificationNumber: me.employeeForm.value.idnum,
+					name: me.employeeForm.value.name,
+				    gender: me.employeeForm.value.gender,
+				    email: me.employeeForm.value.email
+				});
+
+				if ($.isEmptyObject(me.employeeId)) {
+				    //create employee
+				    me.employeesService.create(createUpdateEmployeeArgument).subscribe(id => {
+				    	me.employeeId = id;
+				    	me.save.emit({id: id});
+				    	resolve(id);
+				    });
+				} else {
+				    //update employee
+				    me.employeesService.update(me.employeeId, createUpdateEmployeeArgument).subscribe(id => {
+				    	me.save.emit({id: id});
+				    	resolve(id);
+				    });
+				}
+		    }
+	    });
 	}
 
 	/**
@@ -111,7 +99,7 @@ export class Step1Component {
 	validate() {
 
 	    $.each(this.employeeForm.controls, (k, v) => {
-		if (v.markAsTouched) {v.markAsTouched()}
+	    	if (v.markAsTouched) {v.markAsTouched()}
 	    });
 
 	    return this.employeeForm.valid;
@@ -123,8 +111,8 @@ Step1Component.annotations = [
                             		selector: 'step1',
                             		templateUrl: 'app/wizard/step1/step1.template.html',
                             		styleUrls:  [],
-                            		directives: [CountrySelectComponent, ValidateEmailDirective, ValidatePhoneDirective],
+                            		directives: [ValidateEmailDirective],
                             		queries: {employeeForm: new ViewChild('employeeForm')},
-                            		outputs: ['save']
+                            		outputs: ['save', 'next']
                             	})
 ];

@@ -67,7 +67,7 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
 	this.gender = builder.gender;
 	this.address = builder.address;
 	this.email = builder.email;
-	this.phones = Collections.unmodifiableList(builder.phones);
+	this.phones = builder.phones != null ? Collections.unmodifiableList(builder.phones) : null;
 	this.substituteIds = builder.substituteIds != null
 		? builder.substituteIds.stream().map(sid -> new ObjectId(sid)).collect(Collectors.toSet()) : null;
     }

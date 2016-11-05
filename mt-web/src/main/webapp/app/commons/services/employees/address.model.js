@@ -10,21 +10,21 @@ export class Address {
      * @param {string} data.country - country
      */
     constructor(data) {
-	this.street = data && data.street || null;
-	this.zip = data && data.zip || null;
-	this.city = data && data.city || null;
-	this.country = data && data.country || null;
+    	this.street = data && data.street || null;
+    	this.zip = data && data.zip || null;
+    	this.city = data && data.city || null;
+    	this.country = data && data.country || null;
     }
 
     /**
      * @return {Object}
      */
     toJSON() {
-	return {
-	    street: this.street,
-	    zip: this.zip,
-	    city: this.city,
-	    country: this.country
-	};
+		return {
+		    street: this.street,
+		    zip: this.zip,
+		    city: this.city,
+		    country: this.country
+		};
     }
 }

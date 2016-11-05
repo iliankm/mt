@@ -112,7 +112,11 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
 
 	ops.set("name", createUpdateEmployeeArgument.getName());
 
-	ops.set("email", createUpdateEmployeeArgument.getEmail());
+	if (createUpdateEmployeeArgument.getEmail() != null) {
+	    ops.set("email", createUpdateEmployeeArgument.getEmail());
+	} else {
+	    ops.unset("email");
+	}
 
 	ops.set("gender", createUpdateEmployeeArgument.getGender());
 

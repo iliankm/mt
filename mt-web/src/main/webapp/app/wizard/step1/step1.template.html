@@ -30,50 +30,14 @@
 		</div>
 	</div>
 
-	<!-- Address -->
-	<div class="form-group row required">
-		<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.address')}}</label>
+	<!-- Identification number -->
+	<div class="form-group row required"
+		[class.has-danger]="idnum.errors && (idnum.dirty || idnum.touched)">
+		<label for="idnum" class="col-xs-2 col-form-label">{{RES.get('wizard.employee.id_num')}}</label>
 		<div class="col-xs-8">
-			<div class="form-group row">
-				<!-- Country -->
-				<div class="col-xs-6"
-					[class.has-danger]="country.errors && (country.dirty || country.touched)">
-					<country-select name="country" #country="ngModel"
-						ngModel required></country-select>
-					<div class="form-control-feedback"
-						*ngIf="country.errors && (country.dirty || country.touched)">{{RES.get('commons.required_field')}}</div>
-					<small class="form-text text-muted">{{RES.get('wizard.employee.address.country.help_text')}}</small>
-				</div>
-				<!-- City -->
-				<div class="col-xs-6"
-					[class.has-danger]="city.errors && (city.dirty || city.touched)">
-					<input class="form-control" type="text" required maxlength="50"
-						name="city" #city="ngModel" ngModel>
-					<div class="form-control-feedback"
-						*ngIf="city.errors && (city.dirty || city.touched)">{{RES.get('commons.required_field')}}</div>
-					<small class="form-text text-muted">{{RES.get('wizard.employee.address.city.help_text')}}</small>
-				</div>
-			</div>
-			<div class="form-group row">
-				<!-- Street -->
-				<div class="col-xs-6"
-					[class.has-danger]="street.errors && (street.dirty || street.touched)">
-					<input class="form-control" type="text" required maxlength="100"
-						name="street" #street="ngModel" ngModel>
-					<div class="form-control-feedback"
-						*ngIf="street.errors && (street.dirty || street.touched)">{{RES.get('commons.required_field')}}</div>
-					<small class="form-text text-muted">{{RES.get('wizard.employee.address.street.help_text')}}</small>
-				</div>
-				<!-- ZIP -->
-				<div class="col-xs-6"
-					[class.has-danger]="zip.errors && (zip.dirty || zip.touched)">
-					<input class="form-control" type="text" required maxlength="10"
-						name="zip" #zip="ngModel" ngModel>
-					<div class="form-control-feedback"
-						*ngIf="zip.errors && (zip.dirty || zip.touched)">{{RES.get('commons.required_field')}}</div>
-					<small class="form-text text-muted">{{RES.get('wizard.employee.address.zip.help_text')}}</small>
-				</div>
-			</div>
+			<input class="form-control" type="text" required maxlength="20" name="idnum" #idnum="ngModel" ngModel>
+			<div class="form-control-feedback" *ngIf="idnum.errors && (idnum.dirty || idnum.touched)">{{RES.get('commons.required_field')}}</div>
+			<small class="form-text text-muted">{{RES.get('wizard.employee.id_num.help_text')}}</small>
 		</div>
 	</div>
 
@@ -91,70 +55,6 @@
 	</div>
 
 </form>
-
-<!-- Phone form -->
-<form #phoneForm="ngForm" (ngSubmit)="onPhoneFormSubmit(phoneForm)">
-
-	<div class="form-group row">
-		<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.phones')}}</label>
-		<div class="col-xs-8">
-			<div class="form-group row">
-				<!-- Phone Number -->
-				<div class="col-xs-3"
-					[class.has-danger]="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)">
-					<input class="form-control" type="text" required validatePhone maxlength="50"
-						name="phoneNumber" #phoneNumber="ngModel" ngModel>
-					<div class="form-control-feedback"
-						*ngIf="phoneNumber.errors && phoneNumber.errors.required && (phoneNumber.dirty || phoneNumber.touched)">{{RES.get('commons.required_field')}}</div>
-					<div class="form-control-feedback"
-						*ngIf="phoneNumber.errors && phoneNumber.errors.validatePhone && (phoneNumber.dirty || phoneNumber.touched)">{{RES.get('commons.invalid_phone')}}</div>
-					<small class="form-text text-muted">{{RES.get('wizard.employee.phones.number.help_text')}}</small>
-				</div>
-				<!-- Phone Type -->
-				<div class="col-xs-3"
-					[class.has-danger]="phoneType.errors && (phoneType.dirty || phoneType.touched)">
-					<select class="form-control" required name="phoneType"
-						#phoneType="ngModel" ngModel>
-						<option value="{{PHONE_TYPES.MOBILE}}">{{RES.get('wizard.employee.phones.mobile')}}</option>
-						<option value="{{PHONE_TYPES.LANDLINE}}">{{RES.get('wizard.employee.phones.landline')}}</option>
-					</select>
-					<div class="form-control-feedback"
-						*ngIf="phoneType.errors && (phoneType.dirty || phoneType.touched)">{{RES.get('commons.required_field')}}</div>
-					<small class="form-text text-muted">{{RES.get('wizard.employee.phones.type.help_text')}}</small>
-				</div>
-				<!-- Phone add button -->
-				<div class="col-xs-3">
-					<button type="submit" class="btn btn-secondary"	[disabled]="!phoneForm.form.valid">{{RES.get('commons.add')}}</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-</form>
-
-<!-- Phones list -->
-<div class="row">
-	<div class="offset-xs-2 col-xs-4">
-		<!-- Empty phones list tag -->
-		<span class="tag tag-info" *ngIf="!phones || phones.length == 0">{{RES.get('wizard.employee.phones.no_phones_added')}}</span>
-
-		<!-- Phones list -->
-		<div class="list-group" *ngIf="phones && phones.length > 0">
-			<a class="list-group-item list-group-item-action" *ngFor="let p of phones; let i = index">
-				<div class="row">
-					<div class="col-xs-10">
-						<h5 class="list-group-item-heading">{{p.phone}}</h5>
-					</div>
-					<div class="col-xs-2">
-						<button type="button" class="btn btn-sm btn-outline-danger" (click)="onDeletePhone(i)">&#10060;</button>
-					</div>
-				</div>
-				<p class="list-group-item-text" *ngIf="p.type==PHONE_TYPES.MOBILE">{{RES.get('wizard.employee.phones.mobile')}}</p>
-				<p class="list-group-item-text" *ngIf="p.type==PHONE_TYPES.LANDLINE">{{RES.get('wizard.employee.phones.landline')}}</p>
-			</a>
-		</div>
-	</div>
-</div>
 
 <!-- Buttons -->
 <div class="row mt-3">
