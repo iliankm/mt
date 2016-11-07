@@ -11,14 +11,14 @@ export class EmployeesService extends BaseService {
 
     constructor(http) {
 
-	super();
+        super();
 
-	this.http = http;
+        this.http = http;
     }
 
     static get parameters() {
 
-	return [[Http]];
+        return [[Http]];
     }
 
     /**
@@ -30,9 +30,9 @@ export class EmployeesService extends BaseService {
      */
     create(createUpdateEmployeeArgument) {
 
-	return this.http.post(ENDPOINT_EMPLOYEES, createUpdateEmployeeArgument.toJSON())
-		.map(r => r.text())
-		.catch(this.handleError);
+        return this.http.post(ENDPOINT_EMPLOYEES, createUpdateEmployeeArgument.toJSON())
+            .map(r => r.text())
+            .catch(this.handleError);
     }
 
     /**
@@ -45,9 +45,9 @@ export class EmployeesService extends BaseService {
      */
     update(id, createUpdateEmployeeArgument) {
 
-	return this.http.put(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
-		.map(r => r.text())
-		.catch(this.handleError);
+        return this.http.put(ENDPOINT_EMPLOYEES + "/" + id, createUpdateEmployeeArgument.toJSON())
+            .map(r => r.text())
+            .catch(this.handleError);
     }
 
     /**
@@ -59,9 +59,9 @@ export class EmployeesService extends BaseService {
      */
     updateAddress(id, address) {
 
-	return this.http.put(ENDPOINT_EMPLOYEES + "/" + id + "/address", address.toJSON())
-		.map(r => r.text())
-		.catch(this.handleError);
+        return this.http.put(ENDPOINT_EMPLOYEES + "/" + id + "/address", address.toJSON())
+            .map(r => r.text())
+            .catch(this.handleError);
     }
 
     /**
@@ -73,11 +73,11 @@ export class EmployeesService extends BaseService {
      */
     updatePhones(id, phones) {
 
-	let phonesJSON = phones ? phones.map(p => p.toJSON()) : [];
+        let phonesJSON = phones ? phones.map(p => p.toJSON()) : [];
 
-	return this.http.put(ENDPOINT_EMPLOYEES + "/" + id + "/phones", phonesJSON)
-		.map(r => r.text())
-		.catch(this.handleError);
+        return this.http.put(ENDPOINT_EMPLOYEES + "/" + id + "/phones", phonesJSON)
+            .map(r => r.text())
+            .catch(this.handleError);
     }
 }
 

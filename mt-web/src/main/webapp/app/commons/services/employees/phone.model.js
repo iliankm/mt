@@ -1,6 +1,6 @@
 export const PHONE_TYPES = {
-	MOBILE: "MOBILE",
-	LANDLINE: "LANDLINE"
+    MOBILE: "MOBILE",
+    LANDLINE: "LANDLINE"
 }
 
 export class Phone {
@@ -13,17 +13,19 @@ export class Phone {
      * @param {string} data.phone - phone number
      */
     constructor(data) {
-	this.type = data && data.type || null;
-	this.phone = data && data.phone || null;
+
+        this.type = data && data.type || null;
+        this.phone = data && data.phone || null;
     }
 
     /**
      * @return {Object}
      */
     toJSON() {
-	return {
-	    type: this.type,
-	    phone: this.phone
-	};
+
+        return {
+            type: this.type,
+            phone: this.phone
+        };
     }
 }

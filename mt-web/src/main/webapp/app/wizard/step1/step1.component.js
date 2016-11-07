@@ -8,117 +8,118 @@ import {GENDERS} from 'app/commons/services/employees/employee.model.js';
 
 export class Step1Component {
 
-	static get parameters() {
+    static get parameters() {
 
-	    return [[Router], [MessagesService], [EmployeesService]];
-	}
+        return [[Router], [MessagesService], [EmployeesService]];
+    }
 
-	constructor(router, messagesService, employeesService) {
+    constructor(router, messagesService, employeesService) {
 
-	    // Router from DI
-	    this.router = router;
-	    // MessageService from DI
-	    this.RES = messagesService;
-	    // EmployeesService from DI
-	    this.employeesService = employeesService;
-	    // gender types
-	    this.GENDERS = GENDERS;
-	    // created event - fired when employee is successfully created
-	    this.created = new EventEmitter();
-	    // next event - fired when Next is clisked and data is successfully
-	    this.next = new EventEmitter();
+        // Router from DI
+        this.router = router;
+        // MessageService from DI
+        this.RES = messagesService;
+        // EmployeesService from DI
+        this.employeesService = employeesService;
+        // gender types
+        this.GENDERS = GENDERS;
+        // created event - fired when employee is successfully created
+        this.created = new EventEmitter();
+        // next event - fired when Next is clisked and data is successfully
+        this.next = new EventEmitter();
 
-	    // employee id
-	    this.employeeId = null;
-	}
+        // employee id
+        this.employeeId = null;
+    }
 
-	ngAfterViewInit() {
-	    // initialize tooltips
-	    $('[data-toggle="tooltip"]').tooltip();
-	}
+    ngAfterViewInit() {
 
-	onCancel() {
+        // initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+    }
 
-	    this.router.navigate(['/list/all'])
-	}
+    onCancel() {
 
-	onNext() {
+        this.router.navigate(['/list/all'])
+    }
 
-		let me = this;
+    onNext() {
 
-	    this.createOrUpdate().then(
-	    		id => {me.next.emit()},
-	    		err => {});
-	}
+        let me = this;
 
-	/**
-	 * Validate data then create (or update) employee. Fire 'save' event if data
-	 * is saved with success.
-	 *
-	 * @return {Promise for string} - The Promise is resolved with id of the
-	 *         created employee. The Promise is rejected if validation failed or
-	 *         some server error occured.
-	 */
-	createOrUpdate() {
+        this.createOrUpdate().then(
+                id => {me.next.emit()},
+                err => {});
+    }
 
-	    let me = this;
+    /**
+     * Validate data then create (or update) employee. Fire 'save' event if data
+     * is saved with success.
+     *
+     * @return {Promise for string} - The Promise is resolved with id of the
+     *         created employee. The Promise is rejected if validation failed or
+     *         some server error occured.
+     */
+    createOrUpdate() {
 
-	    return new Promise((resolve, reject) => {
+        let me = this;
 
-		    if (me.validate()) {
+        return new Promise((resolve, reject) => {
 
-				// create CreateUpdateEmployeeArgument
-				let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
-					identificationNumber: me.employeeForm.value.idnum,
-					name: me.employeeForm.value.name,
-				    gender: me.employeeForm.value.gender,
-				    email: me.employeeForm.value.email
-				});
+            if (me.validate()) {
 
-				if ($.isEmptyObject(me.employeeId)) {
-				    // create employee
-				    me.employeesService.create(createUpdateEmployeeArgument)
-				    	.subscribe(id => {
-					    	me.employeeId = id;
-					    	me.created.emit({id: id});
-					    	resolve(id);
-				    	},
-				    	err => {reject(err)});
-				} else {
-				    // update employee
-				    me.employeesService.update(me.employeeId, createUpdateEmployeeArgument)
-				    	.subscribe(
-				    			id => {resolve(id)},
-				    			err => {reject(err)});
-				}
-		    } else {
-		    	reject();
-		    }
-	    });
-	}
+                // create CreateUpdateEmployeeArgument
+                let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
+                    identificationNumber: me.employeeForm.value.idnum,
+                    name: me.employeeForm.value.name,
+                    gender: me.employeeForm.value.gender,
+                    email: me.employeeForm.value.email
+                });
 
-	/**
-	 * Validate step 1 data
-	 *
-	 * @return {boolean} true if data is valid, false otherwise
-	 */
-	validate() {
+                if ($.isEmptyObject(me.employeeId)) {
+                    // create employee
+                    me.employeesService.create(createUpdateEmployeeArgument)
+                        .subscribe(id => {
+                            me.employeeId = id;
+                            me.created.emit({id: id});
+                            resolve(id);
+                        },
+                        err => {reject(err)});
+                } else {
+                    // update employee
+                    me.employeesService.update(me.employeeId, createUpdateEmployeeArgument)
+                        .subscribe(
+                                id => {resolve(id)},
+                                err => {reject(err)});
+                }
+            } else {
+                reject();
+            }
+        });
+    }
 
-	    $.each(this.employeeForm.controls, (k, v) => {
-	    	if (v.markAsTouched) {v.markAsTouched()}
-	    });
+    /**
+     * Validate step 1 data
+     *
+     * @return {boolean} true if data is valid, false otherwise
+     */
+    validate() {
 
-	    return this.employeeForm.valid;
-	}
+        $.each(this.employeeForm.controls, (k, v) => {
+            if (v.markAsTouched) {v.markAsTouched()}
+        });
+
+        return this.employeeForm.valid;
+    }
 }
 
 Step1Component.annotations = [
-                            	new Component({
-                            		selector: 'step1',
-                            		templateUrl: 'app/wizard/step1/step1.template.html',
-                            		styleUrls:  [],
-                            		directives: [ValidateEmailDirective],
-                            		queries: {employeeForm: new ViewChild('employeeForm')},
-                            		outputs: ['created', 'next']
-                            	})
+                                new Component({
+                                    selector: 'step1',
+                                    templateUrl: 'app/wizard/step1/step1.template.html',
+                                    styleUrls:  [],
+                                    directives: [ValidateEmailDirective],
+                                    queries: {employeeForm: new ViewChild('employeeForm')},
+                                    outputs: ['created', 'next']
+                                })
 ];

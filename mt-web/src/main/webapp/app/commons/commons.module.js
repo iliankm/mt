@@ -16,32 +16,32 @@ export class CommonsModule {
 }
 
 CommonsModule.annotations = [
-                        	new NgModule({
+                            new NgModule({
 
-                        		imports: [FormsModule, BrowserModule, HttpModule],
+                                imports: [FormsModule, BrowserModule, HttpModule],
 
-                        		declarations: [
-                        		               	CountrySelectComponent,
-                        		               	ValidateEmailDirective,
-                        		               	ValidatePhoneDirective
-                        		              ],
+                                declarations: [
+                                                CountrySelectComponent,
+                                                ValidateEmailDirective,
+                                                ValidatePhoneDirective
+                                              ],
 
-                          		exports: [
-                   		               		CountrySelectComponent,
-                   		               		ValidateEmailDirective,
-                   		               		ValidatePhoneDirective
-                   		               	  ],
+                                exports: [
+                                            CountrySelectComponent,
+                                            ValidateEmailDirective,
+                                            ValidatePhoneDirective
+                                          ],
 
-                        		providers: [
-                        		            MessagesService,
-                        		            {
-                        		            	provide: APP_INITIALIZER,
-                        		                useFactory: (messagesService) => () => messagesService.load(),
-                        		                deps: [MessagesService],
-                        		                multi: true
-                        		            },
-                        		            EmployeesService
-                        		            ]
+                                providers: [
+                                            MessagesService,
+                                            {
+                                                provide: APP_INITIALIZER,
+                                                useFactory: (messagesService) => () => messagesService.load(),
+                                                deps: [MessagesService],
+                                                multi: true
+                                            },
+                                            EmployeesService
+                                            ]
 
-                        	})
+                            })
                         ];

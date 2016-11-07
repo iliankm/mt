@@ -17,31 +17,31 @@ export class WizardModule {
 }
 
 WizardModule.annotations = [
-                        	new NgModule({
+                            new NgModule({
 
-                        		imports: [FormsModule, BrowserModule, CommonsModule],
+                                imports: [FormsModule, BrowserModule, CommonsModule],
 
-                        		declarations: [
-                        		               	WizardComponent,
-                  		               			WizardStepComponent,
-                   		               			WizardStepsComponent,
-                       		               		Step1Component,
-                       		               		Step2Component,
-                       		               		Step3Component,
-                       		               		Step4Component
-                        		              ],
+                                declarations: [
+                                                WizardComponent,
+                                                WizardStepComponent,
+                                                WizardStepsComponent,
+                                                Step1Component,
+                                                Step2Component,
+                                                Step3Component,
+                                                Step4Component
+                                              ],
 
-                          		exports: [
-                          		          	WizardComponent,
-               		               			WizardStepComponent,
-               		               			WizardStepsComponent,
-                   		               		Step1Component,
-                   		               		Step2Component,
-                   		               		Step3Component,
-                   		               		Step4Component
-                   		               	  ],
+                                exports: [
+                                            WizardComponent,
+                                            WizardStepComponent,
+                                            WizardStepsComponent,
+                                            Step1Component,
+                                            Step2Component,
+                                            Step3Component,
+                                            Step4Component
+                                          ],
 
-                        		providers: []
+                                providers: []
 
-                        	})
+                            })
                         ];

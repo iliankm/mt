@@ -9,12 +9,12 @@ export class DetailsModule {}
 DetailsModule.annotations = [
                              new NgModule({
 
-                            	 imports: [FormsModule, BrowserModule],
+                                 imports: [FormsModule, BrowserModule],
 
-                            	 declarations: [DetailsComponent],
+                                 declarations: [DetailsComponent],
 
-                            	 exports: [DetailsComponent],
+                                 exports: [DetailsComponent],
 
-                            	 providers: []
+                                 providers: []
                              })
                              ];

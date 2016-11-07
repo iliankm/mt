@@ -4,28 +4,29 @@ import {MessagesService} from 'app/commons/services/messages/messages.service.js
 
 export class AppComponent {
 
-	static get parameters() {
+    static get parameters() {
 
-	    return [[Router], [MessagesService]];
-	}
+        return [[Router], [MessagesService]];
+    }
 
-	constructor(router, messagesService) {
+    constructor(router, messagesService) {
 
-		this.router = router;
+        this.router = router;
 
-		this.RES = messagesService;
-	}
+        this.RES = messagesService;
+    }
 
-	navigateToWizard() {
-		this.router.navigate(['/wizard'])
-	}
+    navigateToWizard() {
+
+        this.router.navigate(['/wizard'])
+    }
 }
 
 AppComponent.annotations = [
-                            	new Component({
-                            		selector: 'mt-app',
-                            		templateUrl: 'app/app.template.html',
-                            		styleUrls:  ['app/app.component.css'],
-                            		directives: [ROUTER_DIRECTIVES]
-                            	})
+                                new Component({
+                                    selector: 'mt-app',
+                                    templateUrl: 'app/app.template.html',
+                                    styleUrls:  ['app/app.component.css'],
+                                    directives: [ROUTER_DIRECTIVES]
+                                })
 ];

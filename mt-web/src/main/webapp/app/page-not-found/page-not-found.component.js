@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 
 export class PageNotFoundComponent {
 
-	constructor() {
-	}
+    constructor() {
+    }
 
 }
 
 PageNotFoundComponent.annotations = [
-                            	new Component({
-                            		selector: 'page-not-found',
-                            		templateUrl: 'app/page-not-found/page-not-found.template.html',
-                            		styleUrls:  []
-                            	})
+                                new Component({
+                                    selector: 'page-not-found',
+                                    templateUrl: 'app/page-not-found/page-not-found.template.html',
+                                    styleUrls:  []
+                                })
 ];

@@ -3,35 +3,35 @@ import {NG_VALIDATORS} from '@angular/forms';
 
 export function validatePhone() {
 
-	let PHONE_REGEXP = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    let PHONE_REGEXP = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-	return (control) => {
+    return (control) => {
 
-		let value = control.value;
+        let value = control.value;
 
-		if (!value) {return null}
+        if (!value) {return null}
 
-		return PHONE_REGEXP.test(value) ? null : {'validatePhone': value};
-	}
+        return PHONE_REGEXP.test(value) ? null : {'validatePhone': value};
+    }
 }
 
 export class ValidatePhoneDirective {
 
-	constructor() {
+    constructor() {
 
-		this.valFn = validatePhone();
-	}
+        this.valFn = validatePhone();
+    }
 
-	validate(control) {
+    validate(control) {
 
-		return this.valFn(control);
-	}
+        return this.valFn(control);
+    }
 }
 
 ValidatePhoneDirective.annotations = [
-                                      	new Directive({
-                                      		selector: '[validatePhone]',
-                                      		providers: [{provide: NG_VALIDATORS, useExisting: ValidatePhoneDirective, multi: true}]
-                                      	})
+                                        new Directive({
+                                            selector: '[validatePhone]',
+                                            providers: [{provide: NG_VALIDATORS, useExisting: ValidatePhoneDirective, multi: true}]
+                                        })
                                       ];
 

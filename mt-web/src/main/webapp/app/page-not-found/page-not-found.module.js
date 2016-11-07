@@ -9,12 +9,12 @@ export class PageNotFoundModule {}
 PageNotFoundModule.annotations = [
                              new NgModule({
 
-                            	 imports: [FormsModule, BrowserModule],
+                                 imports: [FormsModule, BrowserModule],
 
-                            	 declarations: [PageNotFoundComponent],
+                                 declarations: [PageNotFoundComponent],
 
-                            	 exports: [PageNotFoundComponent],
+                                 exports: [PageNotFoundComponent],
 
-                            	 providers: []
+                                 providers: []
                              })
                              ];

@@ -16,22 +16,22 @@ export class AppModule {
 }
 
 AppModule.annotations = [
-                        	new NgModule({
+                            new NgModule({
 
-                        		imports: [
-                        		          BrowserModule,
-                        		          FormsModule,
-                        		          routing,
-                        		          PageNotFoundModule,
-                        		          WizardModule,
-                        		          DetailsModule,
-                        		          ListModule
-                        		          ],
+                                imports: [
+                                          BrowserModule,
+                                          FormsModule,
+                                          routing,
+                                          PageNotFoundModule,
+                                          WizardModule,
+                                          DetailsModule,
+                                          ListModule
+                                          ],
 
-                        		declarations: [AppComponent],
+                                declarations: [AppComponent],
 
-                        		providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+                                providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
 
-                        		bootstrap: [AppComponent]
-                        	})
+                                bootstrap: [AppComponent]
+                            })
                         ];

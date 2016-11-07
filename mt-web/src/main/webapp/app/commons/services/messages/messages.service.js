@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 
 export function formatString() {
+
     // The string containing the format items (e.g. "{0}")
     // will and always has to be the first argument.
     let theString = arguments[0];
@@ -21,30 +22,30 @@ let MESSAGES = {};
 
 export class MessagesService {
 
-	constructor(http) {
+    constructor(http) {
 
-		this.http = http;
-	}
+        this.http = http;
+    }
 
-	static get parameters() {
+    static get parameters() {
 
-	    return [[Http]];
-	}
+        return [[Http]];
+    }
 
-	load() {
+    load() {
 
-		return new Promise((resolve, reject) => {
-			this.http.get('resources/messages').subscribe(res => {
-				MESSAGES = res.json();
-				resolve();
-			});
-		});
-	}
+        return new Promise((resolve, reject) => {
+            this.http.get('resources/messages').subscribe(res => {
+                MESSAGES = res.json();
+                resolve();
+            });
+        });
+    }
 
-	get(key) {
+    get(key) {
 
-		return MESSAGES[key];
-	}
+        return MESSAGES[key];
+    }
 }
 
 MessagesService.annotations = [new Injectable()];

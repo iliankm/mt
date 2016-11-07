@@ -9,12 +9,12 @@ export class ListModule {}
 ListModule.annotations = [
                              new NgModule({
 
-                            	 imports: [FormsModule, BrowserModule],
+                                 imports: [FormsModule, BrowserModule],
 
-                            	 declarations: [ListComponent],
+                                 declarations: [ListComponent],
 
-                            	 exports: [ListComponent],
+                                 exports: [ListComponent],
 
-                            	 providers: []
+                                 providers: []
                              })
                              ];

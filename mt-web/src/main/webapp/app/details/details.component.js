@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 
 export class DetailsComponent {
 
-	constructor() {
-	}
+    constructor() {
+    }
 
 }
 
 DetailsComponent.annotations = [
-                            	new Component({
-                            		selector: 'emp-details',
-                            		templateUrl: 'app/details/details.template.html',
-                            		styleUrls:  []
-                            	})
-];
+                                new Component({
+                                    selector: 'emp-details',
+                                    templateUrl: 'app/details/details.template.html',
+                                    styleUrls:  []
+                                })
+                                ];

@@ -5,46 +5,46 @@ const LIST_FILTERS = ['all', 'archived'];
 
 export class ListComponent {
 
-	constructor(router, route) {
+    constructor(router, route) {
 
-		this.router = router;
+        this.router = router;
 
-		this.route = route;
-	}
+        this.route = route;
+    }
 
-	static get parameters() {
+    static get parameters() {
 
-		return [[Router], [ActivatedRoute]]
-	}
+        return [[Router], [ActivatedRoute]]
+    }
 
-	ngOnInit() {
+    ngOnInit() {
 
-		let me = this;
+        let me = this;
 
-	    this.sub = this.route.params.subscribe(params => {
+        this.sub = this.route.params.subscribe(params => {
 
-	    	let filter = params['filter'];
+            let filter = params['filter'];
 
-	    	if (LIST_FILTERS.indexOf(filter) == -1) {
-	    		me.router.navigate(['/list', LIST_FILTERS[0]]);
-	    	}
-	    	else {
-	    		me.filter = filter;
-	    	}
-	    });
-	}
+            if (LIST_FILTERS.indexOf(filter) == -1) {
+                me.router.navigate(['/list', LIST_FILTERS[0]]);
+            }
+            else {
+                me.filter = filter;
+            }
+        });
+    }
 
-	ngOnDestroy() {
+    ngOnDestroy() {
 
-		  this.sub.unsubscribe();
-	}
+          this.sub.unsubscribe();
+    }
 
 }
 
 ListComponent.annotations = [
-                            	new Component({
-                            		selector: 'emp-list',
-                            		templateUrl: 'app/list/list.template.html',
-                            		styleUrls:  []
-                            	})
+                                new Component({
+                                    selector: 'emp-list',
+                                    templateUrl: 'app/list/list.template.html',
+                                    styleUrls:  []
+                                })
 ];

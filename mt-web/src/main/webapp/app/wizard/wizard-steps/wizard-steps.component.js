@@ -4,72 +4,78 @@ import { WizardStep, WizardStepComponent } from 'app/wizard/wizard-steps/wizard-
 
 export class WizardStepsComponent {
 
-	constructor() {
-		this.wizardSteps = [];
-		this._current = new WizardStep("", "", "", false);
-		this.select = new EventEmitter();
-	}
+    constructor() {
 
-	set current(current) {
-		current.isVisited = true;
-		this._current = current;
-		this._updateCurrentStep(current);
-	}
+        this.wizardSteps = [];
+        this._current = new WizardStep("", "", "", false);
+        this.select = new EventEmitter();
+    }
 
-	get current() {
-		return this._current;
-	}
+    set current(current) {
 
-	_updateCurrentStep(wizardStep) {
-		if (this.stepComponents) {
-			this.stepComponents.forEach(function(cmp){
-				cmp.isCurrent = cmp.wizardStep.name && wizardStep.name && cmp.wizardStep.name === wizardStep.name;
-			});
-		}
-	}
+        current.isVisited = true;
+        this._current = current;
+        this._updateCurrentStep(current);
+    }
 
-	ngAfterViewInit() {
-		setTimeout(()=>{
-			//update current step
-			this._updateCurrentStep(this._current);
+    get current() {
 
-			//calculate and update each step size property
-			if (this.stepComponents && this.stepComponents.length > 0) {
-				let size = Math.floor(12/this.stepComponents.length);
-				size = size >= 1 ? size : 1;
+        return this._current;
+    }
 
-				this.stepComponents.forEach(function(cmp){
-					cmp.size = size;
-				});
-			}
-		});
-	}
+    _updateCurrentStep(wizardStep) {
 
-	onSelect(wizardStep) {
-		var me = this;
+        if (this.stepComponents) {
+            this.stepComponents.forEach(function(cmp){
+                cmp.isCurrent = cmp.wizardStep.name && wizardStep.name && cmp.wizardStep.name === wizardStep.name;
+            });
+        }
+    }
 
-		if (wizardStep.isVisited && me.current.name !== wizardStep.name) {
-			//find current step in the array and reference it
-			let old = $.grep(me.wizardSteps, function(wz){return wz.name === me.current.name})[0];
+    ngAfterViewInit() {
 
-			me.current = wizardStep;
+        setTimeout(()=>{
+            //update current step
+            this._updateCurrentStep(this._current);
 
-			me.select.emit({
-				'old': old,
-				'new': wizardStep
-			});
-		}
-	}
+            //calculate and update each step size property
+            if (this.stepComponents && this.stepComponents.length > 0) {
+                let size = Math.floor(12/this.stepComponents.length);
+                size = size >= 1 ? size : 1;
+
+                this.stepComponents.forEach(function(cmp){
+                    cmp.size = size;
+                });
+            }
+        });
+    }
+
+    onSelect(wizardStep) {
+
+        var me = this;
+
+        if (wizardStep.isVisited && me.current.name !== wizardStep.name) {
+            //find current step in the array and reference it
+            let old = $.grep(me.wizardSteps, function(wz){return wz.name === me.current.name})[0];
+
+            me.current = wizardStep;
+
+            me.select.emit({
+                'old': old,
+                'new': wizardStep
+            });
+        }
+    }
 }
 
 WizardStepsComponent.annotations = [
-                            	new Component({
-                            		selector: 'wizard-steps',
-                            		templateUrl: 'app/wizard/wizard-steps/wizard-steps.template.html',
-                            		styleUrls:  ['app/wizard/wizard-steps/wizard-steps.component.css'],
-                            		directives: [WizardStepComponent],
-                            		queries: {stepComponents: new ViewChildren(WizardStepComponent)},
-                            		inputs: ['wizardSteps', 'current'],
-                            		outputs: ['select']
-                            	})
+                                new Component({
+                                    selector: 'wizard-steps',
+                                    templateUrl: 'app/wizard/wizard-steps/wizard-steps.template.html',
+                                    styleUrls:  ['app/wizard/wizard-steps/wizard-steps.component.css'],
+                                    directives: [WizardStepComponent],
+                                    queries: {stepComponents: new ViewChildren(WizardStepComponent)},
+                                    inputs: ['wizardSteps', 'current'],
+                                    outputs: ['select']
+                                })
 ];

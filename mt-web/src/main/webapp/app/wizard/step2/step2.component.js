@@ -9,112 +9,112 @@ import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/vali
 
 export class Step2Component {
 
-	static get parameters() {
+    static get parameters() {
 
-	    return [[Router], [MessagesService], [EmployeesService]];
-	}
+        return [[Router], [MessagesService], [EmployeesService]];
+    }
 
-	constructor(router, messagesService, employeesService) {
+    constructor(router, messagesService, employeesService) {
 
-	    // Router from DI
-	    this.router = router;
-	    // MessageService from DI
-	    this.RES = messagesService;
-	    // EmployeesService from DI
-	    this.employeesService = employeesService;
-	    // phone types
-	    this.PHONE_TYPES = PHONE_TYPES;
-	    // added phones
-	    this.phones = [];
-	    // next event - fired when Next button is clisked and data is
-		// successfully saved
-	    this.next = new EventEmitter();
-	    // back event - fired when Previous button is clicked
-	    this.back = new EventEmitter();
+        // Router from DI
+        this.router = router;
+        // MessageService from DI
+        this.RES = messagesService;
+        // EmployeesService from DI
+        this.employeesService = employeesService;
+        // phone types
+        this.PHONE_TYPES = PHONE_TYPES;
+        // added phones
+        this.phones = [];
+        // next event - fired when Next button is clisked and data is
+        // successfully saved
+        this.next = new EventEmitter();
+        // back event - fired when Previous button is clicked
+        this.back = new EventEmitter();
 
-	    // employee id
-	    this.employeeId = null;
-	}
+        // employee id
+        this.employeeId = null;
+    }
 
-	onPhoneFormSubmit(form) {
+    onPhoneFormSubmit(form) {
 
-	    this.phones.push({phone: form.value.phoneNumber, type: form.value.phoneType});
-	    form.reset();
-	}
+        this.phones.push({phone: form.value.phoneNumber, type: form.value.phoneType});
+        form.reset();
+    }
 
-	onDeletePhone(ind) {
+    onDeletePhone(ind) {
 
-	    this.phones.splice(ind, 1);
-	}
+        this.phones.splice(ind, 1);
+    }
 
-	onPrevious() {
+    onPrevious() {
 
-		this.back.emit();
-	}
+        this.back.emit();
+    }
 
-	onNext() {
+    onNext() {
 
-		this.update().then(
-				r => {this.next.emit()},
-				err => {});
-	}
+        this.update().then(
+                r => {this.next.emit()},
+                err => {});
+    }
 
-	/**
-	 * Validate data then update employee address.
-	 *
-	 * @return {Promise} - the Promise is resolved if data is updated
-	 *         successfully and rejected if validation failed or some server
-	 *         error occured.
-	 */
-	update() {
+    /**
+     * Validate data then update employee address.
+     *
+     * @return {Promise} - the Promise is resolved if data is updated
+     *         successfully and rejected if validation failed or some server
+     *         error occured.
+     */
+    update() {
 
-	    let me = this;
+        let me = this;
 
-	    return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
-		    if (this.validate()) {
+            if (this.validate()) {
 
-				// create Address
-				let address = new Address({
-			    	street: this.addressForm.value.street,
-			    	zip: this.addressForm.value.zip,
-			    	city: this.addressForm.value.city,
-			    	country: this.addressForm.value.country
-				});
+                // create Address
+                let address = new Address({
+                    street: this.addressForm.value.street,
+                    zip: this.addressForm.value.zip,
+                    city: this.addressForm.value.city,
+                    country: this.addressForm.value.country
+                });
 
-			    // update employee address
-			    this.employeesService.updateAddress(this.employeeId, address)
-			    	.subscribe(
-			    			id => {resolve()},
-			    			err => {reject()});
-		    } else {
-		    	reject();
-		    }
-	    });
-	}
+                // update employee address
+                this.employeesService.updateAddress(this.employeeId, address)
+                    .subscribe(
+                            id => {resolve()},
+                            err => {reject()});
+            } else {
+                reject();
+            }
+        });
+    }
 
-	/**
-	 * Validate step 2 data
-	 *
-	 * @return {boolean} true if data is valid, false otherwise
-	 */
-	validate() {
+    /**
+     * Validate step 2 data
+     *
+     * @return {boolean} true if data is valid, false otherwise
+     */
+    validate() {
 
-	    $.each(this.addressForm.controls, (k, v) => {
-	    	if (v.markAsTouched) {v.markAsTouched()}
-	    });
+        $.each(this.addressForm.controls, (k, v) => {
+            if (v.markAsTouched) {v.markAsTouched()}
+        });
 
-	    return this.addressForm.valid;
-	}
+        return this.addressForm.valid;
+    }
 }
 
 Step2Component.annotations = [
-                            	new Component({
-                            		selector: 'step2',
-                            		templateUrl: 'app/wizard/step2/step2.template.html',
-                            		styleUrls:  [],
-                            		directives: [CountrySelectComponent, ValidatePhoneDirective],
-                            		queries: {addressForm: new ViewChild('addressForm')},
-                            		outputs: ['next', 'back']
-                            	})
+                                new Component({
+                                    selector: 'step2',
+                                    templateUrl: 'app/wizard/step2/step2.template.html',
+                                    styleUrls:  [],
+                                    directives: [CountrySelectComponent, ValidatePhoneDirective],
+                                    queries: {addressForm: new ViewChild('addressForm')},
+                                    outputs: ['next', 'back']
+                                })
 ];
