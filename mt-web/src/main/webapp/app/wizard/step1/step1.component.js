@@ -1,5 +1,6 @@
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
@@ -47,55 +48,49 @@ export class Step1Component {
 
         let me = this;
 
-        this.createOrUpdate().then(
-                id => {me.next.emit()},
+        this.createOrUpdate().subscribe(
+                id => {
+                    if ($.isEmptyObject(me.employeeId)) {
+                	me.employeeId = id;
+                	me.created.emit({id: id});
+                    }
+
+                    me.next.emit();
+                },
                 err => {});
     }
 
     /**
-     * Validate data then create (or update) employee. Fire 'save' event if data
+     * Validate data then create (or update) employee.
      * is saved with success.
      *
-     * @return {Promise for string} - The Promise is resolved with id of the
-     *         created employee. The Promise is rejected if validation failed or
-     *         some server error occured.
+     * @return {Observable for string} - employee id
      */
     createOrUpdate() {
 
         let me = this;
 
-        return new Promise((resolve, reject) => {
+        if (me.validate()) {
 
-            if (me.validate()) {
+            // create CreateUpdateEmployeeArgument
+            let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
+                identificationNumber: me.employeeForm.value.idnum,
+                name: me.employeeForm.value.name,
+                gender: me.employeeForm.value.gender,
+                email: me.employeeForm.value.email
+            });
 
-                // create CreateUpdateEmployeeArgument
-                let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
-                    identificationNumber: me.employeeForm.value.idnum,
-                    name: me.employeeForm.value.name,
-                    gender: me.employeeForm.value.gender,
-                    email: me.employeeForm.value.email
-                });
+            if ($.isEmptyObject(me.employeeId)) {
+                // create employee
+                return me.employeesService.create(createUpdateEmployeeArgument);
 
-                if ($.isEmptyObject(me.employeeId)) {
-                    // create employee
-                    me.employeesService.create(createUpdateEmployeeArgument)
-                        .subscribe(id => {
-                            me.employeeId = id;
-                            me.created.emit({id: id});
-                            resolve(id);
-                        },
-                        err => {reject(err)});
-                } else {
-                    // update employee
-                    me.employeesService.update(me.employeeId, createUpdateEmployeeArgument)
-                        .subscribe(
-                                id => {resolve(id)},
-                                err => {reject(err)});
-                }
             } else {
-                reject();
+                // update employee
+                return me.employeesService.update(me.employeeId, createUpdateEmployeeArgument);
             }
-        });
+        } else {
+            return Observable.throw('Validation failed');
+        }
     }
 
     /**

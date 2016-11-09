@@ -1,5 +1,6 @@
 import {Component,EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 import {MessagesService} from 'app/commons/services/messages/messages.service.js';
 import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
 import {PHONE_TYPES, Phone} from 'app/commons/services/employees/phone.model.js';
@@ -54,43 +55,35 @@ export class Step2Component {
 
     onNext() {
 
-        this.update().then(
-                r => {this.next.emit()},
+	let me = this;
+
+        this.update().subscribe(
+                r => {me.next.emit()},
                 err => {});
     }
 
     /**
      * Validate data then update employee address.
      *
-     * @return {Promise} - the Promise is resolved if data is updated
-     *         successfully and rejected if validation failed or some server
-     *         error occured.
+     * @return {Observable}
      */
     update() {
 
-        let me = this;
+        if (this.validate()) {
 
-        return new Promise((resolve, reject) => {
+            // create Address
+            let address = new Address({
+                street: this.addressForm.value.street,
+                zip: this.addressForm.value.zip,
+                city: this.addressForm.value.city,
+                country: this.addressForm.value.country
+            });
 
-            if (this.validate()) {
-
-                // create Address
-                let address = new Address({
-                    street: this.addressForm.value.street,
-                    zip: this.addressForm.value.zip,
-                    city: this.addressForm.value.city,
-                    country: this.addressForm.value.country
-                });
-
-                // update employee address
-                this.employeesService.updateAddress(this.employeeId, address)
-                    .subscribe(
-                            id => {resolve()},
-                            err => {reject()});
-            } else {
-                reject();
-            }
-        });
+            // update employee address
+            return this.employeesService.updateAddress(this.employeeId, address);
+        } else {
+            return Observable.throw('Validation failed');
+        }
     }
 
     /**
