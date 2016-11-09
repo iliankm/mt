@@ -59,7 +59,7 @@ export class Step2Component {
 
         this.update().subscribe(
                 r => {me.next.emit()},
-                err => {});
+                err => {alert(err)});
     }
 
     /**
@@ -82,7 +82,7 @@ export class Step2Component {
             // update employee address
             return this.employeesService.updateAddress(this.employeeId, address);
         } else {
-            return Observable.throw('Validation failed');
+            return Observable.throw(this.RES.get('commons.validation.errors'));
         }
     }
 

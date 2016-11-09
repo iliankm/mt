@@ -57,7 +57,7 @@ export class Step1Component {
 
                     me.next.emit();
                 },
-                err => {});
+                err => {alert(err)});
     }
 
     /**
@@ -68,28 +68,26 @@ export class Step1Component {
      */
     createOrUpdate() {
 
-        let me = this;
-
-        if (me.validate()) {
+        if (this.validate()) {
 
             // create CreateUpdateEmployeeArgument
             let createUpdateEmployeeArgument = new CreateUpdateEmployeeArgument({
-                identificationNumber: me.employeeForm.value.idnum,
-                name: me.employeeForm.value.name,
-                gender: me.employeeForm.value.gender,
-                email: me.employeeForm.value.email
+                identificationNumber: this.employeeForm.value.idnum,
+                name: this.employeeForm.value.name,
+                gender: this.employeeForm.value.gender,
+                email: this.employeeForm.value.email
             });
 
-            if ($.isEmptyObject(me.employeeId)) {
+            if ($.isEmptyObject(this.employeeId)) {
                 // create employee
-                return me.employeesService.create(createUpdateEmployeeArgument);
+                return this.employeesService.create(createUpdateEmployeeArgument);
 
             } else {
                 // update employee
-                return me.employeesService.update(me.employeeId, createUpdateEmployeeArgument);
+                return this.employeesService.update(this.employeeId, createUpdateEmployeeArgument);
             }
         } else {
-            return Observable.throw('Validation failed');
+            return Observable.throw(this.RES.get('commons.validation.errors'));
         }
     }
 
