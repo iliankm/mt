@@ -19,9 +19,9 @@ export class WizardComponent {
         this.RES = messagesService;
 
         this.step1 = new WizardStep("step1", this.RES.get('wizard.steps.step1.title'), this.RES.get('wizard.steps.step1.info'), true);
-        this.step2 = new WizardStep("step2", this.RES.get('wizard.steps.step2.title'), this.RES.get('wizard.steps.step2.info'), true);
-        this.step3 = new WizardStep("step3", this.RES.get('wizard.steps.step3.title'), this.RES.get('wizard.steps.step3.info'), true);
-        this.step4 = new WizardStep("step4", this.RES.get('wizard.steps.step4.title'), this.RES.get('wizard.steps.step4.info'), true);
+        this.step2 = new WizardStep("step2", this.RES.get('wizard.steps.step2.title'), this.RES.get('wizard.steps.step2.info'), false);
+        this.step3 = new WizardStep("step3", this.RES.get('wizard.steps.step3.title'), this.RES.get('wizard.steps.step3.info'), false);
+        this.step4 = new WizardStep("step4", this.RES.get('wizard.steps.step4.title'), this.RES.get('wizard.steps.step4.info'), false);
 
         this.steps = [this.step1, this.step2, this.step3, this.step4];
 
@@ -44,10 +44,18 @@ export class WizardComponent {
 
     onStep1Next() {
 
+        if (!this.step2.isVisited) {
+            this.step2.isVisited = true;
+        }
+
         this.currentStep = this.step2;
     }
 
     onStep2Next() {
+
+        if (!this.step3.isVisited) {
+            this.step3.isVisited = true;
+        }
 
         this.currentStep = this.step3;
     }

@@ -32,6 +32,8 @@ export class Step2Component {
         this.next = new EventEmitter();
         // back event - fired when Previous button is clicked
         this.back = new EventEmitter();
+        // isSaving flag
+        this.isSaving = false;
 
         // employee id
         this.employeeId = null;
@@ -88,11 +90,19 @@ export class Step2Component {
 
     onNext() {
 
-	let me = this;
+        let me = this;
+
+        me.isSaving = true;
 
         this.update().subscribe(
-                r => {me.next.emit()},
-                err => {alert(err)});
+                r => {
+                    me.next.emit();
+                    me.isSaving = false;
+                },
+                err => {
+                    alert(err);
+                    me.isSaving = false;
+                });
     }
 
     /**

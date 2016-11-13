@@ -64,6 +64,6 @@
 	</div>
 	<!-- Next button -->
 	<div class="offset-xs-4 col-xs-2">
-		<button type="button" class="btn btn-outline-primary" (click)="onNext()">{{RES.get('commons.save_and_continue')}}</button>
+		<button type="button" class="btn btn-outline-primary" [disabled]="isSaving" (click)="onNext()">{{RES.get('commons.save_and_continue')}}</button>
 	</div>
 </div>

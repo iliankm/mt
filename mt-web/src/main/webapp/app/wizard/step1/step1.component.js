@@ -28,6 +28,8 @@ export class Step1Component {
         this.created = new EventEmitter();
         // next event - fired when Next is clisked and data is successfully
         this.next = new EventEmitter();
+        // isSaving flag
+        this.isSaving = false;
 
         // employee id
         this.employeeId = null;
@@ -48,16 +50,23 @@ export class Step1Component {
 
         let me = this;
 
+        me.isSaving = true;
+
         this.createOrUpdate().subscribe(
                 id => {
                     if ($.isEmptyObject(me.employeeId)) {
-                	me.employeeId = id;
-                	me.created.emit({id: id});
+                        me.employeeId = id;
+                        me.created.emit({id: id});
                     }
 
                     me.next.emit();
+
+                    me.isSaving = false;
                 },
-                err => {alert(err)});
+                err => {
+                    alert(err);
+                    me.isSaving = false;
+                });
     }
 
     /**
