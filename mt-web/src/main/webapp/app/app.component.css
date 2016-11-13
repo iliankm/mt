@@ -1,10 +1,7 @@
 .sidebar {
-	position: fixed;
 	top: 54px;
-	bottom: 0;
-	left: 0;
-	background-color: #f5f5f5;
 	padding: 15px 0 0 0;
+	height: 200px;
 }
 .sidebar BUTTON {
 	width: 100px;
