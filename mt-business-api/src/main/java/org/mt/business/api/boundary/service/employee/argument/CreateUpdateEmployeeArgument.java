@@ -88,4 +88,29 @@ public class CreateUpdateEmployeeArgument {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((identificationNumber == null) ? 0 : identificationNumber.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	CreateUpdateEmployeeArgument other = (CreateUpdateEmployeeArgument) obj;
+	if (identificationNumber == null) {
+	    if (other.identificationNumber != null)
+		return false;
+	} else if (!identificationNumber.equals(other.identificationNumber))
+	    return false;
+	return true;
+    }
 }

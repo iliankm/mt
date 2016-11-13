@@ -39,13 +39,46 @@ export class Step2Component {
 
     onPhoneFormSubmit(form) {
 
-        this.phones.push({phone: form.value.phoneNumber, type: form.value.phoneType});
-        form.reset();
+        let me = this;
+
+        let phoneNumber = form.value.phoneNumber;
+        let phoneType = form.value.phoneType;
+
+        //if already added - alert and quit
+        if (this.phones.some(p => p.phone === phoneNumber && p.type === phoneType)) {
+            alert(this.RES.get('wizard.employee.phones.phone_added'));
+        }
+        else {
+            //create array of Phone objects
+            let phones = this.phones.map(p => new Phone(p));
+            //push the added phone
+            phones.push(new Phone({phone: phoneNumber, type: phoneType}));
+
+            //update phones
+            this.employeesService.updatePhones(this.employeeId, phones).subscribe(
+                    r => {
+                        me.phones.push({phone: phoneNumber, type: phoneType});
+                        form.reset();
+                    },
+                    err => {alert(err)});
+        }
     }
 
     onDeletePhone(ind) {
 
-        this.phones.splice(ind, 1);
+        let me = this;
+
+        //create array of Phone objects
+        let phones = this.phones.map(p => new Phone(p));
+        //remove the deleted phone from the array
+        phones.splice(ind, 1);
+
+        //update phones
+        this.employeesService.updatePhones(this.employeeId, phones).subscribe(
+                r => {
+                    me.phones.splice(ind, 1);
+                },
+                err => {alert(err)});
     }
 
     onPrevious() {

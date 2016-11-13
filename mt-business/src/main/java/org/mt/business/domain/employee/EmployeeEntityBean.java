@@ -181,4 +181,33 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
 	return substituteIds != null ? substituteIds.stream().map(oid -> oid.toHexString()).collect(Collectors.toSet())
 		: Collections.emptySet();
     }
+
+    @Override
+    public int hashCode() {
+
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((identificationNumber == null) ? 0 : identificationNumber.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	EmployeeEntityBean other = (EmployeeEntityBean) obj;
+	if (identificationNumber == null) {
+	    if (other.identificationNumber != null)
+		return false;
+	} else if (!identificationNumber.equals(other.identificationNumber))
+	    return false;
+	return true;
+    }
+
+
 }

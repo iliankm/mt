@@ -1,6 +1,6 @@
 package org.mt.business.api.boundary.service.employee;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -19,5 +19,5 @@ public interface EmployeeService {
 
     void update(String employeeId, @Valid AddressArgument addressArgument);
 
-    void update(String employeeId, @Valid List<PhoneArgument> phones);
+    void update(String employeeId, @Valid Set<PhoneArgument> phones);
 }

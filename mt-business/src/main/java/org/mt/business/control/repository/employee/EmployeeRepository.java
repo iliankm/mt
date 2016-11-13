@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.cache.annotation.CacheDefaults;
@@ -150,13 +151,13 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
     }
 
     @CacheRemoveAll
-    public int update(String id, @Valid List<PhoneEntityBean> phones) {
+    public int update(String id, @Valid Set<PhoneEntityBean> phones) {
 
 	Objects.requireNonNull(id);
 
 	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
 
-	ops.set("phones", phones != null ? phones : Collections.emptyList());
+	ops.set("phones", phones != null ? phones : Collections.emptySet());
 
 	ops.set("lastModifiedDate", new Date());
 

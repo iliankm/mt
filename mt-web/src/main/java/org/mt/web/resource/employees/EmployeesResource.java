@@ -1,6 +1,6 @@
 package org.mt.web.resource.employees;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.ws.rs.POST;
@@ -52,7 +52,7 @@ public class EmployeesResource {
 
     @PUT
     @Path(RestEndpoints.EMPLOYEE_PHONES)
-    public Response update(@PathParam("id") String id, List<PhoneArgument> phones) {
+    public Response update(@PathParam("id") String id, Set<PhoneArgument> phones) {
 
 	employeeService.update(id, phones);
 

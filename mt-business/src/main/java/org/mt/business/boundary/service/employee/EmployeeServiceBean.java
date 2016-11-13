@@ -1,8 +1,8 @@
 package org.mt.business.boundary.service.employee;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -88,13 +88,13 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public void update(String employeeId, @Valid List<PhoneArgument> phonesArgument) {
+    public void update(String employeeId, @Valid Set<PhoneArgument> phonesArgument) {
 
 	Objects.requireNonNull(employeeId);
 
-	final List<PhoneEntityBean> phones = phonesArgument == null ? Collections.emptyList()
+	final Set<PhoneEntityBean> phones = phonesArgument == null ? Collections.emptySet()
 		: phonesArgument.stream().map(pa -> new PhoneEntityBean(pa.getType(), pa.getPhone()))
-			.collect(Collectors.toList());
+			.collect(Collectors.toSet());
 
 	final int updatedCount = employeeRepository.update(employeeId, phones);
 
