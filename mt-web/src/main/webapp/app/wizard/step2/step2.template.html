@@ -2,11 +2,11 @@
 
 	<!-- Address -->
 	<div class="form-group row required">
-		<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.address')}}</label>
-		<div class="col-xs-8">
+		<label class="col-sm-2 col-form-label">{{RES.get('wizard.employee.address')}}</label>
+		<div class="col-sm-8">
 			<div class="form-group row">
 				<!-- Country -->
-				<div class="col-xs-6"
+				<div class="col-sm-6"
 					[class.has-danger]="country.errors && (country.dirty || country.touched)">
 					<country-select name="country" #country="ngModel"
 						ngModel required></country-select>
@@ -15,7 +15,7 @@
 					<small class="form-text text-muted">{{RES.get('wizard.employee.address.country.help_text')}}</small>
 				</div>
 				<!-- City -->
-				<div class="col-xs-6"
+				<div class="col-sm-6"
 					[class.has-danger]="city.errors && (city.dirty || city.touched)">
 					<input class="form-control" type="text" required maxlength="50"
 						name="city" #city="ngModel" ngModel>
@@ -26,7 +26,7 @@
 			</div>
 			<div class="form-group row">
 				<!-- Street -->
-				<div class="col-xs-6"
+				<div class="col-sm-6"
 					[class.has-danger]="street.errors && (street.dirty || street.touched)">
 					<input class="form-control" type="text" required maxlength="100"
 						name="street" #street="ngModel" ngModel>
@@ -35,7 +35,7 @@
 					<small class="form-text text-muted">{{RES.get('wizard.employee.address.street.help_text')}}</small>
 				</div>
 				<!-- ZIP -->
-				<div class="col-xs-6"
+				<div class="col-sm-6"
 					[class.has-danger]="zip.errors && (zip.dirty || zip.touched)">
 					<input class="form-control" type="text" required maxlength="10"
 						name="zip" #zip="ngModel" ngModel>
@@ -52,11 +52,11 @@
 <form #phoneForm="ngForm" (ngSubmit)="onPhoneFormSubmit(phoneForm)">
 
 	<div class="form-group row">
-		<label class="col-xs-2 col-form-label">{{RES.get('wizard.employee.phones')}}</label>
-		<div class="col-xs-8">
+		<label class="col-sm-2 col-form-label">{{RES.get('wizard.employee.phones')}}</label>
+		<div class="col-sm-8">
 			<div class="form-group row">
 				<!-- Phone Number -->
-				<div class="col-xs-3"
+				<div class="col-sm-3"
 					[class.has-danger]="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)">
 					<input class="form-control" type="text" required validatePhone maxlength="50"
 						name="phoneNumber" #phoneNumber="ngModel" ngModel>
@@ -67,7 +67,7 @@
 					<small class="form-text text-muted">{{RES.get('wizard.employee.phones.number.help_text')}}</small>
 				</div>
 				<!-- Phone Type -->
-				<div class="col-xs-3"
+				<div class="col-sm-3"
 					[class.has-danger]="phoneType.errors && (phoneType.dirty || phoneType.touched)">
 					<select class="form-control" required name="phoneType"
 						#phoneType="ngModel" ngModel>
@@ -79,7 +79,7 @@
 					<small class="form-text text-muted">{{RES.get('wizard.employee.phones.type.help_text')}}</small>
 				</div>
 				<!-- Phone add button -->
-				<div class="col-xs-3">
+				<div class="col-sm-3">
 					<button type="submit" class="btn btn-secondary"	[disabled]="!phoneForm.form.valid">{{RES.get('commons.add')}}</button>
 				</div>
 			</div>
@@ -90,7 +90,7 @@
 
 <!-- Phones list -->
 <div class="row">
-	<div class="offset-xs-2 col-xs-4">
+	<div class="offset-sm-2 col-sm-4">
 		<!-- Empty phones list tag -->
 		<span class="tag tag-info" *ngIf="!phones || phones.length == 0">{{RES.get('wizard.employee.phones.no_phones_added')}}</span>
 
@@ -101,7 +101,7 @@
 					<div class="col-xs-10">
 						<h5 class="list-group-item-heading">{{p.phone}}</h5>
 					</div>
-					<div class="col-xs-2">
+					<div class="col-xs-2 align-right">
 						<button type="button" class="btn btn-sm btn-outline-danger" (click)="onDeletePhone(i)">&#10060;</button>
 					</div>
 				</div>
@@ -115,11 +115,11 @@
 <!-- Buttons -->
 <div class="row mt-3">
 	<!-- Previous button -->
-	<div class="offset-xs-2 col-xs-1">
+	<div class="col-xs-6">
 		<button type="button" class="btn btn-outline-primary" (click)="onPrevious()">{{RES.get('commons.back')}}</button>
 	</div>
 	<!-- Next button -->
-	<div class="offset-xs-5 col-xs-2">
+	<div class="col-xs-6 align-right">
 		<button type="button" class="btn btn-outline-primary" [disabled]="isSaving" (click)="onNext()">{{RES.get('commons.save_and_continue')}}</button>
 	</div>
 </div>

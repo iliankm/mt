@@ -10,3 +10,7 @@ input:required {
 .bg-highlight {
 	background-color: #f7f7f9;
 }
+
+.align-right {
+	text-align: right;
+}
