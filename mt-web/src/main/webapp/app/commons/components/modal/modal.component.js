@@ -62,7 +62,8 @@ export class ModalComponent {
     }
 
     /**
-     * Set buttons array
+     * Set buttons array.
+     * Buttons should be rendered in the footer of the modal.
      *
      * @param {Object[]} buttons
      * @param {Object[]} buttons[].value - button caption value
