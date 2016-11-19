@@ -6,10 +6,29 @@ export class BaseService {
 
         console.error(response);
 
-        if (!$.isEmptyObject(response.text()) && response.json().error) {
-            return Observable.throw(response.json().error);
+        let json = BaseService.safeParseJSON(response.text());
+
+        if (json && json.error) {
+            return Observable.throw(json.error);
         } else {
             return Observable.throw('Server error');
         }
+    }
+
+    /**
+     * Safe parse passed string to json
+     */
+    static safeParseJSON(text) {
+
+        let json = null;
+
+        try {
+            json = JSON.parse(text);
+        }
+        catch(e) {
+            json = null;
+        }
+
+        return json;
     }
 }
