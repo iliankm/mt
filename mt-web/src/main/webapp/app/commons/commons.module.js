@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
+import {ModalComponent} from 'app/commons/components/modal/modal.component';
 
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
@@ -22,12 +23,14 @@ CommonsModule.annotations = [
 
                                 declarations: [
                                                 CountrySelectComponent,
+                                                ModalComponent,
                                                 ValidateEmailDirective,
                                                 ValidatePhoneDirective
                                               ],
 
                                 exports: [
                                             CountrySelectComponent,
+                                            ModalComponent,
                                             ValidateEmailDirective,
                                             ValidatePhoneDirective
                                           ],

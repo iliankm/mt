@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" [class.modal-lg]="size == SIZE.large" [class.modal-sm]="size == SIZE.small">
+		<div class="modal-content">
+
+			<!-- Header -->
+			<div class="modal-header">
+				<ng-content select="header"></ng-content>
+			</div>
+
+			<!-- Body -->
+			<div class="modal-body">
+				<ng-content select="body"></ng-content>
+			</div>
+
+			<!-- Footer -->
+			<div class="modal-footer">
+				<ng-content select="footer"></ng-content>
+				<button *ngFor="let btn of buttons" type="button" class="{{btn.class}}" (click)="onBtnClick(btn)">{{btn.value}}</button>
+			</div>
+		</div>
+	</div>
+</div>
