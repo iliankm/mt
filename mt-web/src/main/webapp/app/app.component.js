@@ -1,19 +1,31 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Router, Routes, ROUTER_DIRECTIVES} from '@angular/router';
-import {MessagesService} from 'app/commons/services/messages/messages.service.js';
+import {MessagesService} from 'app/commons/services/messages/messages.service';
+import {AlertsService} from 'app/commons/services/alerts/alerts.service';
+import {ModalComponent} from 'app/commons/components/modal/modal.component';
 
 export class AppComponent {
 
     static get parameters() {
 
-        return [[Router], [MessagesService]];
+        return [[Router], [MessagesService], [AlertsService]];
     }
 
-    constructor(router, messagesService) {
+    constructor(router, messagesService, alertsService) {
 
         this.router = router;
 
         this.RES = messagesService;
+
+        this.alertsService = alertsService;
+    }
+
+    /**
+     * ngOnInit lifecycle hook
+     */
+    ngOnInit() {
+
+        this.alertsService.registerModals(this.alertModal);
     }
 
     navigateToWizard() {
@@ -27,6 +39,7 @@ AppComponent.annotations = [
                                     selector: 'mt-app',
                                     templateUrl: 'app/app.template.html',
                                     styleUrls:  ['app/app.component.css'],
-                                    directives: [ROUTER_DIRECTIVES]
+                                    directives: [ROUTER_DIRECTIVES, ModalComponent],
+                                    queries: {alertModal: new ViewChild('alertModal')}
                                 })
 ];

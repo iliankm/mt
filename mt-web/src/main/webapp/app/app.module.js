@@ -6,6 +6,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {routing} from './app.routes';
 
 import {AppComponent} from './app.component';
+import {CommonsModule} from 'app/commons/commons.module';
 import {PageNotFoundModule} from 'app/page-not-found/page-not-found.module';
 import {ListModule} from 'app/list/list.module';
 import {DetailsModule} from 'app/details/details.module';
@@ -22,6 +23,8 @@ AppModule.annotations = [
                                           BrowserModule,
                                           FormsModule,
                                           routing,
+
+                                          CommonsModule,
                                           PageNotFoundModule,
                                           WizardModule,
                                           DetailsModule,

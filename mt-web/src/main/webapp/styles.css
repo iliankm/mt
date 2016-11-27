@@ -14,3 +14,7 @@ input:required {
 .align-right {
 	text-align: right;
 }
+
+.modal-footer BUTTON {
+	margin-left: 5px;
+}

@@ -1,9 +1,10 @@
 import {Component,EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {MessagesService} from 'app/commons/services/messages/messages.service.js';
-import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
-import {PHONE_TYPES, Phone} from 'app/commons/services/employees/phone.model.js';
+import {MessagesService} from 'app/commons/services/messages/messages.service';
+import {AlertsService} from 'app/commons/services/alerts/alerts.service';
+import {EmployeesService} from 'app/commons/services/employees/employees.service';
+import {PHONE_TYPES, Phone} from 'app/commons/services/employees/phone.model';
 import {Address} from 'app/commons/services/employees/address.model.js';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
@@ -12,10 +13,10 @@ export class Step2Component {
 
     static get parameters() {
 
-        return [[Router], [MessagesService], [EmployeesService]];
+        return [[Router], [MessagesService], [EmployeesService], [AlertsService]];
     }
 
-    constructor(router, messagesService, employeesService) {
+    constructor(router, messagesService, employeesService, alertsService) {
 
         // Router from DI
         this.router = router;
@@ -23,6 +24,8 @@ export class Step2Component {
         this.RES = messagesService;
         // EmployeesService from DI
         this.employeesService = employeesService;
+        // AlertsService from DI
+        this.alertsService = alertsService;
         // phone types
         this.PHONE_TYPES = PHONE_TYPES;
         // added phones
@@ -48,7 +51,7 @@ export class Step2Component {
 
         //if already added - alert and quit
         if (this.phones.some(p => p.phone === phoneNumber && p.type === phoneType)) {
-            alert(this.RES.get('wizard.employee.phones.phone_added'));
+            this.alertsService.error(this.RES.get('wizard.employee.phones.phone_added'));
         }
         else {
             //create array of Phone objects
@@ -62,7 +65,7 @@ export class Step2Component {
                         me.phones.push({phone: phoneNumber, type: phoneType});
                         form.reset();
                     },
-                    err => {alert(err)});
+                    err => {this.alertsService.error(err)});
         }
     }
 
@@ -80,7 +83,7 @@ export class Step2Component {
                 r => {
                     me.phones.splice(ind, 1);
                 },
-                err => {alert(err)});
+                err => {this.alertsService.error(err)});
     }
 
     onPrevious() {
@@ -100,7 +103,7 @@ export class Step2Component {
                     me.isSaving = false;
                 },
                 err => {
-                    alert(err);
+                    this.alertsService.error(err);
                     me.isSaving = false;
                 });
     }

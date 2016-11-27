@@ -9,8 +9,9 @@ import {ModalComponent} from 'app/commons/components/modal/modal.component';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
 
-import {MessagesService} from 'app/commons/services/messages/messages.service.js';
-import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
+import {AlertsService} from 'app/commons/services/alerts/alerts.service';
+import {MessagesService} from 'app/commons/services/messages/messages.service';
+import {EmployeesService} from 'app/commons/services/employees/employees.service';
 
 export class CommonsModule {
 
@@ -36,6 +37,7 @@ CommonsModule.annotations = [
                                           ],
 
                                 providers: [
+                                            AlertsService,
                                             MessagesService,
                                             {
                                                 provide: APP_INITIALIZER,

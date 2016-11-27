@@ -2,19 +2,20 @@ import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
-import {MessagesService} from 'app/commons/services/messages/messages.service.js';
-import {EmployeesService} from 'app/commons/services/employees/employees.service.js';
-import {CreateUpdateEmployeeArgument} from 'app/commons/services/employees/create-update-employee.argument.js';
-import {GENDERS} from 'app/commons/services/employees/employee.model.js';
+import {MessagesService} from 'app/commons/services/messages/messages.service';
+import {EmployeesService} from 'app/commons/services/employees/employees.service';
+import {AlertsService} from 'app/commons/services/alerts/alerts.service';
+import {CreateUpdateEmployeeArgument} from 'app/commons/services/employees/create-update-employee.argument';
+import {GENDERS} from 'app/commons/services/employees/employee.model';
 
 export class Step1Component {
 
     static get parameters() {
 
-        return [[Router], [MessagesService], [EmployeesService]];
+        return [[Router], [MessagesService], [EmployeesService], [AlertsService]];
     }
 
-    constructor(router, messagesService, employeesService) {
+    constructor(router, messagesService, employeesService, alertsService) {
 
         // Router from DI
         this.router = router;
@@ -22,6 +23,8 @@ export class Step1Component {
         this.RES = messagesService;
         // EmployeesService from DI
         this.employeesService = employeesService;
+        // AlertsService from DI
+        this.alertsService = alertsService;
         // gender types
         this.GENDERS = GENDERS;
         // created event - fired when employee is successfully created
@@ -64,7 +67,7 @@ export class Step1Component {
                     me.isSaving = false;
                 },
                 err => {
-                    alert(err);
+                    this.alertsService.error(err);
                     me.isSaving = false;
                 });
     }
