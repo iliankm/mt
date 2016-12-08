@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {MessagesService} from 'app/commons/services/messages/messages.service.js';
+import {MessagesService} from 'app/commons/services/messages/messages.service';
+import {UploadComponent} from 'app/commons/components/upload/upload.component';
 
 export class Step3Component {
 
@@ -19,6 +20,6 @@ Step3Component.annotations = [
                                     selector: 'step3',
                                     templateUrl: 'app/wizard/step3/step3.template.html',
                                     styleUrls:  [],
-                                    directives: []
+                                    directives: [UploadComponent]
                                 })
 ];
