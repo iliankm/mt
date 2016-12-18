@@ -1,0 +1,6 @@
+LABEL {
+	margin-bottom: 0;
+}
+INPUT[type="file"] {
+	display: none;
+}

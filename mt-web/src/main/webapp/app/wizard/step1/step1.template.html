@@ -61,6 +61,7 @@
 	<!-- Cancel button -->
 	<div class="col-xs-6">
 		<button type="button" class="btn btn-secondary" (click)="onCancel()">{{RES.get('commons.cancel')}}</button>
+		<upload [label]="'Select files...'" [multiple]="true" [disabled]="false" [accept]="'image/*'"></upload>
 	</div>
 	<!-- Next button -->
 	<div class="col-xs-6 align-right">
