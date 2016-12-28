@@ -1,5 +1,20 @@
 import {Component, EventEmitter} from '@angular/core';
 
+export const ERRORS = {
+        maxFilesExceeded: {
+            code: 1,
+            message: "Number of files exceeds the maximum allowed."
+        },
+        maxSizeExceeded: {
+            code: 2,
+            message: "File(s) size exceeds the maximum allowed."
+        },
+        serverError: {
+            code: 3,
+            message: "Server error."
+        }
+}
+
 export class UploadComponent {
 
 
@@ -32,7 +47,27 @@ export class UploadComponent {
 
         let files = event.target.files;
 
-        //event.target.value = "";
+        if (files && files.length > 0) {
+
+            //maxFiles check
+            if (files.length > this.maxFiles) {
+                console.error(ERRORS.maxFilesExceeded);
+                this.error.emit(ERRORS.maxFilesExceeded);
+                event.target.value = "";
+                return;
+            }
+
+            //maxSize check
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                if (file.size > this.maxSize) {
+                    console.error(ERRORS.maxSizeExceeded);
+                    this.error.emit(ERRORS.maxSizeExceeded);
+                    event.target.value = "";
+                    return;
+                }
+            }
+        }
     }
 }
 
