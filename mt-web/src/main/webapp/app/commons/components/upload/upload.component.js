@@ -67,7 +67,17 @@ export class UploadComponent {
                     return;
                 }
             }
+
+            //if no errors fire change event
+            this.change.emit(files);
+
+            //upload selected files...
+
         }
+        else {
+            this.change.emit();
+        }
+
     }
 }
 
