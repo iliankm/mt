@@ -19,6 +19,8 @@ export class UploadComponent {
 
 
     constructor() {
+        // input: url
+        this.url = '';
         // input: default label
         this.label = 'Browse';
         // input: default multiple false
@@ -72,12 +74,67 @@ export class UploadComponent {
             this.change.emit(files);
 
             //upload selected files...
-
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                //fire start event
+                this.start.emit(file);
+                //upload file
+                this.uploadFile(file);
+            }
         }
         else {
             this.change.emit();
         }
+    }
 
+    uploadFile(file) {
+
+        let me = this;
+
+        let xhr = new XMLHttpRequest();
+
+        let fd = new FormData();
+
+        xhr.open("POST", this.url, true);
+
+        //progress listener
+        xhr.upload.addEventListener("progress", function(e) {
+            let pc = parseInt(e.loaded / e.total * 100);
+
+            me.progress.emit({
+                file: file,
+                progress: pc
+            });
+        }, false);
+
+        //onready listener
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    //fire ready event
+                    me.ready.emit({
+                        file: file,
+                        responseText: xhr.responseText ? xhr.responseText : null
+                    });
+                }
+                else {
+                    let err = {
+                        file: file,
+                        code: ERRORS.serverError.code,
+                        message: ERRORS.serverError.message,
+                        responseText: xhr.responseText ? xhr.responseText : null
+                    }
+
+                    console.error(err);
+                    //fire error event
+                    me.error.emit(err);
+                }
+            }
+        };
+
+        fd.append("upload_file", file);
+
+        xhr.send(fd);
     }
 }
 
@@ -88,7 +145,7 @@ UploadComponent.annotations = [
         providers: [],
         styleUrls:  ['app/commons/components/upload/upload.component.css'],
         directives: [],
-        inputs: ['label', 'multiple', 'disabled', 'accept', 'maxSize', 'maxFiles'],
+        inputs: ['url', 'label', 'multiple', 'disabled', 'accept', 'maxSize', 'maxFiles'],
         outputs: ['change', 'start', 'progress', 'ready', 'error']
     })
 ];
