@@ -1,11 +1,13 @@
 package org.mt.web.resource.employees;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.mt.business.api.boundary.service.employee.ImagesService;
 import org.mt.web.resource.RestEndpoints;
 
 @Path(RestEndpoints.EMPLOYEES)
@@ -26,6 +29,9 @@ public class UploadImageResource {
     private static final int MAX_SIZE = 10 * 1024 * 1024;
 
     private static final List<String> ALLOWED_FILE_TYPES = Arrays.asList("jpeg", "jpg", "png", "bmp", "tiff", "gif");
+
+    @Inject
+    ImagesService imageService;
 
     @POST
     @Path(RestEndpoints.UPLOAD)
@@ -57,6 +63,11 @@ public class UploadImageResource {
 		    throw new RuntimeException(
 			    "Uploaded file size of " + bytes.length + " excedes max allowed " + MAX_SIZE);
 		}
+
+		//save stream to file
+		imageService.save(id, new ByteArrayInputStream(bytes), fileName);
+
+
 	    } catch (IOException e) {
 		throw new RuntimeException(e);
 	    }
