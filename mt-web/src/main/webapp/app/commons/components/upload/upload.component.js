@@ -52,7 +52,7 @@ export class UploadComponent {
         if (files && files.length > 0) {
 
             //maxFiles check
-            if (files.length > this.maxFiles) {
+            if (this.maxFiles > 0 && files.length > this.maxFiles) {
                 console.error(ERRORS.maxFilesExceeded);
                 this.error.emit(ERRORS.maxFilesExceeded);
                 event.target.value = "";
