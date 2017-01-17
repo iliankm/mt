@@ -7,7 +7,6 @@ import {EmployeesService} from 'app/commons/services/employees/employees.service
 import {AlertsService} from 'app/commons/services/alerts/alerts.service';
 import {CreateUpdateEmployeeArgument} from 'app/commons/services/employees/create-update-employee.argument';
 import {GENDERS} from 'app/commons/services/employees/employee.model';
-import {UploadComponent} from 'app/commons/components/upload/upload.component';
 
 export class Step1Component {
 
@@ -124,7 +123,7 @@ Step1Component.annotations = [
                                     selector: 'step1',
                                     templateUrl: 'app/wizard/step1/step1.template.html',
                                     styleUrls:  [],
-                                    directives: [ValidateEmailDirective, UploadComponent],
+                                    directives: [ValidateEmailDirective],
                                     queries: {employeeForm: new ViewChild('employeeForm')},
                                     outputs: ['created', 'next']
                                 })

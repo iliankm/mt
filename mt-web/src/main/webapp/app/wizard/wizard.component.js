@@ -65,6 +65,20 @@ export class WizardComponent {
         this.currentStep = this.step1;
     }
 
+    onStep3Next() {
+
+        if (!this.step4.isVisited) {
+            this.step4.isVisited = true;
+        }
+
+        this.currentStep = this.step4;
+    }
+
+    onStep3Back() {
+
+        this.currentStep = this.step2;
+    }
+
 }
 
 WizardComponent.annotations = [

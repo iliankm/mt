@@ -1,1 +1,18 @@
-<upload>
+<upload [url]="getUrl()"
+	[label]="RES.get('wizard.steps.step3.upload-files')" [maxFiles]="-1"
+	[maxSize]="getMaxFileSize()" [multiple]="true" [disabled]="false"
+	[accept]="'image/*'" (change)="onChange($event)" (start)="onStart($event)"
+	(progress)="onProgress($event)" (ready)="onReady($event)" (error)="onError($event)">
+</upload>
+
+<!-- Buttons -->
+<div class="row mt-3">
+	<!-- Previous button -->
+	<div class="col-xs-6">
+		<button type="button" class="btn btn-outline-primary" (click)="onPrevious()">{{RES.get('commons.back')}}</button>
+	</div>
+	<!-- Next button -->
+	<div class="col-xs-6 align-right">
+		<button type="button" class="btn btn-outline-primary" (click)="onNext()">{{RES.get('commons.continue')}}</button>
+	</div>
+</div>
