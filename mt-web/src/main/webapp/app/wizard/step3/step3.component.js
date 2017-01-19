@@ -27,7 +27,7 @@ export class Step3Component {
      */
     getUrl() {
 
-	return "resources/employees/" + this.employeeId + "/upload";
+	return "resources/employees/" + this.employeeId + "/images";
     }
 
     /**
@@ -56,7 +56,7 @@ export class Step3Component {
     /**
      * Upload component ready handler
      */
-    onReady(event) {}
+    onReady(event) {console.log(event)}
 
     /**
      * Upload component error handler

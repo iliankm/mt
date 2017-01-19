@@ -3,12 +3,14 @@ package org.mt.web.resource.employees;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,7 +26,7 @@ import org.mt.business.api.boundary.service.employee.ImagesService;
 import org.mt.web.resource.RestEndpoints;
 
 @Path(RestEndpoints.EMPLOYEES)
-public class UploadImageResource {
+public class ImagesResource {
 
     private static final int MAX_SIZE = 10 * 1024 * 1024;
 
@@ -33,14 +35,23 @@ public class UploadImageResource {
     @Inject
     ImagesService imageService;
 
+    @GET
+    @Path(RestEndpoints.EMPLOYEE_IMAGE)
+    public Response get(@PathParam("id") String id, @PathParam("name") String name) {
+
+	return null;
+    }
+
     @POST
-    @Path(RestEndpoints.UPLOAD)
+    @Path(RestEndpoints.EMPLOYEE_IMAGES)
     @Consumes("multipart/form-data")
     public Response upload(@PathParam("id") String id, MultipartFormDataInput input) {
 
 	final Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 
 	final List<InputPart> inputParts = uploadForm.get("upload_file");
+
+	final List<String> fileNames = new ArrayList<>();
 
 	inputParts.forEach(inputPart -> {
 
@@ -65,15 +76,16 @@ public class UploadImageResource {
 		}
 
 		//save stream to file
-		imageService.save(id, new ByteArrayInputStream(bytes), fileName);
+		java.nio.file.Path p = imageService.save(id, new ByteArrayInputStream(bytes), fileName);
 
+		fileNames.add(p.getFileName().toString());
 
 	    } catch (IOException e) {
 		throw new RuntimeException(e);
 	    }
 	});
 
-	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity("OK").build();
+	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(String.join(",", fileNames)).build();
     }
 
     /**

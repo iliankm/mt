@@ -14,6 +14,8 @@ public interface RestEndpoints {
 
     String EMPLOYEE_PHONES = "{id}/phones";
 
-    String UPLOAD = "{id}/upload";
+    String EMPLOYEE_IMAGES = "{id}/images";
+
+    String EMPLOYEE_IMAGE = "{id}/images/{name}";
 
 }
