@@ -9,12 +9,31 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.mt.business.api.boundary.service.employee.ImagesService;
+import org.mt.business.api.exception.ResourceNotFoundException;
 
 public class ImagesServiceBean implements ImagesService {
 
     private static final String ENV_HOME = "HOME";
 
     private static final String APP_UPLOAD_DIR = "mt-upload";
+
+    @Override
+    public Path getImage(String employeeId, String fileName) {
+
+	Objects.requireNonNull(employeeId);
+
+	Objects.requireNonNull(fileName);
+
+	final Path employeePath = getEmployeeImagesDirectory(employeeId);
+
+	final Path imagePath = Paths.get(employeePath.toString(), fileName);
+
+	if (imagePath.toFile().exists()) {
+	    return imagePath;
+	} else {
+	    throw new ResourceNotFoundException();
+	}
+    }
 
     @Override
     public Path save(String employeeId, InputStream in, String fileName) {
@@ -45,7 +64,8 @@ public class ImagesServiceBean implements ImagesService {
 
     /**
      *
-     * @param employeeId - Employee id
+     * @param employeeId
+     *            - Employee id
      * @return - employee images directory Path. All nonexistent parent
      *         directories are created.
      */

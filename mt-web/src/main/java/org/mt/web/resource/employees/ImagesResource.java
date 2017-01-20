@@ -1,6 +1,7 @@
 package org.mt.web.resource.employees;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -8,12 +9,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -37,9 +40,17 @@ public class ImagesResource {
 
     @GET
     @Path(RestEndpoints.EMPLOYEE_IMAGE)
+    @Produces("image/*")
     public Response get(@PathParam("id") String id, @PathParam("name") String name) {
 
-	return null;
+	final java.nio.file.Path imagePath = imageService.getImage(id, name);
+
+	final File imageFile = imagePath.toFile();
+
+	final String contentType = new MimetypesFileTypeMap().getContentType(imageFile);
+
+	return Response.ok(imageFile).type(contentType)
+		.header("Content-Disposition", "attachment; filename=\"" + name + "\"").build();
     }
 
     @POST
@@ -55,7 +66,7 @@ public class ImagesResource {
 
 	inputParts.forEach(inputPart -> {
 
-	    //get file name
+	    // get file name
 	    final String fileName = getFileName(inputPart.getHeaders());
 	    final String ext = fileName.toLowerCase().substring(fileName.lastIndexOf('.') + 1);
 
@@ -69,13 +80,13 @@ public class ImagesResource {
 
 		final byte[] bytes = IOUtils.toByteArray(inputStream);
 
-		//check for max allowed file size
+		// check for max allowed file size
 		if (bytes.length > MAX_SIZE) {
 		    throw new RuntimeException(
 			    "Uploaded file size of " + bytes.length + " excedes max allowed " + MAX_SIZE);
 		}
 
-		//save stream to file
+		// save stream to file
 		java.nio.file.Path p = imageService.save(id, new ByteArrayInputStream(bytes), fileName);
 
 		fileNames.add(p.getFileName().toString());
@@ -85,11 +96,13 @@ public class ImagesResource {
 	    }
 	});
 
-	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(String.join(",", fileNames)).build();
+	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(String.join(",", fileNames))
+		.build();
     }
 
     /**
      * Extract file name from part headers
+     *
      * @param header
      * @return file name or unknown
      */
