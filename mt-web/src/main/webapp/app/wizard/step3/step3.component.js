@@ -1,6 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {MessagesService} from 'app/commons/services/messages/messages.service';
 import {UploadComponent} from 'app/commons/components/upload/upload.component';
+import {ImageFile} from 'app/wizard/step3/image-file.model';
 
 export class Step3Component {
 
