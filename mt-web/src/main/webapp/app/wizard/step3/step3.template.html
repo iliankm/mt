@@ -1,3 +1,9 @@
+<div class="row">
+	<div class="col-xs-1 col-sm-4" *ngFor="let imf of imageFiles">
+		<image-file [imageFile]="imf"></image-file>
+	</div>
+</div>
+
 <upload [url]="getUrl()"
 	[label]="RES.get('wizard.steps.step3.upload-files')" [maxFiles]="-1"
 	[maxSize]="getMaxFileSize()" [multiple]="true" [disabled]="false"
