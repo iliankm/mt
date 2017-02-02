@@ -20,6 +20,8 @@ export class Step3Component {
         this.next = new EventEmitter();
         // back event - fired when Previous button is clicked
         this.back = new EventEmitter();
+        //array of uploading/uploaded ImageFile objects
+        this.imageFiles = [];
 
     }
 
@@ -47,7 +49,18 @@ export class Step3Component {
     /**
      * Upload component start handler
      */
-    onStart(event) {}
+    onStart(event) {
+
+	let me = this;
+
+	let imageFile = new ImageFile({
+	    employeeId: me.employeeId,
+	    name: event.name,
+	    size: event.size
+	});
+
+	this.imageFiles.push(imageFile);
+    }
 
     /**
      * Upload component progress handler
