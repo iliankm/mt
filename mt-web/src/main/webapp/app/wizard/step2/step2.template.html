@@ -98,10 +98,10 @@
 		<div class="list-group" *ngIf="phones && phones.length > 0">
 			<a class="list-group-item list-group-item-action" *ngFor="let p of phones; let i = index">
 				<div class="row">
-					<div class="col-xs-10">
+					<div class="col-10">
 						<h5 class="list-group-item-heading">{{p.phone}}</h5>
 					</div>
-					<div class="col-xs-2 align-right">
+					<div class="col-2 align-right">
 						<button type="button" class="btn btn-sm btn-outline-danger" (click)="onDeletePhone(i)">&#10060;</button>
 					</div>
 				</div>
@@ -115,11 +115,11 @@
 <!-- Buttons -->
 <div class="row mt-3">
 	<!-- Previous button -->
-	<div class="col-xs-6">
+	<div class="col-6">
 		<button type="button" class="btn btn-outline-primary" (click)="onPrevious()">{{RES.get('commons.back')}}</button>
 	</div>
 	<!-- Next button -->
-	<div class="col-xs-6 align-right">
+	<div class="col-6 align-right">
 		<button type="button" class="btn btn-outline-primary" [disabled]="isSaving" (click)="onNext()">{{RES.get('commons.save_and_continue')}}</button>
 	</div>
 </div>

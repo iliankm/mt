@@ -20,7 +20,6 @@ export class WizardStepComponent {
 
         this.isCurrent = false;
         this.wizardStep = new WizardStep("", "", "", false);;
-        this.size = 1;
         this.select = new EventEmitter();
     }
 

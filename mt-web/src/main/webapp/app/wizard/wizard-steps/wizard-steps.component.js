@@ -9,6 +9,7 @@ export class WizardStepsComponent {
         this.wizardSteps = [];
         this._current = new WizardStep("", "", "", false);
         this.select = new EventEmitter();
+        this.size = 25;
     }
 
     set current(current) {
@@ -40,8 +41,7 @@ export class WizardStepsComponent {
 
             //calculate and update each step size property
             if (this.stepComponents && this.stepComponents.length > 0) {
-                let size = Math.floor(12/this.stepComponents.length);
-                size = size >= 1 ? size : 1;
+                let size = Math.floor(100/this.stepComponents.length);
 
                 this.stepComponents.forEach(function(cmp){
                     cmp.size = size;
