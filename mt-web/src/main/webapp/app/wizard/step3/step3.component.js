@@ -1,6 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {MessagesService} from 'app/commons/services/messages/messages.service';
 import {UploadComponent} from 'app/commons/components/upload/upload.component';
+import {ImageFileComponent} from 'app/wizard/step3/image-file.component';
 import {ImageFile} from 'app/wizard/step3/image-file.model';
 
 export class Step3Component {
@@ -13,7 +14,7 @@ export class Step3Component {
     constructor(messagesService) {
 
         //Resources service
-	this.RES = messagesService;
+        this.RES = messagesService;
         // employee id
         this.employeeId = null;
         // next event - fired when Next button is clicked
@@ -30,7 +31,7 @@ export class Step3Component {
      */
     getUrl() {
 
-	return "resources/employees/" + this.employeeId + "/images";
+        return "resources/employees/" + this.employeeId + "/images";
     }
 
     /**
@@ -38,7 +39,7 @@ export class Step3Component {
      */
     getMaxFileSize() {
 
-	return 10485760;
+        return 10485760;
     }
 
     /**
@@ -51,15 +52,15 @@ export class Step3Component {
      */
     onStart(event) {
 
-	let me = this;
+        let me = this;
 
-	let imageFile = new ImageFile({
-	    employeeId: me.employeeId,
-	    name: event.name,
-	    size: event.size
-	});
+    	let imageFile = new ImageFile({
+    	    employeeId: me.employeeId,
+    	    name: event.name,
+    	    size: event.size
+    	});
 
-	this.imageFiles.push(imageFile);
+    	this.imageFiles.push(imageFile);
     }
 
     /**
@@ -82,7 +83,7 @@ export class Step3Component {
      */
     onNext() {
 
-	this.next.emit();
+        this.next.emit();
     }
 
     /**
@@ -101,7 +102,7 @@ Step3Component.annotations = [
                                     selector: 'step3',
                                     templateUrl: 'app/wizard/step3/step3.template.html',
                                     styleUrls:  [],
-                                    directives: [UploadComponent],
+                                    directives: [UploadComponent, ImageFileComponent],
                                     outputs: ['next', 'back']
                                 })
 ];
