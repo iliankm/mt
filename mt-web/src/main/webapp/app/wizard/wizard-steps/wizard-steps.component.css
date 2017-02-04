@@ -1,1 +1,18 @@
 .bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
+
+:host .bs-wizard-step {padding: 0; position: relative;}
+:host .bs-wizard-step + .bs-wizard-step {}
+:host .bs-wizard-stepnum {color: #595959; font-size: 16px; margin-bottom: 5px;}
+:host .bs-wizard-info {color: #999; font-size: 14px;}
+:host .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: #fbe8aa; top: 48px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;}
+:host .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; border-radius: 50px; position: absolute; top: 8px; left: 8px; }
+:host .current .bs-wizard-dot:after {background: #fbbd19}
+:host .wprogress {position: relative; border-radius: 0px; height: 8px; box-shadow: none; margin: 20px 0; background-color: #f5f5f5;}
+:host .wprogress .wprogress-bar {width:0px; height: 8px; box-shadow: none; background: #fbe8aa;}
+:host .visited .wprogress .wprogress-bar {width:100%;}
+:host .disabled .bs-wizard-dot {background-color: #f5f5f5;}
+:host .disabled .bs-wizard-dot:after {opacity: 0;}
+:host .bs-wizard-step:first-child .wprogress {left: 50%; width: 50%;}
+:host .bs-wizard-step:last-child .wprogress {width: 50%;}
+:host .visited a.bs-wizard-dot {cursor: pointer;}
+:host .disabled a.bs-wizard-dot {pointer-events: none;}

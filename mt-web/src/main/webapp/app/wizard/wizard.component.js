@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {WizardStepsComponent} from 'app/wizard/wizard-steps/wizard-steps.component';
-import {WizardStep, WizardStepComponent} from 'app/wizard/wizard-steps/wizard-step.component';
+import {WizardStep, WizardStepsComponent} from 'app/wizard/wizard-steps/wizard-steps.component';
 import {Step1Component} from 'app/wizard/step1/step1.component';
 import {Step2Component} from 'app/wizard/step2/step2.component';
 import {Step3Component} from 'app/wizard/step3/step3.component';
@@ -86,7 +85,7 @@ WizardComponent.annotations = [
                                     selector: 'emp-wizard',
                                     templateUrl: 'app/wizard/wizard.template.html',
                                     styleUrls:  [],
-                                    directives: [WizardStepsComponent, WizardStepComponent, Step1Component, Step2Component, Step3Component, Step4Component],
+                                    directives: [WizardStepsComponent, Step1Component, Step2Component, Step3Component, Step4Component],
                                     queries: {
                                                 step1Component: new ViewChild(Step1Component),
                                                 step2Component: new ViewChild(Step2Component),

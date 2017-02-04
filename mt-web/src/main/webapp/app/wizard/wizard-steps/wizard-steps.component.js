@@ -1,6 +1,18 @@
-import { Component, ViewChildren, forwardRef, EventEmitter } from '@angular/core';
+import {Component, ViewChildren, forwardRef, EventEmitter} from '@angular/core';
 
-import { WizardStep, WizardStepComponent } from 'app/wizard/wizard-steps/wizard-step.component';
+/**
+ * WizardStep model class
+ */
+export class WizardStep {
+
+    constructor(name, title, info, isVisited) {
+
+        this.name = name;
+        this.title = title;
+        this.info = info;
+        this.isVisited = isVisited;
+    }
+}
 
 export class WizardStepsComponent {
 
@@ -9,45 +21,17 @@ export class WizardStepsComponent {
         this.wizardSteps = [];
         this._current = new WizardStep("", "", "", false);
         this.select = new EventEmitter();
-        this.size = 25;
     }
 
     set current(current) {
 
         current.isVisited = true;
         this._current = current;
-        this._updateCurrentStep(current);
     }
 
     get current() {
 
         return this._current;
-    }
-
-    _updateCurrentStep(wizardStep) {
-
-        if (this.stepComponents) {
-            this.stepComponents.forEach(function(cmp){
-                cmp.isCurrent = cmp.wizardStep.name && wizardStep.name && cmp.wizardStep.name === wizardStep.name;
-            });
-        }
-    }
-
-    ngAfterViewInit() {
-
-        setTimeout(()=>{
-            //update current step
-            this._updateCurrentStep(this._current);
-
-            //calculate and update each step size property
-            if (this.stepComponents && this.stepComponents.length > 0) {
-                let size = Math.floor(100/this.stepComponents.length);
-
-                this.stepComponents.forEach(function(cmp){
-                    cmp.size = size;
-                });
-            }
-        });
     }
 
     onSelect(wizardStep) {
@@ -66,6 +50,22 @@ export class WizardStepsComponent {
             });
         }
     }
+
+    getStepClasses(wizardStep) {
+
+        let classes = {
+            current: wizardStep.name == this.current.name,
+            visited: wizardStep.isVisited,
+            disabled: !wizardStep.isVisited,
+            "bs-wizard-step": true
+        }
+
+        let stepSize = Math.floor(12 / this.wizardSteps.length);
+        classes["col-" + stepSize] = true;
+
+        return classes;
+    }
+
 }
 
 WizardStepsComponent.annotations = [
@@ -73,8 +73,8 @@ WizardStepsComponent.annotations = [
                                     selector: 'wizard-steps',
                                     templateUrl: 'app/wizard/wizard-steps/wizard-steps.template.html',
                                     styleUrls:  ['app/wizard/wizard-steps/wizard-steps.component.css'],
-                                    directives: [WizardStepComponent],
-                                    queries: {stepComponents: new ViewChildren(WizardStepComponent)},
+                                    directives: [],
+                                    queries: {},
                                     inputs: ['wizardSteps', 'current'],
                                     outputs: ['select']
                                 })

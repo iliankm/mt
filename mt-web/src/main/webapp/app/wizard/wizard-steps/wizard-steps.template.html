@@ -1,3 +1,10 @@
 <div class="row bs-wizard" style="border-bottom:0;">
-	<wizard-step *ngFor="let step of wizardSteps" [wizardStep]="step" (select)="onSelect($event)"></wizard-step>
+	<div *ngFor="let wizardStep of wizardSteps" [ngClass]="getStepClasses(wizardStep)">
+		<div class="text-center bs-wizard-stepnum">{{wizardStep.title}}</div>
+		<div class="wprogress">
+			<div class="wprogress-bar"></div>
+		</div>
+		<a class="bs-wizard-dot" (click)="onSelect(wizardStep)"></a>
+		<div class="bs-wizard-info text-center">{{wizardStep.info}}</div>
+	</div>
 </div>

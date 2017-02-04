@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<button type="button" (click)="navigateToWizard()" class="btn btn-primary btn-sm">{{RES.get('main.sidebar.create')}}</button>
-			<ul class="nav nav-sidebar">
+			<ul class="nav flex-column nav-sidebar">
 				<li class="nav-item"><a class="nav-link" routerLink="list/all" routerLinkActive="active">{{RES.get('main.sidebar.employees')}}</a></li>
 				<li class="nav-item "><a class="nav-link" routerLink="list/archived" routerLinkActive="active">{{RES.get('main.sidebar.archived')}}</a></li>
 			</ul>
@@ -24,7 +24,7 @@
 </div>
 
 <modal #alertModal>
-	<header>
+	<header style="width: 100%">
 		<div class="alert" role="alert">
 			<strong class="alert-title"></strong>
 		</div>

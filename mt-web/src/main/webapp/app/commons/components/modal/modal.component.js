@@ -109,7 +109,7 @@ ModalComponent.annotations = [
                                     selector: 'modal',
                                     templateUrl: 'app/commons/components/modal/modal.template.html',
                                     providers: [],
-                                    styleUrls:  [],
+                                    styleUrls:  ['app/commons/components/modal/modal.component.css'],
                                     directives: [],
                                     inputs: ['size'],
                                     outputs: ['show', 'shown', 'hide', 'hidden']
