@@ -1,0 +1,5 @@
+:host .card.loading {
+	background-image: url(icons/loading.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
