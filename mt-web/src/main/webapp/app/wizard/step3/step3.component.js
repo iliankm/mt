@@ -1,7 +1,6 @@
 import {Component, EventEmitter} from '@angular/core';
 import {MessagesService} from 'app/commons/services/messages/messages.service';
 import {UploadComponent} from 'app/commons/components/upload/upload.component';
-import {ImageFileComponent} from 'app/wizard/step3/image-file.component';
 import {ImageFile} from 'app/wizard/step3/image-file.model';
 
 export class Step3Component {
@@ -101,8 +100,8 @@ Step3Component.annotations = [
                                 new Component({
                                     selector: 'step3',
                                     templateUrl: 'app/wizard/step3/step3.template.html',
-                                    styleUrls:  [],
-                                    directives: [UploadComponent, ImageFileComponent],
+                                    styleUrls:  ['app/wizard/step3/step3.component.css'],
+                                    directives: [UploadComponent],
                                     outputs: ['next', 'back']
                                 })
 ];
