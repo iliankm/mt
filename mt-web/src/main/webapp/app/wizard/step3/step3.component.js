@@ -53,6 +53,11 @@ export class Step3Component {
 
         let me = this;
 
+        if (this.getImageFile(event.name)) {
+            console.error('File: ' + event.name + ' already selected.');
+            return;
+        }
+
     	let imageFile = new ImageFile({
     	    employeeId: me.employeeId,
     	    name: event.name,
@@ -65,12 +70,26 @@ export class Step3Component {
     /**
      * Upload component progress handler
      */
-    onProgress(event) {}
+    onProgress(event) {
+
+	let imageFile = this.getImageFile(event.file.name);
+
+	if (imageFile) {
+	    imageFile.progress = event.progress;
+	}
+    }
 
     /**
      * Upload component ready handler
      */
-    onReady(event) {console.log(event)}
+    onReady(event) {
+
+	let imageFile = this.getImageFile(event.file.name);
+
+	if (imageFile) {
+	    imageFile.serverName = event.responseText;
+	}
+    }
 
     /**
      * Upload component error handler
@@ -91,6 +110,14 @@ export class Step3Component {
     onPrevious() {
 
         this.back.emit();
+    }
+
+    /**
+     * Locate ImageFile object by file name
+     */
+    getImageFile(fileName) {
+
+	return this.imageFiles.find(el => fileName && el.name && el.name === fileName);
     }
 
 

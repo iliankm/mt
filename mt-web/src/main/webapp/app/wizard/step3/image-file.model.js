@@ -34,7 +34,8 @@ export class ImageFile {
     set progress(progress) {
 
 	if (!progress || progress < 0 || progress > 100) {
-	    throw "Invalid progress value";
+	    console.error("Invalid progress value: " + progress ? progress : "null");
+	    return;
 	}
 
 	this._progress = progress;
