@@ -4,3 +4,6 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
+:host .card .btn {display: none}
+:host .card.loaded:hover .btn {display: block}
