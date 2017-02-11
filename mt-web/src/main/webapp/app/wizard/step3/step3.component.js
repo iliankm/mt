@@ -1,6 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {MessagesService} from 'app/commons/services/messages/messages.service';
 import {UploadComponent} from 'app/commons/components/upload/upload.component';
+import {ProgressComponent} from 'app/commons/components/progress/progress.component';
 import {ImageFile} from 'app/wizard/step3/image-file.model';
 
 export class Step3Component {
@@ -12,7 +13,7 @@ export class Step3Component {
 
     constructor(messagesService) {
 
-        //Resources service
+        // Resources service
         this.RES = messagesService;
         // employee id
         this.employeeId = null;
@@ -20,7 +21,7 @@ export class Step3Component {
         this.next = new EventEmitter();
         // back event - fired when Previous button is clicked
         this.back = new EventEmitter();
-        //array of uploading/uploaded ImageFile objects
+        // array of uploading/uploaded ImageFile objects
         this.imageFiles = [];
 
     }
@@ -72,11 +73,11 @@ export class Step3Component {
      */
     onProgress(event) {
 
-	let imageFile = this.getImageFile(event.file.name);
+        let imageFile = this.getImageFile(event.file.name);
 
-	if (imageFile) {
-	    imageFile.progress = event.progress;
-	}
+        if (imageFile) {
+            imageFile.progress = event.progress;
+        }
     }
 
     /**
@@ -84,11 +85,11 @@ export class Step3Component {
      */
     onReady(event) {
 
-	let imageFile = this.getImageFile(event.file.name);
+        let imageFile = this.getImageFile(event.file.name);
 
-	if (imageFile) {
-	    imageFile.serverName = event.responseText;
-	}
+        if (imageFile) {
+            imageFile.serverName = event.responseText;
+        }
     }
 
     /**
@@ -117,7 +118,7 @@ export class Step3Component {
      */
     getImageFile(fileName) {
 
-	return this.imageFiles.find(el => fileName && el.name && el.name === fileName);
+        return this.imageFiles.find(el => fileName && el.name && el.name === fileName);
     }
 
 
@@ -128,7 +129,7 @@ Step3Component.annotations = [
                                     selector: 'step3',
                                     templateUrl: 'app/wizard/step3/step3.template.html',
                                     styleUrls:  ['app/wizard/step3/step3.component.css'],
-                                    directives: [UploadComponent],
+                                    directives: [UploadComponent, ProgressComponent],
                                     outputs: ['next', 'back']
                                 })
 ];

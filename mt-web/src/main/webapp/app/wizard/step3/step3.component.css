@@ -1,5 +1,5 @@
 :host .card {height: 100%}
-:host .card.loading {
+:host .card {
 	background-image: url(icons/loading.svg);
 	background-repeat: no-repeat;
 	background-position: center;

@@ -6,6 +6,7 @@ import {HttpModule} from '@angular/http';
 import {CountrySelectComponent} from 'app/commons/components/country-select/country-select.component';
 import {ModalComponent} from 'app/commons/components/modal/modal.component';
 import {UploadComponent} from 'app/commons/components/upload/upload.component';
+import {ProgressComponent} from 'app/commons/components/progress/progress.component';
 
 import {ValidateEmailDirective} from 'app/commons/directives/validate-email/validate-email.directive';
 import {ValidatePhoneDirective} from 'app/commons/directives/validate-phone/validate-phone.directive';
@@ -27,6 +28,7 @@ CommonsModule.annotations = [
                                                 CountrySelectComponent,
                                                 ModalComponent,
                                                 UploadComponent,
+                                                ProgressComponent,
                                                 ValidateEmailDirective,
                                                 ValidatePhoneDirective
                                               ],
@@ -35,6 +37,7 @@ CommonsModule.annotations = [
                                             CountrySelectComponent,
                                             ModalComponent,
                                             UploadComponent,
+                                            ProgressComponent,
                                             ValidateEmailDirective,
                                             ValidatePhoneDirective
                                           ],
