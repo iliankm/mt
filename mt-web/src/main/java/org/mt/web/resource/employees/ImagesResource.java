@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,6 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.mt.business.api.boundary.service.employee.ImagesService;
+import org.mt.business.api.exception.ResourceNotFoundException;
 import org.mt.web.resource.RestEndpoints;
 
 @Path(RestEndpoints.EMPLOYEES)
@@ -51,6 +53,24 @@ public class ImagesResource {
 
 	return Response.ok(imageFile).type(contentType)
 		.header("Content-Disposition", "attachment; filename=\"" + name + "\"").build();
+    }
+
+    @DELETE
+    @Path(RestEndpoints.EMPLOYEE_IMAGE)
+    public Response delete(@PathParam("id") String id, @PathParam("name") String name) {
+
+	final java.nio.file.Path imagePath = imageService.getImage(id, name);
+
+	final File imageFile = imagePath.toFile();
+
+	if (!imageFile.exists() || !imageFile.isFile()) {
+	    throw new ResourceNotFoundException();
+	}
+	else {
+	    imageFile.delete();
+
+	    return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(name).build();
+	}
     }
 
     @POST
