@@ -35,7 +35,7 @@ public class ImagesResource {
 
     private static final int MAX_SIZE = 10 * 1024 * 1024;
 
-    private static final List<String> ALLOWED_FILE_TYPES = Arrays.asList("jpeg", "jpg", "png", "bmp", "tiff", "gif");
+    private static final List<String> ALLOWED_FILE_TYPES = Arrays.asList("jpeg", "jpg", "png", "bmp", "tiff", "gif", "svg");
 
     @Inject
     ImagesService imageService;
