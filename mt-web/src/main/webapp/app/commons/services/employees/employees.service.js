@@ -79,6 +79,20 @@ export class EmployeesService extends BaseService {
             .map(r => r.text())
             .catch(this.handleError);
     }
+
+    /**
+     * Delete employee image
+     *
+     * @param {string} id - employee id
+     * @param {string} name - image file name
+     * @return {Observable for string} - passed image file name
+     */
+    deleteEmployeeImage(id, name) {
+
+        return this.http.delete(ENDPOINT_EMPLOYEES + "/" + id + "/images" + name)
+            .map(r => r.text())
+            .catch(this.handleError);
+    }
 }
 
 EmployeesService.annotations = [new Injectable()];
