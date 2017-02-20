@@ -15,6 +15,8 @@ public class ImagesServiceBean implements ImagesService {
 
     private static final String ENV_HOME = "HOME";
 
+    private static final String ENV_OPENSHIFT_DATA_DIR = "OPENSHIFT_DATA_DIR";
+
     private static final String APP_UPLOAD_DIR = "mt-upload";
 
     @Override
@@ -71,7 +73,8 @@ public class ImagesServiceBean implements ImagesService {
      */
     private Path getEmployeeImagesDirectory(String employeeId) {
 
-	final String homePathString = System.getenv(ENV_HOME);
+	final String homePathString = System.getenv(ENV_OPENSHIFT_DATA_DIR) != null
+		? System.getenv(ENV_OPENSHIFT_DATA_DIR) : System.getenv(ENV_HOME);
 
 	if (homePathString == null || homePathString.isEmpty()) {
 	    throw new RuntimeException("Missing environment variable HOME");
