@@ -10,7 +10,6 @@ import org.mt.business.api.domain.IdentifiableObject;
 
 /**
  * BaseEntityBean with auto-generated (by persistence framework) fields
- *
  */
 public abstract class BaseEntityBean implements IdentifiableObject {
 
@@ -29,27 +28,27 @@ public abstract class BaseEntityBean implements IdentifiableObject {
     @Override
     public String getId() {
 
-	return id.toHexString();
+        return id.toHexString();
     }
 
     @Override
     public Date getCreationDate() {
 
-	return new Date(creationDate.getTime());
+        return new Date(creationDate.getTime());
     }
 
     @Override
     public Date getLastModifiedDate() {
 
-	return new Date(lastModifiedDate.getTime());
+        return new Date(lastModifiedDate.getTime());
     }
 
     @PrePersist
     private void prePersist() {
 
-	this.creationDate = (creationDate == null) ? new Date() : creationDate;
+        this.creationDate = (creationDate == null) ? new Date() : creationDate;
 
-	this.lastModifiedDate = (lastModifiedDate == null) ? creationDate : new Date();
+        this.lastModifiedDate = (lastModifiedDate == null) ? creationDate : new Date();
     }
 
 }

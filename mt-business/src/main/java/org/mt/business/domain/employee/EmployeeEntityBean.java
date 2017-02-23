@@ -22,7 +22,6 @@ import org.mt.business.domain.BaseEntityBean;
 
 /**
  * Immutable EmployeeEntity
- *
  */
 @Entity(value = "employee", noClassnameStored = false)
 public class EmployeeEntityBean extends BaseEntityBean implements Employee {
@@ -62,14 +61,14 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
 
     private EmployeeEntityBean(Builder builder) {
 
-	this.identificationNumber = builder.identificationNumber;
-	this.name = builder.name;
-	this.gender = builder.gender;
-	this.address = builder.address;
-	this.email = builder.email;
-	this.phones = builder.phones != null ? Collections.unmodifiableList(builder.phones) : null;
-	this.substituteIds = builder.substituteIds != null
-		? builder.substituteIds.stream().map(sid -> new ObjectId(sid)).collect(Collectors.toSet()) : null;
+        this.identificationNumber = builder.identificationNumber;
+        this.name = builder.name;
+        this.gender = builder.gender;
+        this.address = builder.address;
+        this.email = builder.email;
+        this.phones = builder.phones != null ? Collections.unmodifiableList(builder.phones) : null;
+        this.substituteIds = builder.substituteIds != null
+                ? builder.substituteIds.stream().map(sid -> new ObjectId(sid)).collect(Collectors.toSet()) : null;
     }
 
     /**
@@ -77,136 +76,136 @@ public class EmployeeEntityBean extends BaseEntityBean implements Employee {
      */
     public static class Builder {
 
-	private String identificationNumber;
-	private String name;
-	private Gender gender;
-	private AddressEntityBean address;
-	private String email;
-	private List<PhoneEntityBean> phones;
-	private Set<String> substituteIds;
+        private String identificationNumber;
+        private String name;
+        private Gender gender;
+        private AddressEntityBean address;
+        private String email;
+        private List<PhoneEntityBean> phones;
+        private Set<String> substituteIds;
 
-	public static Builder get() {
+        public static Builder get() {
 
-	    return new Builder();
-	}
+            return new Builder();
+        }
 
-	public Builder identificationNumber(String identificationNumber) {
+        public Builder identificationNumber(String identificationNumber) {
 
-	    this.identificationNumber = identificationNumber;
-	    return this;
-	}
+            this.identificationNumber = identificationNumber;
+            return this;
+        }
 
-	public Builder name(String name) {
+        public Builder name(String name) {
 
-	    this.name = name;
-	    return this;
-	}
+            this.name = name;
+            return this;
+        }
 
-	public Builder gender(Gender gender) {
+        public Builder gender(Gender gender) {
 
-	    this.gender = gender;
-	    return this;
-	}
+            this.gender = gender;
+            return this;
+        }
 
-	public Builder address(AddressEntityBean address) {
+        public Builder address(AddressEntityBean address) {
 
-	    this.address = address;
-	    return this;
-	}
+            this.address = address;
+            return this;
+        }
 
-	public Builder email(String email) {
+        public Builder email(String email) {
 
-	    this.email = email;
-	    return this;
-	}
+            this.email = email;
+            return this;
+        }
 
-	public Builder phones(List<PhoneEntityBean> phones) {
+        public Builder phones(List<PhoneEntityBean> phones) {
 
-	    this.phones = phones;
-	    return this;
-	}
+            this.phones = phones;
+            return this;
+        }
 
 
-	public Builder substituteIds(Set<String> substituteIds) {
+        public Builder substituteIds(Set<String> substituteIds) {
 
-	    this.substituteIds = substituteIds;
-	    return this;
-	}
+            this.substituteIds = substituteIds;
+            return this;
+        }
 
-	public EmployeeEntityBean build() {
+        public EmployeeEntityBean build() {
 
-	    return new EmployeeEntityBean(this);
-	}
+            return new EmployeeEntityBean(this);
+        }
     }
 
     @Override
     public String getName() {
 
-	return name;
+        return name;
     }
 
     @Override
     public Gender getGender() {
 
-	return gender;
+        return gender;
     }
 
     @Override
     public Address getAddress() {
 
-	return address;
+        return address;
     }
 
     @Override
     public String getEmail() {
 
-	return email;
+        return email;
     }
 
     @Override
     public List<? extends Phone> getPhones() {
 
-	return phones != null ? Collections.unmodifiableList(phones) : Collections.emptyList();
+        return phones != null ? Collections.unmodifiableList(phones) : Collections.emptyList();
     }
 
     @Override
     public String getIdentificationNumber() {
 
-	return identificationNumber;
+        return identificationNumber;
     }
 
     @Override
     public Set<String> getSubstituteIds() {
 
-	return substituteIds != null ? substituteIds.stream().map(oid -> oid.toHexString()).collect(Collectors.toSet())
-		: Collections.emptySet();
+        return substituteIds != null ? substituteIds.stream().map(oid -> oid.toHexString()).collect(Collectors.toSet())
+                : Collections.emptySet();
     }
 
     @Override
     public int hashCode() {
 
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((identificationNumber == null) ? 0 : identificationNumber.hashCode());
-	return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((identificationNumber == null) ? 0 : identificationNumber.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
 
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	EmployeeEntityBean other = (EmployeeEntityBean) obj;
-	if (identificationNumber == null) {
-	    if (other.identificationNumber != null)
-		return false;
-	} else if (!identificationNumber.equals(other.identificationNumber))
-	    return false;
-	return true;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        EmployeeEntityBean other = (EmployeeEntityBean) obj;
+        if (identificationNumber == null) {
+            if (other.identificationNumber != null)
+                return false;
+        } else if (!identificationNumber.equals(other.identificationNumber))
+            return false;
+        return true;
     }
 
 

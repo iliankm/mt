@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import com.mongodb.MongoClient;
@@ -36,44 +37,44 @@ public class MongoDB {
     private static final String DB_NAME = "mt";
 
     private static class SingletonHolder {
-	static final MongoDB INSTANCE = new MongoDB();
+        static final MongoDB INSTANCE = new MongoDB();
     }
 
     private final Datastore datastore;
 
     private MongoDB() {
 
-	final MongoClientOptions mongoOptions = MongoClientOptions.builder().socketTimeout(SOCKET_TIMEOUT)
-		.connectTimeout(CONNECT_TIMEOUT).build();
+        final MongoClientOptions mongoOptions = MongoClientOptions.builder().socketTimeout(SOCKET_TIMEOUT)
+                .connectTimeout(CONNECT_TIMEOUT).build();
 
-	MongoClient mongoClient;
-	try {
-	    if (DB_HOST_OPENSHIFT == null) {
-		//non-openshift deployment
-		mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
-	    } else {
-		//openshift deployment
-		final List<MongoCredential> credentials = Arrays.asList(MongoCredential
-			.createMongoCRCredential(DB_USERNAME_OPENSHIFT, DB_NAME, DB_PASSWORD_OPENSHIFT.toCharArray()));
-		mongoClient = new MongoClient(new ServerAddress(DB_HOST_OPENSHIFT, DB_PORT), credentials);
-	    }
+        MongoClient mongoClient;
+        try {
+            if (DB_HOST_OPENSHIFT == null) {
+                //non-openshift deployment
+                mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
+            } else {
+                //openshift deployment
+                final List<MongoCredential> credentials = Arrays.asList(MongoCredential
+                        .createMongoCRCredential(DB_USERNAME_OPENSHIFT, DB_NAME, DB_PASSWORD_OPENSHIFT.toCharArray()));
+                mongoClient = new MongoClient(new ServerAddress(DB_HOST_OPENSHIFT, DB_PORT), credentials);
+            }
 
-	} catch (UnknownHostException e) {
-	    throw new RuntimeException("Error initializing MongoDB", e);
-	}
+        } catch (UnknownHostException e) {
+            throw new RuntimeException("Error initializing MongoDB", e);
+        }
 
-	mongoClient.setWriteConcern(WriteConcern.SAFE);
+        mongoClient.setWriteConcern(WriteConcern.SAFE);
 
-	datastore = new Morphia().mapPackage("org.mt.business.entity").createDatastore(mongoClient, DB_NAME);
+        datastore = new Morphia().mapPackage("org.mt.business.entity").createDatastore(mongoClient, DB_NAME);
 
-	datastore.ensureIndexes();
+        datastore.ensureIndexes();
 
-	LOG.info("Connection to database '" + DB_NAME + "' initialized");
+        LOG.info("Connection to database '" + DB_NAME + "' initialized");
     }
 
     public static MongoDB instance() {
 
-	return SingletonHolder.INSTANCE;
+        return SingletonHolder.INSTANCE;
     }
 
     /**
@@ -85,7 +86,7 @@ public class MongoDB {
      */
     public Datastore getDatastore() {
 
-	return datastore;
+        return datastore;
     }
 
 }

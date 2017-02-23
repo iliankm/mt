@@ -9,7 +9,7 @@ public class MongoDBDatastoreFactory {
     @Produces
     public static Datastore createDatastore() {
 
-	return MongoDB.instance().getDatastore();
+        return MongoDB.instance().getDatastore();
 
     }
 

@@ -38,133 +38,133 @@ public class EmployeeRepository extends AbstractRepository<EmployeeEntityBean> {
     @Override
     public Class<EmployeeEntityBean> getEntityClazz() {
 
-	return EmployeeEntityBean.class;
+        return EmployeeEntityBean.class;
     }
 
     @Override
     @CacheRemoveAll
     public void save(@Valid EmployeeEntityBean entity) {
 
-	super.save(entity);
+        super.save(entity);
     }
 
     @Override
     @CacheResult
     public EmployeeEntityBean findById(String id) {
 
-	return super.findById(id);
+        return super.findById(id);
     }
 
     @Override
     @CacheRemoveAll
     public boolean deleteById(String id) {
 
-	return super.deleteById(id);
+        return super.deleteById(id);
     }
 
     @CacheResult
     public List<EmployeeEntityBean> findByCriteria(EmployeeSearchCriteria criteria, SortCriteria sort, int offset,
-	    int limit) {
+                                                   int limit) {
 
-	final Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
+        final Query<EmployeeEntityBean> query = ds.createQuery(getEntityClazz());
 
-	if (criteria != null) {
-	    final List<Criteria> _criteria = new LinkedList<>();
+        if (criteria != null) {
+            final List<Criteria> _criteria = new LinkedList<>();
 
-	    if (criteria.getName() != null && !criteria.getName().isEmpty()) {
-		_criteria.add(query.criteria("name").contains(criteria.getName()));
-	    }
+            if (criteria.getName() != null && !criteria.getName().isEmpty()) {
+                _criteria.add(query.criteria("name").contains(criteria.getName()));
+            }
 
-	    if (criteria.getEmail() != null && !criteria.getEmail().isEmpty()) {
-		_criteria.add(query.criteria("email").equal(criteria.getEmail()));
-	    }
+            if (criteria.getEmail() != null && !criteria.getEmail().isEmpty()) {
+                _criteria.add(query.criteria("email").equal(criteria.getEmail()));
+            }
 
-	    if (criteria.getGender() != null) {
-		_criteria.add(query.criteria("gender").equal(criteria.getGender().name()));
-	    }
+            if (criteria.getGender() != null) {
+                _criteria.add(query.criteria("gender").equal(criteria.getGender().name()));
+            }
 
-	    query.and((Criteria[]) _criteria.toArray());
-	}
+            query.and((Criteria[]) _criteria.toArray());
+        }
 
-	if (sort != null) {
-	    query.order(ORDER_TRANSFORMER.apply(sort));
-	}
+        if (sort != null) {
+            query.order(ORDER_TRANSFORMER.apply(sort));
+        }
 
-	query.offset(offset);
+        query.offset(offset);
 
-	query.limit(limit);
+        query.limit(limit);
 
-	final List<EmployeeEntityBean> results = query.asList();
+        final List<EmployeeEntityBean> results = query.asList();
 
-	return results;
+        return results;
 
     }
 
     @CacheRemoveAll
     public int update(String id, @Valid CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
-	Objects.requireNonNull(id);
+        Objects.requireNonNull(id);
 
-	Objects.requireNonNull(createUpdateEmployeeArgument);
+        Objects.requireNonNull(createUpdateEmployeeArgument);
 
-	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
+        final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
 
-	ops.set("identificationNumber", createUpdateEmployeeArgument.getIdentificationNumber());
+        ops.set("identificationNumber", createUpdateEmployeeArgument.getIdentificationNumber());
 
-	ops.set("name", createUpdateEmployeeArgument.getName());
+        ops.set("name", createUpdateEmployeeArgument.getName());
 
-	if (createUpdateEmployeeArgument.getEmail() != null) {
-	    ops.set("email", createUpdateEmployeeArgument.getEmail());
-	} else {
-	    ops.unset("email");
-	}
+        if (createUpdateEmployeeArgument.getEmail() != null) {
+            ops.set("email", createUpdateEmployeeArgument.getEmail());
+        } else {
+            ops.unset("email");
+        }
 
-	ops.set("gender", createUpdateEmployeeArgument.getGender());
+        ops.set("gender", createUpdateEmployeeArgument.getGender());
 
-	ops.set("lastModifiedDate", new Date());
+        ops.set("lastModifiedDate", new Date());
 
-	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
+        final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
 
-	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
+        final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
 
-	return updateResults.getUpdatedCount();
+        return updateResults.getUpdatedCount();
     }
 
     @CacheRemoveAll
     public int update(String id, @Valid AddressEntityBean address) {
 
-	Objects.requireNonNull(id);
+        Objects.requireNonNull(id);
 
-	Objects.requireNonNull(address);
+        Objects.requireNonNull(address);
 
-	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
+        final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
 
-	ops.set("address", address);
+        ops.set("address", address);
 
-	ops.set("lastModifiedDate", new Date());
+        ops.set("lastModifiedDate", new Date());
 
-	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
+        final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
 
-	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
+        final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
 
-	return updateResults.getUpdatedCount();
+        return updateResults.getUpdatedCount();
     }
 
     @CacheRemoveAll
     public int update(String id, @Valid Set<PhoneEntityBean> phones) {
 
-	Objects.requireNonNull(id);
+        Objects.requireNonNull(id);
 
-	final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
+        final UpdateOperations<EmployeeEntityBean> ops = ds.createUpdateOperations(EmployeeEntityBean.class);
 
-	ops.set("phones", phones != null ? phones : Collections.emptySet());
+        ops.set("phones", phones != null ? phones : Collections.emptySet());
 
-	ops.set("lastModifiedDate", new Date());
+        ops.set("lastModifiedDate", new Date());
 
-	final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
+        final Query<EmployeeEntityBean> query = ds.createQuery(EmployeeEntityBean.class).field(Mapper.ID_KEY).equal(new ObjectId(id));
 
-	final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
+        final UpdateResults<EmployeeEntityBean> updateResults = ds.update(query, ops);
 
-	return updateResults.getUpdatedCount();
+        return updateResults.getUpdatedCount();
     }
 }

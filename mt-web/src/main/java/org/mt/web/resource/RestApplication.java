@@ -12,14 +12,14 @@ public class RestApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
 
-	final Set<Class<?>> classes = new HashSet<Class<?>>();
+        final Set<Class<?>> classes = new HashSet<Class<?>>();
 
-	classes.add(org.mt.web.resource.ExceptionMapper.class);
-	classes.add(org.mt.web.resource.messages.MessagesResource.class);
-	classes.add(org.mt.web.resource.employees.EmployeesResource.class);
-	classes.add(org.mt.web.resource.employees.ImagesResource.class);
+        classes.add(org.mt.web.resource.ExceptionMapper.class);
+        classes.add(org.mt.web.resource.messages.MessagesResource.class);
+        classes.add(org.mt.web.resource.employees.EmployeesResource.class);
+        classes.add(org.mt.web.resource.employees.ImagesResource.class);
 
-	return classes;
+        return classes;
     }
 
 }

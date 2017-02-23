@@ -20,12 +20,12 @@ public class MessagesResource {
     @GET
     public Response getMessages() {
 
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources", Locale.ENGLISH);
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources", Locale.ENGLISH);
 
-	final Map<String, String> messages = resourceBundle.keySet().stream()
-		.collect(Collectors.toMap(k -> k, k -> StringEscapeUtils.escapeJava(resourceBundle.getString(k))));
+        final Map<String, String> messages = resourceBundle.keySet().stream()
+                .collect(Collectors.toMap(k -> k, k -> StringEscapeUtils.escapeJava(resourceBundle.getString(k))));
 
-	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(messages).build();
+        return Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(messages).build();
 
     }
 

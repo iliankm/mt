@@ -10,11 +10,11 @@ public class LoggerFactory {
     @Produces
     public static Logger createLogger(InjectionPoint injectionPoint) {
 
-	String name = injectionPoint.getMember().getDeclaringClass().getName();
-	Logger logger = Logger.getLogger(name);
+        String name = injectionPoint.getMember().getDeclaringClass().getName();
+        Logger logger = Logger.getLogger(name);
 
-	logger.setLevel(Level.ALL);
+        logger.setLevel(Level.ALL);
 
-	return logger;
+        return logger;
     }
 }

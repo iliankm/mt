@@ -8,7 +8,6 @@ import org.mt.business.api.domain.employee.Gender;
 
 /**
  * Immutable CreateEmployeeArgument
- *
  */
 public class CreateUpdateEmployeeArgument {
 
@@ -31,46 +30,46 @@ public class CreateUpdateEmployeeArgument {
     }
 
     private CreateUpdateEmployeeArgument(Builder builder) {
-	this.identificationNumber = builder.identificationNumber;
-	this.name = builder.name;
-	this.gender = builder.gender;
-	this.email = builder.email;
+        this.identificationNumber = builder.identificationNumber;
+        this.name = builder.name;
+        this.gender = builder.gender;
+        this.email = builder.email;
     }
 
     public static class Builder {
 
-	private String identificationNumber;
-	private String name;
-	private Gender gender;
-	private String email;
+        private String identificationNumber;
+        private String name;
+        private Gender gender;
+        private String email;
 
-	public static Builder get() {
-	    return new Builder();
-	}
+        public static Builder get() {
+            return new Builder();
+        }
 
-	public Builder identificationNumber(String identificationNumber) {
-	    this.identificationNumber = identificationNumber;
-	    return this;
-	}
+        public Builder identificationNumber(String identificationNumber) {
+            this.identificationNumber = identificationNumber;
+            return this;
+        }
 
-	public Builder name(String name) {
-	    this.name = name;
-	    return this;
-	}
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
 
-	public Builder gender(Gender gender) {
-	    this.gender = gender;
-	    return this;
-	}
+        public Builder gender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
 
-	public Builder email(String email) {
-	    this.email = email;
-	    return this;
-	}
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
 
-	public CreateUpdateEmployeeArgument build() {
-	    return new CreateUpdateEmployeeArgument(this);
-	}
+        public CreateUpdateEmployeeArgument build() {
+            return new CreateUpdateEmployeeArgument(this);
+        }
     }
 
     public String getIdentificationNumber() {
@@ -91,26 +90,26 @@ public class CreateUpdateEmployeeArgument {
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((identificationNumber == null) ? 0 : identificationNumber.hashCode());
-	return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((identificationNumber == null) ? 0 : identificationNumber.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	CreateUpdateEmployeeArgument other = (CreateUpdateEmployeeArgument) obj;
-	if (identificationNumber == null) {
-	    if (other.identificationNumber != null)
-		return false;
-	} else if (!identificationNumber.equals(other.identificationNumber))
-	    return false;
-	return true;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CreateUpdateEmployeeArgument other = (CreateUpdateEmployeeArgument) obj;
+        if (identificationNumber == null) {
+            if (other.identificationNumber != null)
+                return false;
+        } else if (!identificationNumber.equals(other.identificationNumber))
+            return false;
+        return true;
     }
 }

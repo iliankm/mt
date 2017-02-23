@@ -27,80 +27,80 @@ public class EmployeeServiceBean implements EmployeeService {
     @Override
     public Employee findById(String id) {
 
-	Objects.requireNonNull(id);
+        Objects.requireNonNull(id);
 
-	final Employee employee = employeeRepository.findById(id);
+        final Employee employee = employeeRepository.findById(id);
 
-	if (employee == null) {
-	    throw new ResourceNotFoundException();
-	}
+        if (employee == null) {
+            throw new ResourceNotFoundException();
+        }
 
-	return employee;
+        return employee;
     }
 
     @Override
     public Employee create(@Valid CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
-	Objects.requireNonNull(createUpdateEmployeeArgument);
+        Objects.requireNonNull(createUpdateEmployeeArgument);
 
-	// create EmployeeEntityBean
-	final EmployeeEntityBean employee = EmployeeEntityBean.Builder.get()
-		.identificationNumber(createUpdateEmployeeArgument.getIdentificationNumber())
-		.name(createUpdateEmployeeArgument.getName()).email(createUpdateEmployeeArgument.getEmail())
-		.gender(createUpdateEmployeeArgument.getGender()).build();
+        // create EmployeeEntityBean
+        final EmployeeEntityBean employee = EmployeeEntityBean.Builder.get()
+                .identificationNumber(createUpdateEmployeeArgument.getIdentificationNumber())
+                .name(createUpdateEmployeeArgument.getName()).email(createUpdateEmployeeArgument.getEmail())
+                .gender(createUpdateEmployeeArgument.getGender()).build();
 
-	// persist employee
-	employeeRepository.save(employee);
+        // persist employee
+        employeeRepository.save(employee);
 
-	return employee;
+        return employee;
     }
 
     @Override
     public void update(String employeeId, @Valid CreateUpdateEmployeeArgument createUpdateEmployeeArgument) {
 
-	Objects.requireNonNull(employeeId);
+        Objects.requireNonNull(employeeId);
 
-	Objects.requireNonNull(createUpdateEmployeeArgument);
+        Objects.requireNonNull(createUpdateEmployeeArgument);
 
-	final int updatedCount = employeeRepository.update(employeeId, createUpdateEmployeeArgument);
+        final int updatedCount = employeeRepository.update(employeeId, createUpdateEmployeeArgument);
 
-	if (updatedCount == 0) {
-	    throw new ResourceNotFoundException();
-	}
+        if (updatedCount == 0) {
+            throw new ResourceNotFoundException();
+        }
     }
 
     @Override
     public void update(String employeeId, @Valid AddressArgument addressArgument) {
 
-	Objects.requireNonNull(employeeId);
+        Objects.requireNonNull(employeeId);
 
-	Objects.requireNonNull(addressArgument);
+        Objects.requireNonNull(addressArgument);
 
-	final AddressEntityBean address = AddressEntityBean.Builder.get().country(addressArgument.getCountry())
-		.city(addressArgument.getCity()).street(addressArgument.getStreet()).zip(addressArgument.getZip())
-		.build();
+        final AddressEntityBean address = AddressEntityBean.Builder.get().country(addressArgument.getCountry())
+                .city(addressArgument.getCity()).street(addressArgument.getStreet()).zip(addressArgument.getZip())
+                .build();
 
-	final int updatedCount = employeeRepository.update(employeeId, address);
+        final int updatedCount = employeeRepository.update(employeeId, address);
 
-	if (updatedCount == 0) {
-	    throw new ResourceNotFoundException();
-	}
+        if (updatedCount == 0) {
+            throw new ResourceNotFoundException();
+        }
     }
 
     @Override
     public void update(String employeeId, @Valid Set<PhoneArgument> phonesArgument) {
 
-	Objects.requireNonNull(employeeId);
+        Objects.requireNonNull(employeeId);
 
-	final Set<PhoneEntityBean> phones = phonesArgument == null ? Collections.emptySet()
-		: phonesArgument.stream().map(pa -> new PhoneEntityBean(pa.getType(), pa.getPhone()))
-			.collect(Collectors.toSet());
+        final Set<PhoneEntityBean> phones = phonesArgument == null ? Collections.emptySet()
+                : phonesArgument.stream().map(pa -> new PhoneEntityBean(pa.getType(), pa.getPhone()))
+                .collect(Collectors.toSet());
 
-	final int updatedCount = employeeRepository.update(employeeId, phones);
+        final int updatedCount = employeeRepository.update(employeeId, phones);
 
-	if (updatedCount == 0) {
-	    throw new ResourceNotFoundException();
-	}
+        if (updatedCount == 0) {
+            throw new ResourceNotFoundException();
+        }
     }
 
 }

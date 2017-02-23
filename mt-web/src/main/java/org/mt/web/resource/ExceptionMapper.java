@@ -17,13 +17,13 @@ public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Exceptio
     @Override
     public Response toResponse(Exception exception) {
 
-	log.log(Level.SEVERE, "Exception caught by JAX-RS exception mapper:", exception);
+        log.log(Level.SEVERE, "Exception caught by JAX-RS exception mapper:", exception);
 
-	//ResourceNotFoundException
-	if (ResourceNotFoundException.class.isAssignableFrom(exception.getClass())) {
-	    return Response.status(Status.NOT_FOUND).build();
-	}
+        //ResourceNotFoundException
+        if (ResourceNotFoundException.class.isAssignableFrom(exception.getClass())) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
 
-	return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+        return Response.status(Status.INTERNAL_SERVER_ERROR).build();
     }
 }
